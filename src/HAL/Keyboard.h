@@ -1,3 +1,4 @@
+#include <Wire.h>
 #include <PCF8574.h>
 
 #ifndef HAL_KEYBOARD
@@ -14,6 +15,7 @@ class Keyboard{
     private:
         PCF8574* m_expander;
 
+        static const byte m_led = 7;
         static const byte m_button_down = 4;
         static const byte m_button_right = 8;
         static const byte m_button_left = 2;

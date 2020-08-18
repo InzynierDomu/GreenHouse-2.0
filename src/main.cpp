@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "HAL/Keyboard.h"
@@ -10,7 +9,10 @@
 #define OLED_RESET     -1// Reset pin # (or -1 if sharing Arduino reset pin)
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
+//TODO: move to some config file
 const byte m_pin_analog = A0;
+const byte m_pin_keyboard_int = D5;
+const byte m_keyboard_pcf_adress = 0x20;
 
 bool volatile m_keyboatd_button_presed;
 
@@ -19,7 +21,7 @@ void ICACHE_RAM_ATTR readpcf()
   m_keyboatd_button_presed = true;
 }
 
-HAL::Keyboard keyboard(0x20);
+HAL::Keyboard keyboard(m_keyboard_pcf_adress);
 
 struct Linear_function
 {
@@ -65,14 +67,11 @@ void setup() {
   display.setRotation(2);
   display.setTextSize(2);      
   display.setTextColor(SSD1306_WHITE); 
-
-  // // display.setTextColor(BLACK, WHITE);  
-  // // display.println("opcja 2");
+  // display.setTextColor(BLACK, WHITE);  
   display.display();
-  // display.setTextColor(SSD1306_WHITE); // Draw white text
 
   pinMode(D5, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(D5), readpcf, FALLING);
+  attachInterrupt(digitalPinToInterrupt(m_pin_keyboard_int), readpcf, FALLING);
 
   //TODO: move to read from memory
   Point ph4(4, 95);
@@ -89,7 +88,6 @@ void loop() {
   }
 
   int analog_ph = analogRead(m_pin_analog);
-  // Serial.println(analog_ph);
 
   display.clearDisplay();
   display.setCursor(0, 0);   
