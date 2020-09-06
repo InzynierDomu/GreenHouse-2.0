@@ -5,19 +5,18 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
+#include "HAL/Init.h"
 #include "HAL/Keyboard.h"
 #include "test_json.h"
-#include "pin_config.h"
 #include "Liner_fun.h"
 
-#define SCREEN_WIDTH 128 
-#define SCREEN_HEIGHT 64 
+const int m_screen_width = 128;
+const int m_screen_height = 64; 
 
-#define OLED_RESET     -1// Reset pin # (or -1 if sharing Arduino reset pin)
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+Adafruit_SSD1306 display(m_screen_width, m_screen_height, &Wire);
 
 //TODO: move to some config file
-const byte m_keyboard_pcf_adress = 0x20;
+// const byte m_keyboard_pcf_adress = 0x20;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -26,7 +25,7 @@ StaticJsonDocument<200> doc;
 
 bool volatile m_keyboatd_button_presed;
 
-HAL::Keyboard keyboard(m_keyboard_pcf_adress);
+// HAL::Keyboard keyboard(m_keyboard_pcf_adress);
 
 Linear_function test_f;
 
@@ -79,6 +78,7 @@ void setup() {
   Serial.begin(9600);
 
   DeserializationError error = deserializeJson(doc, test_json::content);
+  // Serial.println(error);
   
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
     Serial.println(F("SSD1306 allocation failed"));
@@ -95,8 +95,8 @@ void setup() {
   // display.setTextColor(BLACK, WHITE);  
   display.display();
 
-  pinMode(pins::m_keyboard_int, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(pins::m_keyboard_int), readpcf, FALLING);
+  // pinMode(pins::m_keyboard_int, INPUT_PULLUP);
+  // attachInterrupt(digitalPinToInterrupt(pins::m_keyboard_int), readpcf, FALLING);
 
   //TODO: move to read from memory
   Point ph4(4, 95);
@@ -113,13 +113,13 @@ void loop() {
   {
     reconnect(doc["MQTT_TOPIC_TEST"]);
   }
-  if (m_keyboatd_button_presed)
-  {
-    keyboard.keyboard_action();
-    m_keyboatd_button_presed = false;
-  }
+  // if (m_keyboatd_button_presed)
+  // {
+  //   keyboard.keyboard_action();
+  //   m_keyboatd_button_presed = false;
+  // }
 
-  int analog_ph = analogRead(pins::m_analog);
+  int analog_ph = 100; // analogRead(pins::m_analog);
 
   display.clearDisplay();
   display.setCursor(0, 0);   
