@@ -1,22 +1,13 @@
 #include <Arduino.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 #include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
 #include "HAL/Init.h"
-#include "HAL/Keyboard.h"
 #include "test_json.h"
 #include "Liner_fun.h"
 
-const int m_screen_width = 128;
-const int m_screen_height = 64; 
-
-Adafruit_SSD1306 display(m_screen_width, m_screen_height, &Wire);
-
-//TODO: move to some config file
-// const byte m_keyboard_pcf_adress = 0x20;
+HAL::Init *m_hal;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -77,23 +68,10 @@ void reconnect(const char* topic)
 void setup() {
   Serial.begin(9600);
 
+  m_hal = new HAL::Init();
+
   DeserializationError error = deserializeJson(doc, test_json::content);
   // Serial.println(error);
-  
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
-    Serial.println(F("SSD1306 allocation failed"));
-  }
-  else
-  {
-    Serial.println(F("SSD1306 allocation ok"));
-  } 
-
-  display.clearDisplay();
-  display.setRotation(2);
-  display.setTextSize(2);      
-  display.setTextColor(SSD1306_WHITE); 
-  // display.setTextColor(BLACK, WHITE);  
-  display.display();
 
   // pinMode(pins::m_keyboard_int, INPUT_PULLUP);
   // attachInterrupt(digitalPinToInterrupt(pins::m_keyboard_int), readpcf, FALLING);
@@ -104,15 +82,16 @@ void setup() {
 
   test_f = calculate(ph4, ph7);  
 
-  setup_wifi(doc["SSID"],doc["PASS"]);
-  client.setServer("192.168.0.17", 1883);
+  // setup_wifi(doc["SSID"],doc["PASS"]);
+  // client.setServer("192.168.0.17", 1883);
 }
 
 void loop() { 
-  if (!client.connected()) 
-  {
-    reconnect(doc["MQTT_TOPIC_TEST"]);
-  }
+  // if (!client.connected()) 
+  // {
+  //   reconnect(doc["MQTT_TOPIC_TEST"]);
+  // }
+
   // if (m_keyboatd_button_presed)
   // {
   //   keyboard.keyboard_action();
@@ -121,10 +100,10 @@ void loop() {
 
   int analog_ph = 100; // analogRead(pins::m_analog);
 
-  display.clearDisplay();
-  display.setCursor(0, 0);   
-  display.print(find_y(analog_ph, test_f));
-  display.println("pH");
-  // display.println("uS/cm");
-  display.display();
+  // display.clearDisplay();
+  // display.setCursor(0, 0);   
+  // display.print(find_y(analog_ph, test_f));
+  // display.println("pH");
+  // // display.println("uS/cm");
+  // display.display();
 }
