@@ -14,16 +14,16 @@ PubSubClient client(espClient);
 
 StaticJsonDocument<200> doc;
 
-bool volatile m_keyboatd_button_presed;
+// bool volatile m_keyboatd_button_presed;
 
 // HAL::Keyboard keyboard(m_keyboard_pcf_adress);
 
 Linear_function test_f;
 
-void ICACHE_RAM_ATTR readpcf()
-{
-  m_keyboatd_button_presed = true;
-}
+// void ICACHE_RAM_ATTR readpcf()
+// {
+//   m_keyboatd_button_presed = true;
+// }
 
 //TODO: wywalic!!!!
 

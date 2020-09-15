@@ -1,4 +1,5 @@
 #include "Keyboard.h"
+#include "Pin_config.h"
 
 namespace HAL{
 
@@ -18,6 +19,9 @@ Keyboard::Keyboard(uint8_t adress)
 
   m_expander = new PCF8574(adress);
   m_expander->begin();
+
+  pinMode(Pins::m_keyboard_int, INPUT_PULLUP);
+  
 }
 
 Keyboard::~Keyboard()
@@ -52,6 +56,11 @@ void Keyboard::keyboard_action()
         break;
     }      
   }    
+}
+
+void ICACHE_RAM_ATTR Keyboard::readpcf()
+{
+  m_keyboatd_button_presed = true;
 }
 
 }

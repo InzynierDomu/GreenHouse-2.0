@@ -4,9 +4,7 @@ namespace HAL{
 
 Init::Init()
 {
-  pinMode(Pins::m_keyboard_int, INPUT_PULLUP);
   m_keyboard = new Keyboard(Config::m_keyboard_pcf_adress);
-
   m_screen = new Screen();  
 }
 

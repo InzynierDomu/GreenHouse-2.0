@@ -5,6 +5,9 @@
 #include "GPIO_controller.h"
 #include "../Keyboard_buttons.h"
 
+#ifndef HAL_INIT
+#define HAL_INIT
+
 namespace HAL{
 
 class Init
@@ -20,3 +23,5 @@ private:
 };
 
 } //namespace HAL
+
+#endif //HAL_INIT
