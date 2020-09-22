@@ -3,10 +3,13 @@
 
 namespace HAL{
 
+Keyboard* keyboard;
+static void ICACHE_RAM_ATTR readpcf();
+
 Keyboard::Keyboard(uint8_t adress)
 {
   Wire.begin();
-  Wire.beginTransmission(0x20);
+  Wire.beginTransmission(adress);
   byte error = Wire.endTransmission();
   if (error == 0)
   {
@@ -21,7 +24,8 @@ Keyboard::Keyboard(uint8_t adress)
   m_expander->begin();
 
   pinMode(Pins::m_keyboard_int, INPUT_PULLUP);
-  
+  keyboard = this;
+  attachInterrupt(digitalPinToInterrupt(Pins::m_keyboard_int), readpcf, FALLING);
 }
 
 Keyboard::~Keyboard()
@@ -58,9 +62,9 @@ void Keyboard::keyboard_action()
   }    
 }
 
-void ICACHE_RAM_ATTR Keyboard::readpcf()
+static void ICACHE_RAM_ATTR readpcf()
 {
-  m_keyboatd_button_presed = true;
+  keyboard->m_keyboatd_button_presed = true;
 }
 
 }

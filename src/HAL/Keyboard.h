@@ -12,6 +12,8 @@ class Keyboard{
         ~Keyboard();
         void keyboard_action();
 
+        bool volatile m_keyboatd_button_presed;
+
     private:
         PCF8574* m_expander;
 
@@ -20,10 +22,6 @@ class Keyboard{
         static const byte m_button_right = 8;
         static const byte m_button_left = 2;
         static const byte m_button_up = 1;
-
-        bool volatile m_keyboatd_button_presed;
-
-        void ICACHE_RAM_ATTR readpcf();
 };
 };
 

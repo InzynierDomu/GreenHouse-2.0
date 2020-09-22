@@ -12,18 +12,9 @@ HAL::Init *m_hal;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-StaticJsonDocument<200> doc;
-
-// bool volatile m_keyboatd_button_presed;
-
-// HAL::Keyboard keyboard(m_keyboard_pcf_adress);
+StaticJsonDocument<400> doc;
 
 Linear_function test_f;
-
-// void ICACHE_RAM_ATTR readpcf()
-// {
-//   m_keyboatd_button_presed = true;
-// }
 
 //TODO: wywalic!!!!
 
@@ -71,10 +62,9 @@ void setup() {
   m_hal = new HAL::Init();
 
   DeserializationError error = deserializeJson(doc, test_json::content);
-  // Serial.println(error);
-
-  // pinMode(pins::m_keyboard_int, INPUT_PULLUP);
-  // attachInterrupt(digitalPinToInterrupt(pins::m_keyboard_int), readpcf, FALLING);
+  Serial.println(error.c_str());
+  String topic_test = doc["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][0]["GPIOS"][0]["TOPIC"];
+  Serial.println(topic_test);
 
   //TODO: move to read from memory
   Point ph4(4, 95);

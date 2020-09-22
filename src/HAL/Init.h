@@ -1,14 +1,15 @@
 #include "Config.h"
 #include "Pin_config.h"
-#include "Keyboard.h"
-#include "Screen.h"
-#include "GPIO_controller.h"
 #include "../Keyboard_buttons.h"
 
 #ifndef HAL_INIT
 #define HAL_INIT
 
 namespace HAL{
+
+class Screen;
+class Keyboard;
+class GPIO_controller;
 
 class Init
 {
@@ -17,9 +18,9 @@ public:
     void set_keyoboard_buttons(bool *is_pressed, Keyboard_button *button);
 
 private:
-    Screen *m_screen;
-    Keyboard *m_keyboard; 
-    GPIO_controller *m_gpio_controller;
+    const Screen *m_screen;
+    const Keyboard *m_keyboard; 
+    const GPIO_controller *m_gpio_controller;
 };
 
 } //namespace HAL
