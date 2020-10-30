@@ -1,17 +1,19 @@
 
 namespace test_json
 {
-    const String content = "{\"SSID\":\"UPCD2A94D7\","
-"\"PASS\":\"nG74stttPuzz\","
-"\"MQTT_TOPIC_TEST\":\"192.168.0.17\","
+    const String content = "{\"SSID\":\"test_ssid\","
+"\"PASS\":\"test_pass\","
+"\"MQTT_SERVER\":\"192.168.0.17\","
+"\"MQTT_TOPIC_TEST\":\"test\","
 "\"HARDWARE_CONFIGURATION\":"
-	"{\"GPIO_CONTROLLERS\":["
+	"{\"SENSOR\":\"greenhouse/sensor/\""
+	"\"GPIO_CONTROLLERS\":["
 		"{\"ADDRES\":\"001\","
 		"\"GPIOS\":["
 			"{\"TYPE\":\"OUT\","
-			"\"TOPIC\":\"test/out\"},"
+			"\"TOPIC\":\"greenhouse/pump\"},"
 			"{\"TYPE\":\"IN\","
-			"\"TOPIC\":\"test/in\"}"
+			"\"TOPIC\":\"greenhouse/floodsensor\"}"
 		"]}"		
 	"]}"
 "}";
