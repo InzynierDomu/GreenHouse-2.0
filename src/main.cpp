@@ -4,6 +4,7 @@
 #include <PubSubClient.h>
 
 #include "HAL/Init.h"
+#include "Peripherals/Peripherals_generator.h"
 #include "test_json.h"
 #include "Liner_fun.h"
 
@@ -42,7 +43,7 @@ void reconnect(const char* topic)
 {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("123", "id", "id")) {
       Serial.println("connected");
       client.subscribe(topic);
     } else {
@@ -72,15 +73,15 @@ void setup() {
 
   test_f = calculate(ph4, ph7);  
 
-  // setup_wifi(doc["SSID"],doc["PASS"]);
-  // client.setServer("192.168.0.17", 1883);
+  setup_wifi(doc["SSID"],doc["PASS"]);
+  client.setServer("192.168.0.17", 1883);
 }
 
 void loop() { 
-  // if (!client.connected()) 
-  // {
-  //   reconnect(doc["MQTT_TOPIC_TEST"]);
-  // }
+  if (!client.connected()) 
+  {
+    reconnect(doc["MQTT_TOPIC_TEST"]);
+  }
 
   // if (m_keyboatd_button_presed)
   // {
@@ -89,6 +90,17 @@ void loop() {
   // }
 
   int analog_ph = 100; // analogRead(pins::m_analog);
+
+  float temp = m_hal->get_bme_temp();
+  char array[10];
+  sprintf(array, "%f", temp);
+  Serial.println(temp);
+  Serial.println(array);
+  if(client.publish("/sensor/temp", array))
+  {
+    Serial.println("msg sended");
+  }
+  delay(1000);
 
   // display.clearDisplay();
   // display.setCursor(0, 0);   
