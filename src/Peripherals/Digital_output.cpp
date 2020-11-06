@@ -2,7 +2,7 @@
 
 namespace Peripherals{
 
-Digital_output::Digital_output(GPIO_controller& controller, int pin, String topic)
+Digital_output::Digital_output(GPIO_controller& controller, int pin, char* topic)
 : m_controller(controller)
 {
     m_topic = topic;

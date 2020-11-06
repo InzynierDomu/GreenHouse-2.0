@@ -1,22 +1,31 @@
 #ifndef PERIPHERALS_PERIPHERALS_GENERATOR
 #define PERIPHERALS_PERIPHERALS_GENERATOR
 
+#include <ArduinoJson.h>
+#include <PubSubClient.h>
 #include <vector>
 
-namespace Peripherals{
+#include "Digital_output.h"
+#include "Multisensor.h"
+#include "HAL/Init.h"
 
-class Peripheral;
+namespace Peripherals{
 
 class Peripherals_generator
 {
 public:
-    Peripherals_generator();
+    Peripherals_generator(HAL::Init* hal, JsonDocument& json);
     ~Peripherals_generator();
 
-private:
-    const std::vector<Peripheral> m_outputs;
+    void publish(PubSubClient* client);
 
-    void add_peripherals();
+private:
+    std::vector<Digital_output> m_digital_outputs;
+    Multisensor* m_multisensor;
+
+    // void add_peripherals();
+    void add_multisensor(HAL::Init* hal, JsonDocument& json);
+    void generate_digital_in_out(HAL::Init* hal, JsonDocument& json);
 };    
 
 } //Peripherals

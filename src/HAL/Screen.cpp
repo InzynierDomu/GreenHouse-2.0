@@ -5,14 +5,7 @@ namespace HAL{
 Screen::Screen()
 {
     Adafruit_SSD1306 display(Config::m_screen_width, Config::m_screen_height, &Wire);
-    if(!display.begin(SSD1306_SWITCHCAPVCC, Config::m_screen_adress)) 
-    { 
-        Serial.println(F("Screen not founded"));
-    }
-    else
-    {
-        Serial.println(F("Screen founded"));
-    } 
+    display.begin(SSD1306_SWITCHCAPVCC, Config::m_screen_adress);
 
     display.clearDisplay();
     display.setRotation(2);

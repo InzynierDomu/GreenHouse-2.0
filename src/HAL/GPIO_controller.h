@@ -4,10 +4,12 @@
 #ifndef HAL_GPIO_CONTROLLER
 #define HAL_GPIO_CONTROLLER
 
-namespace HAL{
+namespace HAL
+{
 
 class GPIO_controller
 {
+public:
     GPIO_controller();
 };
 } //namespace HAL

@@ -9,11 +9,12 @@
 #include "Liner_fun.h"
 
 HAL::Init *m_hal;
+Peripherals::Peripherals_generator *m_peripherals;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-StaticJsonDocument<400> doc;
+StaticJsonDocument<800> doc;
 
 Linear_function test_f;
 
@@ -60,21 +61,35 @@ void reconnect(const char* topic)
 void setup() {
   Serial.begin(9600);
 
+  Serial.println("Start setup");
+
   m_hal = new HAL::Init();
 
   DeserializationError error = deserializeJson(doc, test_json::content);
   Serial.println(error.c_str());
-  String topic_test = doc["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][0]["GPIOS"][0]["TOPIC"];
-  Serial.println(topic_test);
+
+  // String topic_test = doc["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][0]["GPIOS"][0]["TOPIC"];
+  // Serial.println(topic_test);
+
+  // JsonArray array = doc["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
+  // Serial.println(array[0]["GPIOS"][0]["TOPIC"].as<String>());
+
+  JsonArray array = doc["HARDWARE_CONFIGURATION"].as<JsonArray>();
+  // int gpios_count = array.size();
+  // Serial.println(gpios_count);
 
   //TODO: move to read from memory
-  Point ph4(4, 95);
-  Point ph7(7, 365);
+  // Point ph4(4, 95);
+  // Point ph7(7, 365);
 
-  test_f = calculate(ph4, ph7);  
+  // test_f = calculate(ph4, ph7);  
+  m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc);
 
   setup_wifi(doc["SSID"],doc["PASS"]);
-  client.setServer("192.168.0.17", 1883);
+  const char* mqtt_addres = doc["MQTT_SERVER"];
+  client.setServer(mqtt_addres, 1883);
+
+  Serial.println("Finish setup");
 }
 
 void loop() { 
@@ -89,17 +104,18 @@ void loop() {
   //   m_keyboatd_button_presed = false;
   // }
 
-  int analog_ph = 100; // analogRead(pins::m_analog);
+  // int analog_ph = 100; // analogRead(pins::m_analog);
 
-  float temp = m_hal->get_bme_temp();
-  char array[10];
-  sprintf(array, "%f", temp);
-  Serial.println(temp);
-  Serial.println(array);
-  if(client.publish("/sensor/temp", array))
-  {
-    Serial.println("msg sended");
-  }
+  // float temp = m_hal->get_bme_temp();
+  // char array[10];
+  // sprintf(array, "%f", temp);
+  // client.publish("/sensor/temp", array);
+
+  // float hum = m_hal->get_bme_hum();
+  // sprintf(array, "%f", hum);
+  // client.publish("/sensor/hum", array);
+  m_peripherals->publish(&client);
+
   delay(1000);
 
   // display.clearDisplay();

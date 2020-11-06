@@ -8,18 +8,6 @@ static void ICACHE_RAM_ATTR readpcf();
 
 Keyboard::Keyboard(uint8_t adress)
 {
-  Wire.begin();
-  Wire.beginTransmission(adress);
-  byte error = Wire.endTransmission();
-  if (error == 0)
-  {
-    Serial.println("pcf ok!");
-  }
-  else
-  {
-    Serial.println("pcf not ok ):");
-  }
-
   m_expander = new PCF8574(adress);
   m_expander->begin();
 

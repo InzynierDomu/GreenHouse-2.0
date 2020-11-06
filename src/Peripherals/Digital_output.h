@@ -10,7 +10,7 @@ class GPIO_controller;
 class Digital_output : public Peripheral
 {
 public:
-    Digital_output(GPIO_controller& controller, int pin, String topic);
+    Digital_output(GPIO_controller& controller, int pin, char* topic);
     ~Digital_output();
 
 private:

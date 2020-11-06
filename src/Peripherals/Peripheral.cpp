@@ -6,8 +6,4 @@ Peripheral::Peripheral()
 {
 }
 
-Peripheral::~Peripheral()
-{
-}
-
 } //Peripherals

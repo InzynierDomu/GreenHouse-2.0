@@ -3,16 +3,16 @@
 
 #include <Arduino.h>
 
-namespace Peripherals{
+namespace Peripherals
+{
 
 class Peripheral
 {
 public:
     Peripheral();
-    ~Peripheral();
 
 protected:
-    String m_topic;
+    char* m_topic;
     int m_pin;
 };
 
