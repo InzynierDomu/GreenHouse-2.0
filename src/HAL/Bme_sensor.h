@@ -1,7 +1,7 @@
-#include <Adafruit_BME280.h>
-
 #ifndef HAL_BME_SENSOR
 #define HAL_BME_SENSOR
+
+#include <Adafruit_BME280.h>
 
 namespace HAL
 {

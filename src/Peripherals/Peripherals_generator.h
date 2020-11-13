@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Digital_output.h"
+#include "Digital_input.h"
 #include "Multisensor.h"
 #include "HAL/Init.h"
 
@@ -20,12 +21,16 @@ public:
     void publish(PubSubClient* client);
 
 private:
-    std::vector<Digital_output> m_digital_outputs;
+    std::vector<Digital_output*> m_digital_outputs;
+    std::vector<Digital_input*> m_digital_inputs;
     Multisensor* m_multisensor;
+    Digital_output* m_test_digi_out;
 
     // void add_peripherals();
     void add_multisensor(HAL::Init* hal, JsonDocument& json);
     void generate_digital_in_out(HAL::Init* hal, JsonDocument& json);
+
+    int convert_bin_to_dec(String number);
 };    
 
 } //Peripherals

@@ -23,6 +23,19 @@ Bme_sensor* Init::get_bme_sensor()
 
 GPIO_controller* Init::get_GPIO_controller(int adress)
 {
+  for(auto it = m_gpio_controllers.begin(); it != m_gpio_controllers.end(); ++it)
+  {
+    if(it->get_adress() == adress)
+    {
+      return &(*it);
+    }
+    else
+    {
+      Serial.println("error couldn't find gpio controller");
+      return nullptr;
+    }
+    
+  }
 }
 
 void Init::scan_i2c()
@@ -47,7 +60,7 @@ void Init::generate_gpio_controllers()
     {
       if(*it > min_adress_gpio_controllers && *it <= max_adress_gpio_controllers)
       {
-        GPIO_controller *gpio_controller = new GPIO_controller();
+        GPIO_controller *gpio_controller = new GPIO_controller(*it);
         m_gpio_controllers.push_back(*gpio_controller);
       }
     }

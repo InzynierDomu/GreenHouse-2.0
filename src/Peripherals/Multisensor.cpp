@@ -15,7 +15,10 @@ void Multisensor::Public_measurements(PubSubClient* client)
     char array[10];
     float measure = m_bme_sensor->get_bme_temp();
     sprintf(array, "%f", measure);
-    client->publish(m_topic, array);
+    client->publish("greenhouse/sensor/temp", array);
+    measure = m_bme_sensor->get_bme_hum();
+    sprintf(array, "%f", measure);
+    client->publish("greenhouse/sensor/hum", array);
 }
 
 } //Peripherals
