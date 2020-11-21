@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
+#include "Logger.h"
 #include "HAL/Init.h"
 #include "Peripherals/Peripherals_generator.h"
 #include "test_json.h"
@@ -68,22 +69,14 @@ void setup() {
   DeserializationError error = deserializeJson(doc, test_json::content);
   Serial.println(error.c_str());
 
-  // String topic_test = doc["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][0]["GPIOS"][0]["TOPIC"];
-  // Serial.println(topic_test);
-
-  // JsonArray array = doc["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
-  // Serial.println(array[0]["GPIOS"][0]["TOPIC"].as<String>());
-
   JsonArray array = doc["HARDWARE_CONFIGURATION"].as<JsonArray>();
-  // int gpios_count = array.size();
-  // Serial.println(gpios_count);
 
   //TODO: move to read from memory
   // Point ph4(4, 95);
   // Point ph7(7, 365);
 
   // test_f = calculate(ph4, ph7);  
-  m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc);
+  m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc, &client);
 
   setup_wifi(doc["SSID"],doc["PASS"]);
   const char* mqtt_addres = doc["MQTT_SERVER"];
@@ -114,7 +107,7 @@ void loop() {
   // float hum = m_hal->get_bme_hum();
   // sprintf(array, "%f", hum);
   // client.publish("/sensor/hum", array);
-  m_peripherals->publish(&client);
+  m_peripherals->publish();
 
   delay(1000);
 

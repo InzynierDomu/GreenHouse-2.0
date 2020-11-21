@@ -6,16 +6,22 @@ GPIO_controller::GPIO_controller(int adress):
 m_adress(adress)
 {
     m_exspander = new Adafruit_MCP23017();
+    m_exspander->begin(adress);
 }
 
-bool GPIO_controller::read_state(int pin)
+void GPIO_controller::set_in_out(int type, int pin)
 {
-    m_exspander->readGPIO(pin);
+    m_exspander->pinMode(pin, type);
 }
 
-void GPIO_controller::set_state(int pin, bool state)
+byte GPIO_controller::get_state(int pin)
 {
-    
+    return m_exspander->digitalRead(pin);
+}
+
+void GPIO_controller::set_state(int pin, byte state)
+{
+  
 }
 
 int GPIO_controller::get_adress()

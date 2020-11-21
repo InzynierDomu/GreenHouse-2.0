@@ -1,8 +1,9 @@
-#include <Wire.h>
-#include <Adafruit_MCP23017.h>
-
 #ifndef HAL_GPIO_CONTROLLER
 #define HAL_GPIO_CONTROLLER
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_MCP23017.h>
 
 namespace HAL
 {
@@ -12,8 +13,9 @@ class GPIO_controller
 public:
     GPIO_controller(int adress);
 
-    bool read_state(int pin);
-    void set_state(int pin, bool state);
+    void set_in_out(int type, int pin);
+    byte get_state(int pin);
+    void set_state(int pin, byte state);
     int get_adress();
 
 private:

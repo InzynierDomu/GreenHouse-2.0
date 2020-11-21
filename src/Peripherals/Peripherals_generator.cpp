@@ -4,24 +4,26 @@
 
 namespace Peripherals{
 
-Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json)
+Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient* client):
+m_client(client)
 {
     add_multisensor(hal, json);
     generate_digital_in_out(hal, json);
 }
-    
-Peripherals_generator::~Peripherals_generator()
-{
-}
 
-void Peripherals_generator::publish(PubSubClient* client)
+void Peripherals_generator::publish()
 {
-    m_multisensor->Public_measurements(client);
+    m_multisensor->Public_measurements(m_client);
+
+    for(auto it = m_digital_inputs.begin(); it != m_digital_inputs.end(); it++)
+    {
+        (*it).publish(m_client);
+    }
 }
 
 void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
 {
-    Serial.println(json["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
+    // Serial.println(json["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
     m_multisensor = new Multisensor(hal->get_bme_sensor(), "greenhouse/sensor");
 }
 
@@ -29,7 +31,6 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
 {
     JsonArray array = json["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
     int gpio_count = array.size();
-    Serial.println(gpio_count);
     for(int i = 0; i <= gpio_count-1; i++)
     {
         String adress = array[i]["ADDRES"].as<String>(); 
@@ -38,22 +39,18 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
         if(gpio_controller != nullptr)
         {
             JsonArray pins = json["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][i]["GPIOS"].as<JsonArray>();
-            for(int j = 0; j <= pins.size(); j++)
+            for(int pin = 0; pin <= pins.size(); pin++)
             {
-                String pin_type = pins[j]["TYPE"].as<String>();
-                Serial.println(pin_type);
+                String pin_type = pins[pin]["TYPE"].as<String>();
                 if(!pin_type.compareTo("IN"))
                 {
-                    char* topic;
-                    pins[j]["TOPIC"].as<String>().toCharArray(topic, 20);
-                    auto digital_input = new Digital_input(gpio_controller, j, topic);
-                    m_digital_inputs.push_back(digital_input);
+                    auto digital_input = new Digital_input(gpio_controller, pin, pins[pin]["TOPIC"].as<String>());
+                    gpio_controller->set_in_out(INPUT, pin);
+                    m_digital_inputs.push_back(*digital_input);
                 }
                 else if(!pin_type.compareTo("OUT"))
                 {
-                    char* topic;
-                    pins[j]["TOPIC"].as<String>().toCharArray(topic, 20);
-                    auto digital_output = new Digital_output(gpio_controller, j, topic);
+                    auto digital_output = new Digital_output(gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>());
                     m_digital_outputs.push_back(digital_output);
                 }                
             }

@@ -12,7 +12,7 @@ public:
     Peripheral();
 
 protected:
-    char* m_topic;
+    String m_topic;
     int m_pin;
 };
 
