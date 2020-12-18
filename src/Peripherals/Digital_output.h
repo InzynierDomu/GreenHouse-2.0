@@ -3,7 +3,8 @@
 
 #include "Peripheral.h"
 #include "HAL/GPIO_controller.h"
-#include "Logger.h"
+
+class Logger;
 
 namespace Peripherals{
 

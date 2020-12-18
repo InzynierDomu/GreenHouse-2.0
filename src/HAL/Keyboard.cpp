@@ -1,4 +1,6 @@
 #include "Keyboard.h"
+
+#include "Logger.h"
 #include "Pin_config.h"
 
 namespace HAL{
@@ -8,6 +10,7 @@ static void ICACHE_RAM_ATTR readpcf();
 
 Keyboard::Keyboard(uint8_t adress)
 {
+  m_logger = new Logger("Keyboard");
   m_expander = new PCF8574(adress);
   m_expander->begin();
 
@@ -31,20 +34,16 @@ void Keyboard::keyboard_action()
     switch (button)
     {
       case m_button_down:
-        Serial.println("down");
-        m_expander->write(m_led, 1);
+        m_logger->log("down");
         break;
       case m_button_right:
-        Serial.println("right");
-        m_expander->write(m_led, 0);
+        m_logger->log("right");
         break;
       case m_button_left:
-        Serial.println("left");
-        m_expander->write(m_led, 0);
+        m_logger->log("left");
         break;
       case m_button_up:
-        Serial.println("up");
-        m_expander->write(m_led, 1);
+        m_logger->log("up");
         break;
     }      
   }    

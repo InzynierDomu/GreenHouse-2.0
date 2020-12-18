@@ -2,7 +2,9 @@
 
 Logger::Logger(String name):
 m_module_name(name)
-{}
+{
+    Serial.println(name + "::create logger");
+}
 
 void Logger::log(const String content, const Msg_type type)
 {

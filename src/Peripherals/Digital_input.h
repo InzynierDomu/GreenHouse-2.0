@@ -1,10 +1,10 @@
 #ifndef PERIPHERALS_DIGITAL_INPUT
 #define PERIPHERALS_DIGITAL_INPUT
 
-#include <PubSubClient.h>
-
 #include "Peripheral.h"
 #include "HAL/GPIO_controller.h"
+
+class Logger;
 
 namespace Peripherals{
 
@@ -16,6 +16,7 @@ public:
 
 private:
     HAL::GPIO_controller* m_controller;
+    Logger* m_logger;
 };
 
 } //Peripherals

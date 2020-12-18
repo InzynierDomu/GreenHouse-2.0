@@ -1,4 +1,5 @@
 #include "Peripherals_generator.h"
+
 #include "Peripheral.h"
 #include "math.h"
 
@@ -51,7 +52,7 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
                 else if(!pin_type.compareTo("OUT"))
                 {
                     auto digital_output = new Digital_output(gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>());
-                    m_digital_outputs.push_back(digital_output);
+                    m_digital_outputs.push_back(*digital_output);
                 }                
             }
         }

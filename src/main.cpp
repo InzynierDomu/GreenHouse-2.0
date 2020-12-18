@@ -1,120 +1,52 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
-#include <ESP8266WiFi.h>
-#include <PubSubClient.h>
 
 #include "Logger.h"
 #include "HAL/Init.h"
 #include "Peripherals/Peripherals_generator.h"
+#include "SenderReceiver.h"
 #include "test_json.h"
 #include "Liner_fun.h"
 
+Logger* m_logger;
 HAL::Init *m_hal;
 Peripherals::Peripherals_generator *m_peripherals;
-
-WiFiClient espClient;
-PubSubClient client(espClient);
+SenderReceiver* m_sender_reciver;
 
 StaticJsonDocument<800> doc;
 
-Linear_function test_f;
-
-//TODO: wywalic!!!!
-
-void setup_wifi(const char* ssid, const char* pass) 
+void setup() 
 {
-  delay(10);
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, pass);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-}
-
-void reconnect(const char* topic) 
-{
-  while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    if (client.connect("123", "id", "id")) {
-      Serial.println("connected");
-      client.subscribe(topic);
-    } else {
-      Serial.print("failed, rc=");
-      Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);
-    }
-  }
-}
-
-//--------------------------------------------------------------------
-
-void setup() {
   Serial.begin(9600);
+  m_logger = new Logger("Main");
+  m_logger->log("Start setup");
 
-  Serial.println("Start setup");
-
-  m_hal = new HAL::Init();
-
-  DeserializationError error = deserializeJson(doc, test_json::content);
-  Serial.println(error.c_str());
-
-  JsonArray array = doc["HARDWARE_CONFIGURATION"].as<JsonArray>();
-
-  //TODO: move to read from memory
-  // Point ph4(4, 95);
-  // Point ph7(7, 365);
-
-  // test_f = calculate(ph4, ph7);  
-  m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc, &client);
-
-  setup_wifi(doc["SSID"],doc["PASS"]);
-  const char* mqtt_addres = doc["MQTT_SERVER"];
-  client.setServer(mqtt_addres, 1883);
-
-  Serial.println("Finish setup");
-}
-
-void loop() { 
-  if (!client.connected()) 
+  String deserialization_state = deserializeJson(doc, test_json::content).c_str();
+  if(!deserialization_state.compareTo("Ok"))
   {
-    reconnect(doc["MQTT_TOPIC_TEST"]);
+    m_logger->log("Deserialization Ok");
+  }
+  else
+  {
+    m_logger->log("Deserialization " + deserialization_state, Msg_type::warning);
   }
 
-  // if (m_keyboatd_button_presed)
-  // {
-  //   keyboard.keyboard_action();
-  //   m_keyboatd_button_presed = false;
-  // }
+  m_hal = new HAL::Init(doc);
 
-  // int analog_ph = 100; // analogRead(pins::m_analog);
+  m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc, m_hal->get_wifi_mqtt_client());
 
-  // float temp = m_hal->get_bme_temp();
-  // char array[10];
-  // sprintf(array, "%f", temp);
-  // client.publish("/sensor/temp", array);
+  m_sender_reciver = new SenderReceiver(m_peripherals);
+  m_hal->set_mqtt_callback(m_sender_reciver->get_callback());
 
-  // float hum = m_hal->get_bme_hum();
-  // sprintf(array, "%f", hum);
-  // client.publish("/sensor/hum", array);
+  m_logger->log("Finish setup");
+}
+
+void loop() 
+{ 
+  m_hal->wifi_mqtt_reconnect();
+  m_hal->mqtt_loop();
+
   m_peripherals->publish();
 
   delay(1000);
-
-  // display.clearDisplay();
-  // display.setCursor(0, 0);   
-  // display.print(find_y(analog_ph, test_f));
-  // display.println("pH");
-  // // display.println("uS/cm");
-  // display.display();
 }

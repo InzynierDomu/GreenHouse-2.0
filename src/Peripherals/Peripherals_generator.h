@@ -16,11 +16,10 @@ class Peripherals_generator
 {
 public:
     Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient* client);
-
     void publish();
 
 private:
-    std::vector<Digital_output*> m_digital_outputs;
+    std::vector<Digital_output> m_digital_outputs;
     std::vector<Digital_input> m_digital_inputs;
     PubSubClient* m_client;
     Multisensor* m_multisensor;

@@ -1,18 +1,25 @@
 #include "Init.h"
+#include "Logger.h"
 #include "Bme_sensor.h"
 #include "Keyboard.h"
 #include "Screen.h"
+#include "SD_reader.h"
 #include "GPIO_controller.h"
+#include "Wifi.h"
 
 namespace HAL{
 
-Init::Init()
+Init::Init(JsonDocument& json)
 {
+  m_logger = new Logger("HAL");
   scan_i2c();
 
   m_keyboard = new Keyboard(Config::m_keyboard_pcf_adress);
   m_screen = new Screen();  
   m_bme_sensor = new Bme_sensor();
+  m_wifi = new Wifi(json["SSID"], json["PASS"], json["MQTT_SERVER"]);
+  m_sd_reader = new SD_reader();
+
   generate_gpio_controllers();
 }
 
@@ -31,11 +38,30 @@ GPIO_controller* Init::get_GPIO_controller(int adress)
     }
     else
     {
-      Serial.println("error couldn't find gpio controller");
+      m_logger->log("Couldn't find gpio controller", Msg_type::warning);
       return nullptr;
     }
-    
   }
+}
+
+PubSubClient* Init::get_wifi_mqtt_client()
+{
+  return m_wifi->get_mqtt_client();
+}
+
+void Init::wifi_mqtt_reconnect()
+{
+  m_wifi->mqtt_reconnect("greenhouse/pump");
+}
+
+void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
+{
+  m_wifi->set_callback(callback);
+}
+
+void Init::mqtt_loop()
+{
+  m_wifi->loop();
 }
 
 void Init::scan_i2c()
@@ -48,8 +74,7 @@ void Init::scan_i2c()
     if (error == 0)
     {
       m_i2c_adress.push_back(address);
-      Serial.print("I2C device found at address");
-      Serial.println(address);
+      m_logger->log("I2C device found at address " + String(address));
     }
   }
 }

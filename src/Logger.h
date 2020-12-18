@@ -14,7 +14,7 @@ class Logger
 {
 public:
     Logger(String name);
-    void log(const String content, const Msg_type type);
+    void log(const String content, const Msg_type type = Msg_type::info);
 
 private:
     const String m_module_name;

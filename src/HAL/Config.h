@@ -12,7 +12,7 @@ const int m_screen_height = 64;
 
 const byte m_keyboard_pcf_adress = 0x20;
 
-const byte m_GPIO_controller_adress = 0x24;
+const int m_mqtt_port = 1883;
 
 } //namespace Config
 } //namespace HAL
