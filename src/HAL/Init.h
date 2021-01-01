@@ -19,6 +19,8 @@ class Keyboard;
 class GPIO_controller;
 class Wifi;
 class SD_reader;
+class Config_memory;
+class Real_clock;
 
 class Init
 {
@@ -35,10 +37,12 @@ private:
     Logger* m_logger;
     const Screen* m_screen;
     const Keyboard* m_keyboard; 
-    const SD_reader* m_sd_reader;
+    SD_reader* m_sd_reader;
     std::vector<GPIO_controller> m_gpio_controllers;
     Bme_sensor* m_bme_sensor;
     Wifi *m_wifi;
+    Config_memory* m_config_memory;
+    Real_clock* m_real_clock;
 
     std::vector<int> m_i2c_adress;
 

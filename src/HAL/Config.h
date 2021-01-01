@@ -12,7 +12,11 @@ const int m_screen_height = 64;
 
 const byte m_keyboard_pcf_adress = 0x20;
 
+const int m_memory_adress = 0x50;
+
 const int m_mqtt_port = 1883;
+
+// const char *m_json_file_name = "datalog.json";
 
 } //namespace Config
 } //namespace HAL

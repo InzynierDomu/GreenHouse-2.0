@@ -3,6 +3,8 @@
 #include "Bme_sensor.h"
 #include "Keyboard.h"
 #include "Screen.h"
+#include "Real_clock.h"
+#include "Config_memory.h"
 #include "SD_reader.h"
 #include "GPIO_controller.h"
 #include "Wifi.h"
@@ -19,8 +21,16 @@ Init::Init(JsonDocument& json)
   m_bme_sensor = new Bme_sensor();
   m_wifi = new Wifi(json["SSID"], json["PASS"], json["MQTT_SERVER"]);
   m_sd_reader = new SD_reader();
+  m_config_memory = new Config_memory();
+  m_real_clock = new Real_clock();
 
   generate_gpio_controllers();
+
+  if(m_sd_reader->is_card_available())
+  {
+    m_config_memory->save_json(m_sd_reader->get_json_file());
+    m_logger->log(m_config_memory->get_json());
+  }
 }
 
 Bme_sensor* Init::get_bme_sensor()
