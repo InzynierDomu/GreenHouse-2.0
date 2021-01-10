@@ -24,11 +24,18 @@ Init::Init(JsonDocument& json)
   m_config_memory = new Config_memory();
   m_real_clock = new Real_clock();
 
+  m_logger->log(m_real_clock->get_time());
+
   generate_gpio_controllers();
 
   if(m_sd_reader->is_card_available())
   {
-    m_config_memory->save_json(m_sd_reader->get_json_file());
+    String json_file = m_sd_reader->get_json_file();
+    if(!json_file.equals(m_config_memory->get_raw_file()))
+    {
+      m_config_memory->save_json(json_file );
+      m_logger->log("New json saving");
+    }
     m_logger->log(m_config_memory->get_json());
   }
 }

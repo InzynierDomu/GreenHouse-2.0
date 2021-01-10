@@ -9,11 +9,11 @@ namespace Peripherals
 class Peripheral
 {
 public:
-    Peripheral();
+  virtual ~Peripheral(){}
 
 protected:
-    String m_topic;
-    int m_pin;
+  String m_topic;
+  int m_pin;
 };
 
 } //Peripherals
