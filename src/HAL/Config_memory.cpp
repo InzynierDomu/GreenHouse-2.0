@@ -75,7 +75,7 @@ int Config_memory::get_first_bracket_position()
 
 void Config_memory::write_EEPROM(unsigned int eeaddress, char data)
 {
-  Wire.beginTransmission(Config::m_memory_adress);
+  Wire.beginTransmission(Config::memory_adress);
   Wire.write((int)(eeaddress >> 8));   // MSB
   Wire.write((int)(eeaddress & 0xFF)); // LSB
   Wire.write(data);
@@ -88,12 +88,12 @@ char Config_memory::read_EEPROM(unsigned int eeaddress)
 {
   char rdata = '0';
 
-  Wire.beginTransmission(Config::m_memory_adress);
+  Wire.beginTransmission(Config::memory_adress);
   Wire.write((int)(eeaddress >> 8));   // MSB
   Wire.write((int)(eeaddress & 0xFF)); // LSB
   Wire.endTransmission();
 
-  Wire.requestFrom(Config::m_memory_adress ,1);
+  Wire.requestFrom(Config::memory_adress ,1);
 
   if (Wire.available()) rdata = Wire.read();
  

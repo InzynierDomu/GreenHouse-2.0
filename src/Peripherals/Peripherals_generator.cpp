@@ -1,5 +1,7 @@
 #include "Peripherals_generator.h"
 
+#include "Digital_output.h"
+#include "Digital_input.h"
 #include "Peripheral.h"
 #include "math.h"
 
@@ -12,13 +14,26 @@ m_client(client)
     generate_digital_in_out(hal, json);
 }
 
+Digital_output* Peripherals_generator::get_output(String topic)
+{
+    //TODO: generic
+    //TODO: optional
+    for(auto it = m_outputs.begin(); it != m_outputs.end(); it++)
+    {
+        if(topic.equals((*it)->get_topic()))
+        {
+            return(*it);
+        }
+    }
+}
+
 void Peripherals_generator::publish()
 {
     m_multisensor->Public_measurements(m_client);
 
-    for(auto it = m_digital_inputs.begin(); it != m_digital_inputs.end(); it++)
+    for(auto it = m_inputs.begin(); it != m_inputs.end(); it++)
     {
-        (*it).publish(m_client);
+        (*it)->publish(m_client);
     }
 }
 
@@ -47,12 +62,12 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
                 {
                     auto digital_input = new Digital_input(gpio_controller, pin, pins[pin]["TOPIC"].as<String>());
                     gpio_controller->set_in_out(INPUT, pin);
-                    m_digital_inputs.push_back(*digital_input);
+                    m_inputs.push_back(digital_input);
                 }
                 else if(!pin_type.compareTo("OUT"))
                 {
                     auto digital_output = new Digital_output(gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>());
-                    m_digital_outputs.push_back(*digital_output);
+                    m_outputs.push_back(digital_output);
                 }                
             }
         }

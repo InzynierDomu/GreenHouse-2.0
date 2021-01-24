@@ -4,11 +4,11 @@ namespace HAL{
 
 Screen::Screen()
 {
-    Adafruit_SSD1306 display(Config::m_screen_width, Config::m_screen_height, &Wire);
-    display.begin(SSD1306_SWITCHCAPVCC, Config::m_screen_adress);
+    Adafruit_SSD1306 display(Config::screen_width, Config::screen_height, &Wire);
+    display.begin(SSD1306_SWITCHCAPVCC, Config::scre0n_adress);
 
     display.clearDisplay();
-    display.setRotation(2);
+    display.setRotation(0);
     display.setTextSize(2);  
     display.setTextColor(SSD1306_WHITE); 
 

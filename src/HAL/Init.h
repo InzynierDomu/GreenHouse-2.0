@@ -46,9 +46,6 @@ private:
 
     std::vector<int> m_i2c_adress;
 
-    const int min_adress_gpio_controllers = 32;
-    const int max_adress_gpio_controllers = 39;
-
     void scan_i2c();
     void generate_gpio_controllers();
 };

@@ -5,12 +5,25 @@ namespace HAL
 
 Bme_sensor::Bme_sensor()
 {
-    m_bme_sensor.begin(BME280_ADDRESS_ALTERNATE);
+  if(m_bme_sensor.begin(BME280_ADDRESS_ALTERNATE))
+  {
+    m_logger = new Logger("BME sensor alt"); 
+  }
+  else if(m_bme_sensor.begin(BME280_ADDRESS))
+  {
+    m_logger = new Logger("BME sensor");
+  }
+  else
+  {
+    m_logger = new Logger("BME not found");
+  }
 }
 
 float Bme_sensor::get_bme_temp()
 {
-  return m_bme_sensor.readTemperature();
+  float temp = m_bme_sensor.readTemperature();
+  m_logger->log(String(temp));
+  return temp;
 }
 
 float Bme_sensor::get_bme_hum()

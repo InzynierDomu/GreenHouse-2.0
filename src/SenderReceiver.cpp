@@ -14,7 +14,9 @@ void SenderReceiver::publish()
 
 void SenderReceiver::callback(const char* topic, byte* payload, unsigned int length)
 {
-  m_logger->log("Message!");
+  m_logger->log("Message arrived");
+  auto output = m_preipherals->get_output(topic);
+  output->set_value(*payload);
 }
 
 std::function<void(const char*, byte*, unsigned int)> SenderReceiver::get_callback()

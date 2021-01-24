@@ -5,8 +5,8 @@
 #include <PubSubClient.h>
 #include <vector>
 
-#include "Digital_output.h"
 #include "Digital_input.h"
+#include "Digital_output.h"
 #include "Multisensor.h"
 #include "HAL/Init.h"
 
@@ -16,14 +16,14 @@ class Peripherals_generator
 {
 public:
     Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient* client);
+    Digital_output* get_output(String topic);
     void publish();
 
 private:
-    std::vector<Digital_output> m_digital_outputs;
-    std::vector<Digital_input> m_digital_inputs;
+    std::vector<Digital_output*> m_outputs;
+    std::vector<Digital_input*> m_inputs;
     PubSubClient* m_client;
     Multisensor* m_multisensor;
-    Digital_output* m_test_digi_out;
 
     void add_multisensor(HAL::Init* hal, JsonDocument& json);
     void generate_digital_in_out(HAL::Init* hal, JsonDocument& json);

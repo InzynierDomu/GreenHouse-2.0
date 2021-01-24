@@ -11,7 +11,7 @@ Wifi::Wifi(const char* ssid, const char* pass, const char* mqtt_addres)
   connect_wifi(ssid, pass);
 
   m_mqtt_client = new PubSubClient(m_espClient);
-  m_mqtt_client->setServer(mqtt_addres, Config::m_mqtt_port);
+  m_mqtt_client->setServer(mqtt_addres, Config::mqtt_port);
 }
 
 PubSubClient* Wifi::get_mqtt_client()
