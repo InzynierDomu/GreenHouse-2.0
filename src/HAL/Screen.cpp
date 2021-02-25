@@ -8,7 +8,7 @@ Screen::Screen()
     display.begin(SSD1306_SWITCHCAPVCC, Config::scre0n_adress);
 
     display.clearDisplay();
-    display.setRotation(0);
+    display.setRotation(2);
     display.setTextSize(2);  
     display.setTextColor(SSD1306_WHITE); 
 

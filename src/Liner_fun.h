@@ -1,3 +1,14 @@
+/**
+ * @file Liner_fun.h
+ * @brief Struct linear function with calculations
+ * @author by Szymon Markiewicz
+ * @details http://www.inzynierdomu.pl/
+ * @date 01-2021
+ */
+
+#ifndef LINER_FUN
+#define LINER_FUN
+
 struct Linear_function
 {
   //y = ax + b
@@ -24,3 +35,5 @@ double find_y(int x, Linear_function f)
 {
   return(f.a * x + f.b);
 }
+
+#endif //LINER_FUN

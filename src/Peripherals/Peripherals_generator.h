@@ -1,9 +1,18 @@
+/**
+ * @file Peripherals_generator.h
+ * @brief GreenHouse 2.0 - Class for genereting peripherals object from json config
+ * @author Szymon Markiewicz
+ * @details http://www.inzynierdomu.pl/  
+ * @date 01-2021
+ */
+
 #ifndef PERIPHERALS_PERIPHERALS_GENERATOR
 #define PERIPHERALS_PERIPHERALS_GENERATOR
 
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <vector>
+#include <optional>
 
 #include "Digital_input.h"
 #include "Digital_output.h"
@@ -16,7 +25,9 @@ class Peripherals_generator
 {
 public:
     Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient* client);
-    Digital_output* get_output(String topic);
+    std::optional<Digital_output*> get_output(String topic);
+    Multisensor* get_multisensor();
+    std::vector<Digital_input*>* get_inputs();
     void publish();
 
 private:

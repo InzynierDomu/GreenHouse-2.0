@@ -1,0 +1,77 @@
+\hypertarget{class_h_a_l_1_1_init}{}\section{H\+AL\+:\+:Init Class Reference}
+\label{class_h_a_l_1_1_init}\index{H\+A\+L\+::\+Init@{H\+A\+L\+::\+Init}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a0ba61c57debf95c76d5e9c18041be711}\label{class_h_a_l_1_1_init_a0ba61c57debf95c76d5e9c18041be711}} 
+bool {\bfseries init\+Network} (Json\+Document \&json)
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_aa606269ddf90f9d98a78fb7704fd3944}\label{class_h_a_l_1_1_init_aa606269ddf90f9d98a78fb7704fd3944}} 
+\hyperlink{class_h_a_l_1_1_bme__sensor}{Bme\+\_\+sensor} $\ast$ {\bfseries get\+\_\+bme\+\_\+sensor} ()
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_aeb92713d53bcd0a686ce275a371e545c}\label{class_h_a_l_1_1_init_aeb92713d53bcd0a686ce275a371e545c}} 
+\hyperlink{class_h_a_l_1_1_g_p_i_o__controller}{G\+P\+I\+O\+\_\+controller} $\ast$ {\bfseries get\+\_\+\+G\+P\+I\+O\+\_\+controller} (int adress)
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a4979a083535df82a9d606f67aaec8b72}\label{class_h_a_l_1_1_init_a4979a083535df82a9d606f67aaec8b72}} 
+Pub\+Sub\+Client $\ast$ {\bfseries get\+\_\+wifi\+\_\+mqtt\+\_\+client} ()
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_ae1b45c5312cf62dce0d0cc5c995ccc08}\label{class_h_a_l_1_1_init_ae1b45c5312cf62dce0d0cc5c995ccc08}} 
+void {\bfseries wifi\+\_\+mqtt\+\_\+reconnect} ()
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_add3c04192c256d9a4618b8607eb40344}\label{class_h_a_l_1_1_init_add3c04192c256d9a4618b8607eb40344}} 
+void {\bfseries set\+\_\+mqtt\+\_\+callback} (std\+::function$<$ void(const char $\ast$, byte $\ast$, unsigned int)$>$ callback)
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a9c32afdf8d8269da5051b0b8e5e199e7}\label{class_h_a_l_1_1_init_a9c32afdf8d8269da5051b0b8e5e199e7}} 
+void {\bfseries mqtt\+\_\+loop} ()
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a231bf97527dba71dcf5348bb6562197d}\label{class_h_a_l_1_1_init_a231bf97527dba71dcf5348bb6562197d}} 
+void {\bfseries deserialize\+Config\+Json} (Json\+Document \&json)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a8f2660725d95bada22b2663ccde4fcea}\label{class_h_a_l_1_1_init_a8f2660725d95bada22b2663ccde4fcea}} 
+void {\bfseries scan\+\_\+i2c} ()
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a6489c15980390bc2862b3ddd9bd167ca}\label{class_h_a_l_1_1_init_a6489c15980390bc2862b3ddd9bd167ca}} 
+void {\bfseries generate\+\_\+gpio\+\_\+controllers} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_ab47bbaa9b451c2c572d860246d12099d}\label{class_h_a_l_1_1_init_ab47bbaa9b451c2c572d860246d12099d}} 
+\hyperlink{class_logger}{Logger} $\ast$ {\bfseries m\+\_\+logger}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a8956d13bf073191d0ce0d2379ead147d}\label{class_h_a_l_1_1_init_a8956d13bf073191d0ce0d2379ead147d}} 
+const \hyperlink{class_h_a_l_1_1_screen}{Screen} $\ast$ {\bfseries m\+\_\+screen}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_ac5130a10accd8f02d3f1a7787296f673}\label{class_h_a_l_1_1_init_ac5130a10accd8f02d3f1a7787296f673}} 
+const \hyperlink{class_h_a_l_1_1_keyboard}{Keyboard} $\ast$ {\bfseries m\+\_\+keyboard}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a3e08a7090f6ef8aef5d4837b4394b3ad}\label{class_h_a_l_1_1_init_a3e08a7090f6ef8aef5d4837b4394b3ad}} 
+\hyperlink{class_h_a_l_1_1_s_d__reader}{S\+D\+\_\+reader} $\ast$ {\bfseries m\+\_\+sd\+\_\+reader}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_ab0db252e70957745b3578273b51b90fc}\label{class_h_a_l_1_1_init_ab0db252e70957745b3578273b51b90fc}} 
+std\+::vector$<$ \hyperlink{class_h_a_l_1_1_g_p_i_o__controller}{G\+P\+I\+O\+\_\+controller} $>$ {\bfseries m\+\_\+gpio\+\_\+controllers}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a79c1b6f42a186e421dc0f0e49e2ff7d0}\label{class_h_a_l_1_1_init_a79c1b6f42a186e421dc0f0e49e2ff7d0}} 
+\hyperlink{class_h_a_l_1_1_bme__sensor}{Bme\+\_\+sensor} $\ast$ {\bfseries m\+\_\+bme\+\_\+sensor}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a68b1840ced404205eafd52d4c01f1dcd}\label{class_h_a_l_1_1_init_a68b1840ced404205eafd52d4c01f1dcd}} 
+\hyperlink{class_h_a_l_1_1_wifi}{Wifi} $\ast$ {\bfseries m\+\_\+wifi}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a83b72536ebcb9ba11f4a78bd7cbf5e24}\label{class_h_a_l_1_1_init_a83b72536ebcb9ba11f4a78bd7cbf5e24}} 
+\hyperlink{class_h_a_l_1_1_config__memory}{Config\+\_\+memory} $\ast$ {\bfseries m\+\_\+config\+\_\+memory}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_ad67a460ea65545c2943d5e5464215c20}\label{class_h_a_l_1_1_init_ad67a460ea65545c2943d5e5464215c20}} 
+\hyperlink{class_h_a_l_1_1_real__clock}{Real\+\_\+clock} $\ast$ {\bfseries m\+\_\+real\+\_\+clock}
+\item 
+\mbox{\Hypertarget{class_h_a_l_1_1_init_a5a4bbc8f230cba3ceb6d7e62c02b9ad5}\label{class_h_a_l_1_1_init_a5a4bbc8f230cba3ceb6d7e62c02b9ad5}} 
+std\+::vector$<$ int $>$ {\bfseries m\+\_\+i2c\+\_\+adress}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Omen/\+Documents/\+Platform\+I\+O/\+Projects/\+Green\+House 2.\+0/src/\+H\+A\+L/Init.\+h\item 
+C\+:/\+Users/\+Omen/\+Documents/\+Platform\+I\+O/\+Projects/\+Green\+House 2.\+0/src/\+H\+A\+L/Init.\+cpp\end{DoxyCompactItemize}

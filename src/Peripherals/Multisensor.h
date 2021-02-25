@@ -1,3 +1,11 @@
+/**
+ * @file Multisensor.h
+ * @brief GreenHouse 2.0 - Peripheral for BME280
+ * @author Szymon Markiewicz
+ * @details http://www.inzynierdomu.pl/  
+ * @date 01-2021
+ */
+
 #ifndef PERIPHERALS_MULTISENSOR
 #define PERIPHERALS_MULTISENSOR
 
@@ -13,7 +21,7 @@ class Multisensor : public Peripheral
 {    
 public:
     Multisensor(HAL::Bme_sensor* bme_sensor, char* topic, int pin = 0);
-    void Public_measurements(PubSubClient* client);
+    void publish(PubSubClient* client);
 
 private:
     HAL::Bme_sensor* m_bme_sensor;

@@ -30,7 +30,7 @@ void Wifi::mqtt_reconnect(const char* topic)
     } 
     else 
     {
-      m_logger->log("Failed, rc=" + String(m_mqtt_client->state()), Msg_type::warning);
+      m_logger->log("Failed, rc=" + String(m_mqtt_client->state()), Log_type::warning);
       m_logger->log("Try again in 5 seconds");
       delay(5000);
     }

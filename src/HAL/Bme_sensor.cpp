@@ -21,9 +21,7 @@ Bme_sensor::Bme_sensor()
 
 float Bme_sensor::get_bme_temp()
 {
-  float temp = m_bme_sensor.readTemperature();
-  m_logger->log(String(temp));
-  return temp;
+  return m_bme_sensor.readTemperature();
 }
 
 float Bme_sensor::get_bme_hum()

@@ -20,4 +20,5 @@ void Digital_input::publish(PubSubClient* client)
   uint8_t state = m_controller->get_state(m_pin);
   client->publish(topic, &state, 1);
 } 
+
 }//Peripherals

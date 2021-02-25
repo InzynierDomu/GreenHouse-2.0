@@ -1,3 +1,11 @@
+/**
+ * @file Peripherals_generator.cpp
+ * @brief GreenHouse 2.0 - Class for genereting peripherals object from json config
+ * @author Szymon Markiewicz
+ * @details http://www.inzynierdomu.pl/  
+ * @date 01-2021
+ */
+
 #include "Peripherals_generator.h"
 
 #include "Digital_output.h"
@@ -14,10 +22,9 @@ m_client(client)
     generate_digital_in_out(hal, json);
 }
 
-Digital_output* Peripherals_generator::get_output(String topic)
+std::optional<Digital_output*> Peripherals_generator::get_output(String topic)
 {
     //TODO: generic
-    //TODO: optional
     for(auto it = m_outputs.begin(); it != m_outputs.end(); it++)
     {
         if(topic.equals((*it)->get_topic()))
@@ -25,12 +32,19 @@ Digital_output* Peripherals_generator::get_output(String topic)
             return(*it);
         }
     }
+    return nullptr;
 }
+
+Multisensor* Peripherals_generator::get_multisensor()
+{
+  return m_multisensor;
+}
+    
+std::vector<Digital_input*>* Peripherals_generator::get_inputs()
+{}
 
 void Peripherals_generator::publish()
 {
-    m_multisensor->Public_measurements(m_client);
-
     for(auto it = m_inputs.begin(); it != m_inputs.end(); it++)
     {
         (*it)->publish(m_client);
@@ -39,7 +53,7 @@ void Peripherals_generator::publish()
 
 void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
 {
-    // Serial.println(json["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
+    Serial.println(json["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
     m_multisensor = new Multisensor(hal->get_bme_sensor(), "greenhouse/sensor");
 }
 

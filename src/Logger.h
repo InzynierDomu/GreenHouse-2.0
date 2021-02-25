@@ -1,27 +1,36 @@
+/**
+ * @file Logger.h
+ * @brief Logger info, debug, erros to Serial
+ * @author by Szymon Markiewicz
+ * @details http://www.inzynierdomu.pl/
+ * @date 01-2021
+ */
+
 #ifndef LOGGER
 #define LOGGER
 
 #include <Arduino.h>
 #include <map>
 
-enum class Msg_type{
-info,
-warning,
-error
+enum class Log_type
+{
+  info,     ///< default information log type
+  warning,  ///< warning log type
+  error     ///< error log type
 };
 
 class Logger
 {
 public:
     Logger(String name);
-    void log(const String content, const Msg_type type = Msg_type::info);
+    void log(const String content, const Log_type type = Log_type::info);
 
 private:
-    const String m_module_name;
-    const std::map<Msg_type, String> m_msg_type_name{
-    {Msg_type::info, "Info"},
-    {Msg_type::warning, "Warning"},
-    {Msg_type::error, "Error"}};
+    const String m_module_name;       ///< object owner name 
+    const std::map<Log_type, String> m_msg_type_name{
+    {Log_type::info, "Info"},
+    {Log_type::warning, "Warning"},
+    {Log_type::error, "Error"}};      ///< map wiht log type
 };
 
-#endif //LOGGE
+#endif //LOGGER

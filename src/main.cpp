@@ -1,3 +1,11 @@
+/**
+ * @file Main.cpp
+ * @brief GreenHouse 2.0 - Main
+ * @author Szymon Markiewicz
+ * @details http://www.inzynierdomu.pl/  
+ * @date 01-2021
+ */
+
 #include <Arduino.h>
 #include <ArduinoJson.h>
 
@@ -5,7 +13,6 @@
 #include "HAL/Init.h"
 #include "Peripherals/Peripherals_generator.h"
 #include "SenderReceiver.h"
-#include "test_json.h"
 #include "Liner_fun.h"
 
 Logger* m_logger;
@@ -21,21 +28,13 @@ void setup()
   m_logger = new Logger("Main");
   m_logger->log("Start setup");
 
-  String deserialization_state = deserializeJson(doc, test_json::content).c_str();
-  if(!deserialization_state.compareTo("Ok"))
-  {
-    m_logger->log("Deserialization Ok");
-  }
-  else
-  {
-    m_logger->log("Deserialization " + deserialization_state, Msg_type::warning);
-  }
-
-  m_hal = new HAL::Init(doc);
+  m_hal = new HAL::Init();
+  m_hal->deserializeConfigJson(doc);
+  m_hal->initNetwork(doc);
 
   m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc, m_hal->get_wifi_mqtt_client());
 
-  m_sender_reciver = new SenderReceiver(m_peripherals);
+  m_sender_reciver = new SenderReceiver(m_peripherals, m_hal->get_wifi_mqtt_client());
   m_hal->set_mqtt_callback(m_sender_reciver->get_callback());
 
   m_logger->log("Finish setup");
@@ -46,7 +45,11 @@ void loop()
   m_hal->wifi_mqtt_reconnect();
   m_hal->mqtt_loop();
 
-  m_peripherals->publish();
-
-  delay(1000);
+  static long last_loop_time = 0;
+  long loop_time = millis();
+  if(loop_time - last_loop_time > 60000)
+  {
+    m_sender_reciver->publish();
+    last_loop_time = millis();
+  }
 }

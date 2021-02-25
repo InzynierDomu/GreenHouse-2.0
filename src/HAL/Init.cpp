@@ -11,7 +11,7 @@
 
 namespace HAL{
 
-Init::Init(JsonDocument& json)
+Init::Init()
 {
   m_logger = new Logger("HAL");
   scan_i2c();
@@ -19,7 +19,6 @@ Init::Init(JsonDocument& json)
   m_keyboard = new Keyboard(Config::keyboard_pcf_adress);
   m_screen = new Screen();  
   m_bme_sensor = new Bme_sensor();
-  m_wifi = new Wifi(json["SSID"], json["PASS"], json["MQTT_SERVER"]);
   m_sd_reader = new SD_reader();
   m_config_memory = new Config_memory();
   m_real_clock = new Real_clock();
@@ -40,6 +39,11 @@ Init::Init(JsonDocument& json)
   }
 }
 
+void Init::initNetwork(JsonDocument& json)
+{
+  m_wifi = new Wifi(json["SSID"], json["PASS"], json["MQTT_SERVER"]);
+}
+
 Bme_sensor* Init::get_bme_sensor()
 {
   return m_bme_sensor;
@@ -55,7 +59,7 @@ GPIO_controller* Init::get_GPIO_controller(int adress)
     }
     else
     {
-      m_logger->log("Couldn't find gpio controller", Msg_type::warning);
+      m_logger->log("Couldn't find gpio controller", Log_type::warning);
       return nullptr;
     }
   }
@@ -68,7 +72,8 @@ PubSubClient* Init::get_wifi_mqtt_client()
 
 void Init::wifi_mqtt_reconnect()
 {
-  m_wifi->mqtt_reconnect("greenhouse/pump");
+  //todo: fromconfig
+  m_wifi->mqtt_reconnect("greenhouse/output/#");
 }
 
 void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
@@ -79,6 +84,19 @@ void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int
 void Init::mqtt_loop()
 {
   m_wifi->loop();
+}
+
+void Init::deserializeConfigJson(JsonDocument& json)
+{
+  String deserialization_state = deserializeJson(json, m_config_memory->get_json()).c_str();
+  if(!deserialization_state.compareTo("Ok"))
+  {
+    m_logger->log("Deserialization Ok");
+  }
+  else
+  {
+    m_logger->log("Deserialization " + deserialization_state, Log_type::warning);
+  }
 }
 
 void Init::scan_i2c()
