@@ -2,6 +2,7 @@
 #define HAL_WIFI
 
 #include <ESP8266WiFi.h>
+#include <time.h>
 #include <PubSubClient.h>
 
 class Logger;
@@ -14,7 +15,7 @@ public:
     Wifi(const char* ssid, const char* pass, const char* mqtt_addres);
     PubSubClient* get_mqtt_client();
     void mqtt_reconnect(const char* topic);
-    void set_callback(std::function<void(const char*, byte*, unsigned int)> callback);
+    void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
     void loop();
 
 private:

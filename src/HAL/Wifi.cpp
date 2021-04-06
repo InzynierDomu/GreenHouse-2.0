@@ -37,7 +37,7 @@ void Wifi::mqtt_reconnect(const char* topic)
   }
 }
 
-void Wifi::set_callback(std::function<void(const char*, byte*, unsigned int)> callback)
+void Wifi::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
 {
   m_mqtt_client->setCallback(callback);
 }

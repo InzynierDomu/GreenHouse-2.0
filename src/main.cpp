@@ -8,6 +8,7 @@
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
+#include <memory>
 
 #include "Logger.h"
 #include "HAL/Init.h"
@@ -15,9 +16,9 @@
 #include "SenderReceiver.h"
 #include "Liner_fun.h"
 
-Logger* m_logger;
+Logger m_logger("Main");
 HAL::Init *m_hal;
-Peripherals::Peripherals_generator *m_peripherals;
+std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;
 SenderReceiver* m_sender_reciver;
 
 StaticJsonDocument<800> doc;
@@ -25,19 +26,18 @@ StaticJsonDocument<800> doc;
 void setup() 
 {
   Serial.begin(9600);
-  m_logger = new Logger("Main");
-  m_logger->log("Start setup");
+  m_logger.log("Start setup");
 
   m_hal = new HAL::Init();
   m_hal->deserializeConfigJson(doc);
   m_hal->initNetwork(doc);
 
-  m_peripherals = new Peripherals::Peripherals_generator(m_hal, doc, m_hal->get_wifi_mqtt_client());
+  m_peripherals = std::make_unique<Peripherals::Peripherals_generator>(m_hal, doc, m_hal->get_wifi_mqtt_client());
 
-  m_sender_reciver = new SenderReceiver(m_peripherals, m_hal->get_wifi_mqtt_client());
+  m_sender_reciver = new SenderReceiver(std::move(m_peripherals), m_hal->get_wifi_mqtt_client());
   m_hal->set_mqtt_callback(m_sender_reciver->get_callback());
 
-  m_logger->log("Finish setup");
+  m_logger.log("Setup finished");
 }
 
 void loop() 

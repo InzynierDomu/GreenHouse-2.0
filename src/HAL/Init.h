@@ -17,6 +17,7 @@ class Screen;
 class Bme_sensor;
 class Keyboard;
 class GPIO_controller;
+class Analog_controller;
 class Wifi;
 class SD_reader;
 class Config_memory;
@@ -41,6 +42,7 @@ private:
     const Keyboard* m_keyboard; 
     SD_reader* m_sd_reader;
     std::vector<GPIO_controller> m_gpio_controllers;
+    std::vector<Analog_controller> m_analog_controllers;
     Bme_sensor* m_bme_sensor;
     Wifi *m_wifi;
     Config_memory* m_config_memory;
@@ -49,7 +51,7 @@ private:
     std::vector<int> m_i2c_adress;
 
     void scan_i2c();
-    void generate_gpio_controllers();
+    void generate_expander_controllers();
 };
 
 } //namespace HAL

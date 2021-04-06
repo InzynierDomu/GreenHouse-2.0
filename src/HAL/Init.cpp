@@ -7,6 +7,7 @@
 #include "Config_memory.h"
 #include "SD_reader.h"
 #include "GPIO_controller.h"
+#include "Analog_controller.h"
 #include "Wifi.h"
 
 namespace HAL{
@@ -25,7 +26,7 @@ Init::Init()
 
   m_logger->log(m_real_clock->get_time());
 
-  generate_gpio_controllers();
+  generate_expander_controllers();
 
   if(m_sd_reader->is_card_available())
   {
@@ -78,7 +79,7 @@ void Init::wifi_mqtt_reconnect()
 
 void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
 {
-  m_wifi->set_callback(callback);
+  m_wifi->set_mqtt_callback(callback);
 }
 
 void Init::mqtt_loop()
@@ -114,16 +115,21 @@ void Init::scan_i2c()
   }
 }
 
-void Init::generate_gpio_controllers()
+void Init::generate_expander_controllers()
 {
-    for(auto it = m_i2c_adress.begin(); it != m_i2c_adress.end(); ++it)
+  for(auto it = m_i2c_adress.begin(); it != m_i2c_adress.end(); ++it)
+  {
+    if(*it > Config::min_adress_gpio_controllers && *it <= Config::max_adress_gpio_controllers)
     {
-      if(*it > Config::min_adress_gpio_controllers && *it <= Config::max_adress_gpio_controllers)
-      {
-        GPIO_controller *gpio_controller = new GPIO_controller(*it);
-        m_gpio_controllers.push_back(*gpio_controller);
-      }
+      GPIO_controller *gpio_controller = new GPIO_controller(*it);
+      m_gpio_controllers.push_back(*gpio_controller);
     }
+    else if(*it > Config::min_adress_analog_controllers && *it <= Config::max_adress_analog_controllers)
+    {
+      Analog_controller *analog_controller = new Analog_controller(*it);
+      m_analog_controllers.push_back(*analog_controller);
+    }
+  }
 }
 
 } //namespace HAL

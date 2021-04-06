@@ -7,9 +7,11 @@
 		{"ADDRES":"100",
 		"GPIOS":[
 			{"TYPE":"OUT",
-			"TOPIC":"greenhouse/light"},
+			"TOPIC":"greenhouse/output/light"},
 			{"TYPE":"OUT",
-			"TOPIC":"greenhouse/fan"},
+			"TOPIC":"greenhouse/output/fan"},
+			{"TYPE":"OUT",
+			"TOPIC":"greenhouse/output/pump"},
 			{"TYPE":"IN",
 			"TOPIC":"greenhouse/floodsensor"}
 		]},

@@ -26,7 +26,7 @@ bool SD_reader::is_card_available()
 
 String SD_reader::get_json_file()
 {
-  File dataFile = SD.open("datalog.json");
+  File dataFile = SD.open("config.json");
   if (dataFile)
   {
     String json_file;  

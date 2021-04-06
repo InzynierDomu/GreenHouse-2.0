@@ -14,11 +14,12 @@
  * @param preipherals: pointer to preipherals
  * @param client: pointer to MQTT client
  */
-SenderReceiver::SenderReceiver(Peripherals::Peripherals_generator* preipherals, PubSubClient* client):
-m_peripherals(preipherals),
+SenderReceiver::SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient* client):
+m_logger(Logger("Sender and reciver")),
+m_peripherals(std::move(preipherals)),
 m_client(client)
 {
-  m_logger = new Logger("Sender and reciver");
+  // m_logger = new Logger("Sender and reciver");
 }
 
 void SenderReceiver::publish()
@@ -29,7 +30,7 @@ void SenderReceiver::publish()
 
 void SenderReceiver::callback(const char* topic, byte* payload, unsigned int length)
 {
-  m_logger->log("Message arrived");
+  m_logger.log("Message arrived");
   auto output = m_peripherals->get_output(topic); 
   if(output)
   {
