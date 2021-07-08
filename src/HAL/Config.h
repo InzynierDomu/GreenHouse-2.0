@@ -16,11 +16,14 @@ const int memory_adress = 0x50;
 
 const int mqtt_port = 1883;
 
+// const char *time_serwer = "pool.ntp.org";
+const int time_zone = 7200;
+
 const int min_adress_gpio_controllers = 32;
 const int max_adress_gpio_controllers = 39;
 
 const int min_adress_analog_controllers = 71;
-const int max_adress_analog_controllers = 78;
+const int max_adress_analog_controllers = 79;
 
 // const char *m_json_file_name = "datalog.json";
 

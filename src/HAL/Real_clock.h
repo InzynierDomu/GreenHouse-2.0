@@ -2,8 +2,7 @@
 #define HAL_REALCLOCK_CONTROLLER
 
 #include <Arduino.h>
-
-class RTC_DS1307;
+#include "RTClib.h"
 
 namespace HAL
 {
@@ -13,9 +12,10 @@ class Real_clock
 public:
   Real_clock();
   String get_time();
+  void adjust(const DateTime data_time);
 
 private:
-  RTC_DS1307* m_rtc;
+  RTC_DS1307 m_rtc;
 };
 
 }

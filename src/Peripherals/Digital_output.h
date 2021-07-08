@@ -11,12 +11,12 @@ namespace Peripherals{
 class Digital_output : public Peripheral_output
 {
 public:
-    Digital_output(HAL::GPIO_controller* controller, PubSubClient* client, int pin, String topic);
+    Digital_output(HAL::GPIO_controller& controller, PubSubClient* client, int pin, String topic);
     void set_value(byte value) override;
     String get_topic();
 
 private:
-    HAL::GPIO_controller* m_controller;
+    HAL::GPIO_controller& m_controller;
     Logger* m_logger;
 };
 

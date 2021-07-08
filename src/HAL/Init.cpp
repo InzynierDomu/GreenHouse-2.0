@@ -43,6 +43,7 @@ Init::Init()
 void Init::initNetwork(JsonDocument& json)
 {
   m_wifi = new Wifi(json["SSID"], json["PASS"], json["MQTT_SERVER"]);
+  synchronize_with_ntp();
 }
 
 Bme_sensor* Init::get_bme_sensor()
@@ -61,6 +62,22 @@ GPIO_controller* Init::get_GPIO_controller(int adress)
     else
     {
       m_logger->log("Couldn't find gpio controller", Log_type::warning);
+      return nullptr;
+    }
+  }
+}
+
+Analog_controller* Init::get_analog_controller(int adress)
+{
+  for(auto it = m_analog_controllers.begin(); it != m_analog_controllers.end(); ++it)
+  {
+    if(it->get_adress() == adress)
+    {
+      return &(*it);
+    }
+    else
+    {
+      m_logger->log("Couldn't find analog controller", Log_type::warning);
       return nullptr;
     }
   }
@@ -130,6 +147,23 @@ void Init::generate_expander_controllers()
       m_analog_controllers.push_back(*analog_controller);
     }
   }
+}
+
+void Init::synchronize_with_ntp()
+{
+  time_t now = time(nullptr);
+
+  configTime(Config::time_zone, 0, "pool.ntp.org"); //TODO: move to config
+
+  while (now < 1546300800)
+  {
+    now = time(nullptr);
+    delay(500);
+    m_logger->log("*");
+  }
+  //TODO: add timeout
+
+  m_real_clock->adjust(now);
 }
 
 } //namespace HAL

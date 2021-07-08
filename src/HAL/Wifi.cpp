@@ -16,7 +16,7 @@ Wifi::Wifi(const char* ssid, const char* pass, const char* mqtt_addres)
 
 PubSubClient* Wifi::get_mqtt_client()
 {
-    return m_mqtt_client;
+  return m_mqtt_client;
 }
 
 void Wifi::mqtt_reconnect(const char* topic) 

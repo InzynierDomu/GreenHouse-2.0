@@ -1,4 +1,5 @@
 #include "Analog_controller.h"
+#include "Config.h"
 
 namespace HAL
 {
@@ -15,6 +16,17 @@ m_address(address)
 
 Analog_controller::~Analog_controller()
 {
+}
+
+int Analog_controller::get_adress()
+{
+  return m_address;
+}
+
+int Analog_controller::get_value(int pin)
+{
+  auto value = m_expander->analogRead(pin);
+  return value;
 }
 
 } //namespace HAL

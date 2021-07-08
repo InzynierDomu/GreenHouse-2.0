@@ -12,12 +12,12 @@ namespace Peripherals
 class Digital_input : public Peripheral_input
 {
 public:
-    Digital_input(HAL::GPIO_controller* controller, int pin, String topic);
+    Digital_input(HAL::GPIO_controller& controller, int pin, String topic);
     void publish(PubSubClient* client) override;
 
 private:
-    HAL::GPIO_controller* m_controller;
-    Logger* m_logger;
+    HAL::GPIO_controller& m_controller;
+    Logger m_logger;
 };
 
 } //Peripherals

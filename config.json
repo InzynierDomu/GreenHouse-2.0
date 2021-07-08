@@ -1,5 +1,5 @@
-{"SSID":"UPCD2A94D7",
-"PASS":"nG74stttPuzz",
+{"SSID":"ssid",
+"PASS":"pass",
 "MQTT_SERVER":"192.168.0.17",
 "HARDWARE_CONFIGURATION":
 	{"SENSOR":"greenhouse/sensor",
@@ -13,7 +13,7 @@
 			{"TYPE":"OUT",
 			"TOPIC":"greenhouse/output/pump"},
 			{"TYPE":"IN",
-			"TOPIC":"greenhouse/floodsensor"}
+			"TOPIC":"greenhouse/input/floodsensor"}
 		]},
 		{"ADDRES":"010",
 		"GPIOS":[
@@ -22,5 +22,12 @@
 			{"TYPE":"IN",
 			"TOPIC":"greenhouse/floodsensor"}
 		]}		
+	],
+	"ANALOG_CONTROLLERS":[
+		{"ADDRES":"001",
+		"INPUTS":[
+			{"TOPIC":"greenhouse/input/moisture"}
+		]
+		}
 	]}
 }

@@ -8,6 +8,7 @@
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <vector>
+#include <optional>
 
 class Logger;
 
@@ -30,6 +31,7 @@ public:
     void initNetwork(JsonDocument& json);
     Bme_sensor* get_bme_sensor();
     GPIO_controller* get_GPIO_controller(int adress);
+    Analog_controller* get_analog_controller(int adress);
     PubSubClient* get_wifi_mqtt_client();
     void wifi_mqtt_reconnect();
     void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
@@ -52,6 +54,7 @@ private:
 
     void scan_i2c();
     void generate_expander_controllers();
+    void synchronize_with_ntp();
 };
 
 } //namespace HAL

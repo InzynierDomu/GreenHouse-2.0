@@ -21,7 +21,7 @@ HAL::Init *m_hal;
 std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;
 SenderReceiver* m_sender_reciver;
 
-StaticJsonDocument<800> doc;
+StaticJsonDocument<1000> doc;
 
 void setup() 
 {
