@@ -1,13 +1,11 @@
 #include "WiFi.h"
-#include "Logger.h"
 #include "config.h"
 
 namespace HAL{
 
-Wifi::Wifi(const char* ssid, const char* pass, const char* mqtt_addres)
-{
-  m_logger = new Logger("WiFi");
-    
+Wifi::Wifi(const char* ssid, const char* pass, const char* mqtt_addres):
+m_logger(Logger("WiFi"))
+{   
   connect_wifi(ssid, pass);
 
   m_mqtt_client = new PubSubClient(m_espClient);
@@ -22,16 +20,16 @@ PubSubClient* Wifi::get_mqtt_client()
 void Wifi::mqtt_reconnect(const char* topic) 
 {
   while (!m_mqtt_client->connected()) {
-    m_logger->log("Attempting MQTT connection");
+    m_logger.log("Attempting MQTT connection");
     if (m_mqtt_client->connect("123", "id", "id")) 
     {
-      m_logger->log("Connected");
+      m_logger.log("Connected");
       m_mqtt_client->subscribe(topic);
     } 
     else 
     {
-      m_logger->log("Failed, rc=" + String(m_mqtt_client->state()), Log_type::warning);
-      m_logger->log("Try again in 5 seconds");
+      m_logger.log("Failed, rc=" + String(m_mqtt_client->state()), Log_type::warning);
+      m_logger.log("Try again in 5 seconds");
       delay(5000);
     }
   }
@@ -49,7 +47,7 @@ void Wifi::loop()
 
 void Wifi::connect_wifi(const char* ssid, const char* pass)
 {
-  m_logger->log("Connecting");
+  m_logger.log("Connecting");
 
   WiFi.begin(ssid, pass);
 
@@ -59,8 +57,8 @@ void Wifi::connect_wifi(const char* ssid, const char* pass)
   }
   Serial.println();
 
-  m_logger->log("Connected");
-  m_logger->log("IP address:" + WiFi.localIP());
+  m_logger.log("Connected");
+  m_logger.log("IP address:" + WiFi.localIP());
 }
 
 } // namespace HAL

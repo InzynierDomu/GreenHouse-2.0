@@ -4,28 +4,27 @@
 namespace HAL
 {
 
-Analog_controller::Analog_controller(int address):
-m_address(address)
+Analog_controller::Analog_controller(const int address):
+m_logger(Logger("Analog_controller")),
+m_address(address),
+m_expander(PCF8591(address))
 {
-  m_logger = new Logger("Analog_controller");
-  m_expander = new PCF8591(address);
-  m_expander->begin();
-  int test = m_expander->analogRead(1);
-  m_logger->log(String(test));
+  
+  m_expander.begin();
 }
 
 Analog_controller::~Analog_controller()
 {
 }
 
-int Analog_controller::get_adress()
+int Analog_controller::get_adress() const
 {
   return m_address;
 }
 
 int Analog_controller::get_value(int pin)
 {
-  auto value = m_expander->analogRead(pin);
+  auto value = m_expander.analogRead(pin);
   return value;
 }
 

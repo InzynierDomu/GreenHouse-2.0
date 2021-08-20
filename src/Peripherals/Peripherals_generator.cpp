@@ -17,8 +17,8 @@
 namespace Peripherals{
 
 Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient* client):
-m_client(client)
-, m_logger(Logger("Peripherals generator"))
+m_client(client),
+m_logger(Logger("Peripherals generator"))
 {
 	add_multisensor(hal, json);
 	generate_digital_in_out(hal, json);

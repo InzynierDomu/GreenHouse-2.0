@@ -22,9 +22,6 @@ Init::Init()
   m_bme_sensor = new Bme_sensor();
   m_sd_reader = new SD_reader();
   m_config_memory = new Config_memory();
-  m_real_clock = new Real_clock();
-
-  m_logger->log(m_real_clock->get_time());
 
   generate_expander_controllers();
 
@@ -154,16 +151,23 @@ void Init::synchronize_with_ntp()
   time_t now = time(nullptr);
 
   configTime(Config::time_zone, 0, "pool.ntp.org"); //TODO: move to config
-
-  while (now < 1546300800)
+  static long last_loop_time = 0;
+  long loop_time = millis();
+  do
   {
+    last_loop_time = millis();
     now = time(nullptr);
     delay(500);
     m_logger->log("*");
-  }
-  //TODO: add timeout
+  }while((now < 1546300800) && !((last_loop_time - loop_time) > Config::time_synchronization_timeout));
+  m_logger->log(String(now));
+  auto clock = Real_clock::get_instance();
+  clock->adjust(now);
+}
 
-  m_real_clock->adjust(now);
+void Init::check_json_file()
+{
+
 }
 
 } //namespace HAL

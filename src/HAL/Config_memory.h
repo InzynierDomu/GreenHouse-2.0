@@ -2,8 +2,8 @@
 #define HAL_CONFIGMEMORY_CONTROLLER
 
 #include <Wire.h>
-
-class Logger;
+#include "Logger.h"
+#include "Utilis/Checksum.h"
 
 namespace HAL
 {
@@ -15,13 +15,14 @@ public:
   void save_json(String file);
   String get_json();
   String get_raw_file();
+  int get_json_size();
 
 private:
-  Logger* m_logger;
-
   int get_first_bracket_position();
   void write_EEPROM(unsigned int eeaddress, char data);
   char read_EEPROM(unsigned int eeaddress);
+
+  Logger m_logger;
 };
 
 }

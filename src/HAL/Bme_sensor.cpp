@@ -3,19 +3,20 @@
 namespace HAL
 {
 
-Bme_sensor::Bme_sensor()
+Bme_sensor::Bme_sensor():
+m_logger(Logger("Bme_sensor"))
 {
   if(m_bme_sensor.begin(BME280_ADDRESS_ALTERNATE))
   {
-    m_logger = new Logger("BME sensor alt"); 
+    m_logger.log("BME sensor found on alt address"); 
   }
   else if(m_bme_sensor.begin(BME280_ADDRESS))
   {
-    m_logger = new Logger("BME sensor");
+    m_logger.log("BME sensor found");
   }
   else
   {
-    m_logger = new Logger("BME not found");
+    m_logger.log("BME not found", Log_type::warning);
   }
 }
 

@@ -32,8 +32,7 @@ public:
   Multisensor* get_multisensor();
   std::vector<Digital_input>* get_gpio_inputs();
   std::vector<Analog_input>* get_analog_inputs();
-  void publish();
-
+  
 private:
   std::vector<Digital_output> m_gpio_outputs;
   std::vector<Digital_input> m_gpio_inputs;

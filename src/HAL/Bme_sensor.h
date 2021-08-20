@@ -2,6 +2,7 @@
 #define HAL_BME_SENSOR
 
 #include <Adafruit_BME280.h>
+
 #include "Logger.h"
 
 namespace HAL
@@ -16,8 +17,8 @@ public:
     float get_bme_pres();
 
 private:
+    Logger m_logger;
     Adafruit_BME280 m_bme_sensor;
-    Logger* m_logger;
 
 };
 }//namespace HAL

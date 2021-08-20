@@ -6,6 +6,7 @@
  */
 Logger::Logger(String name):
 m_module_name(name)
+,m_clock(HAL::Real_clock::get_instance())
 {
   Serial.println(name + "::create logger");
 }
@@ -21,6 +22,8 @@ void Logger::log(const String content, const Log_type type)
   if(type != Log_type::debug)
   {
   #endif  
+    Serial.print(m_clock->get_time());
+    Serial.print("::");
     Serial.print(m_module_name);
     Serial.print("::");
     auto it = m_msg_type_name.find(type);

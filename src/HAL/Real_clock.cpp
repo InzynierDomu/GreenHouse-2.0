@@ -3,10 +3,29 @@
 namespace HAL
 {
 
+Real_clock* Real_clock::m_instance = 0; 
+
+Real_clock* Real_clock::get_instance()
+{
+  if(m_instance == 0)
+  {
+    m_instance = new Real_clock();
+  }
+  return m_instance;
+}
+
 Real_clock::Real_clock():
 m_rtc(RTC_DS1307())
 {
-  m_rtc.begin();
+  if (!m_rtc.begin()) 
+  {
+    Serial.println("Couldn't find RTC");
+  }
+
+  if (!m_rtc.isrunning())
+  {
+    Serial.println("RTC is not running, need adjust");    
+  }
 }
 
 String Real_clock::get_time()

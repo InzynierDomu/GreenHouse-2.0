@@ -12,16 +12,15 @@ namespace HAL
 class Analog_controller
 {
 public:
-  Analog_controller(int address);
+  Analog_controller(const int address);
   ~Analog_controller();
-  int get_adress();
+  int get_adress() const;
   int get_value(int pin);
 
 private:
-  PCF8591* m_expander;
-  Logger* m_logger;
-
   const int m_address;
+  PCF8591 m_expander;
+  Logger m_logger;
 };
 
 }//namespace HAL

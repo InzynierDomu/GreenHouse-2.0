@@ -1,14 +1,13 @@
 #include "Config_memory.h"
 
 #include "Config.h"
-#include "Logger.h"
 
 namespace HAL
 {
 
-Config_memory::Config_memory()
+Config_memory::Config_memory():
+m_logger(Logger("Config_memory"))
 {
-  m_logger = new Logger("Config_memory");
 }
 
 void Config_memory::save_json(String file)
@@ -21,6 +20,8 @@ void Config_memory::save_json(String file)
 
 String Config_memory::get_json()
 {
+  m_logger.log("get_json" , Log_type::debug);
+  // get_json_size();
   String output_file;
 
   int open_bracket_count = 0;
@@ -42,13 +43,14 @@ String Config_memory::get_json()
 
     output_file+=read_character;
     i++;
-  }while (open_bracket_count != close_bracket_count && 1024 > i );
+  }while (open_bracket_count != close_bracket_count && Config::max_json_size > i );
 
   return output_file;
 }
 
 String Config_memory::get_raw_file()
 {
+  m_logger.log("get_raw" , Log_type::debug);
   String output_file;
   int first_bracket_position = get_first_bracket_position();
   for (int i = 0; i < first_bracket_position; i++)
@@ -59,6 +61,29 @@ String Config_memory::get_raw_file()
   return output_file;
 }
 
+int Config_memory::get_json_size()
+{
+  int open_bracket_count = 0;
+  int close_bracket_count = 0;
+  int i = get_first_bracket_position();
+
+  do
+  {
+    char read_character = read_EEPROM(i);
+    if( read_character == '{')
+    {
+      open_bracket_count++;
+    }
+    else if(read_character == '}')    
+    {
+      close_bracket_count++;
+    }
+    i++;
+  }while (open_bracket_count != close_bracket_count && Config::max_json_size > i );
+  m_logger.log("json size=" + String(i) , Log_type::debug);
+  return i;
+}
+
 int Config_memory::get_first_bracket_position()
 {
   for(int i = 0; 100 > i; i++)
@@ -67,6 +92,7 @@ int Config_memory::get_first_bracket_position()
     {
       if(read_EEPROM(i + 1) == '"')
       {
+        m_logger.log("first bracket position=" +String(i) , Log_type::debug);
         return i;
       }      
     }

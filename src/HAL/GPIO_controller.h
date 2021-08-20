@@ -11,17 +11,17 @@ namespace HAL
 class GPIO_controller
 {
 public:
-    GPIO_controller(int adress);
+    GPIO_controller(const int adress);
 
-    void set_in_out(int type, int pin);
-    byte get_state(int pin);
-    void set_state(int pin, byte state);
-    int get_adress();
+    void set_in_out(const int type, const int pin);
+    byte get_state(const int pin);
+    void set_state(const int pin, const byte state);
+    int get_adress()const;
 
 private:
-    Adafruit_MCP23017* m_exspander;
-
     const int m_adress;
+
+    Adafruit_MCP23017 m_exspander;    
 };
 } //namespace HAL
 

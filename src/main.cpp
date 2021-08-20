@@ -19,7 +19,7 @@
 Logger m_logger("Main");
 HAL::Init *m_hal;
 std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;
-SenderReceiver* m_sender_reciver;
+std::unique_ptr<SenderReceiver>  m_sender_reciver;
 
 StaticJsonDocument<1000> doc;
 
@@ -33,8 +33,8 @@ void setup()
   m_hal->initNetwork(doc);
 
   m_peripherals = std::make_unique<Peripherals::Peripherals_generator>(m_hal, doc, m_hal->get_wifi_mqtt_client());
-
-  m_sender_reciver = new SenderReceiver(std::move(m_peripherals), m_hal->get_wifi_mqtt_client());
+  m_sender_reciver = std::make_unique<SenderReceiver>(std::move(m_peripherals), m_hal->get_wifi_mqtt_client());
+  
   m_hal->set_mqtt_callback(m_sender_reciver->get_callback());
 
   m_logger.log("Setup finished");

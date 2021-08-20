@@ -22,7 +22,6 @@ class Analog_controller;
 class Wifi;
 class SD_reader;
 class Config_memory;
-class Real_clock;
 
 class Init
 {
@@ -48,13 +47,13 @@ private:
     Bme_sensor* m_bme_sensor;
     Wifi *m_wifi;
     Config_memory* m_config_memory;
-    Real_clock* m_real_clock;
 
     std::vector<int> m_i2c_adress;
 
     void scan_i2c();
     void generate_expander_controllers();
     void synchronize_with_ntp();
+    void check_json_file();
 };
 
 } //namespace HAL

@@ -4,8 +4,7 @@
 #include <SPI.h>
 #include "SD.h"
 #include "Pin_config.h"
-
-class Logger;
+#include "Logger.h"
 
 namespace HAL{
 
@@ -17,7 +16,7 @@ public:
   String get_json_file();
 
 private:
-  Logger* m_logger;
+  Logger m_logger;
   bool m_card_available;
 };
 

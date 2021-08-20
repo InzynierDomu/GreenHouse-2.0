@@ -6,6 +6,8 @@
 namespace HAL{
 namespace Config{
 
+const int max_json_size = 1024;
+
 const byte scre0n_adress = 0x3C;    
 const int screen_width = 128;
 const int screen_height = 64; 
@@ -18,6 +20,7 @@ const int mqtt_port = 1883;
 
 // const char *time_serwer = "pool.ntp.org";
 const int time_zone = 7200;
+const int time_synchronization_timeout = 30000;
 
 const int min_adress_gpio_controllers = 32;
 const int max_adress_gpio_controllers = 39;
