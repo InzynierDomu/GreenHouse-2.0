@@ -1,6 +1,12 @@
 # GreenHouse-2.0
+* [Description](#Description)
 * [Scheme](#Scheme)
 * [IDE](#IDE)
+
+## Description
+
+More descriptions are available on the blog: [Projekt GREENHOUSE 2.0 cz.1](http://www.inzynierdomu.pl/projekt-greenhouse-2-0-cz-1/) PL
+The development process is presented on live streams [Playlist - live](https://www.youtube.com/playlist?list=PLZ7-be74MkEyWofOm7bbRsfblTcDVo8DT)
 
 ## Scheme
 
