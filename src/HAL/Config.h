@@ -8,7 +8,7 @@ namespace Config{
 
 const int max_json_size = 1024;
 
-const byte scre0n_adress = 0x3C;    
+const byte screen_adress = 0x3C;    
 const int screen_width = 128;
 const int screen_height = 64; 
 
