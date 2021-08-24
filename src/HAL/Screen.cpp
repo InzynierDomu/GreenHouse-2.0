@@ -5,7 +5,7 @@ namespace HAL{
 Screen::Screen()
 {
     Adafruit_SSD1306 display(Config::screen_width, Config::screen_height, &Wire);
-    display.begin(SSD1306_SWITCHCAPVCC, Config::scre0n_adress);
+    display.begin(SSD1306_SWITCHCAPVCC, Config::screen_adress);
 
     display.clearDisplay();
     display.setRotation(2);

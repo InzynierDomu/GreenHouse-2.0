@@ -3,6 +3,7 @@
 
 #include "Config.h"
 #include "Pin_config.h"
+#include "Logger.h"
 #include "../Keyboard_buttons.h"
 
 #include <ArduinoJson.h>
@@ -10,7 +11,7 @@
 #include <vector>
 #include <optional>
 
-class Logger;
+class Supervisor;
 
 namespace HAL{
 
@@ -26,7 +27,7 @@ class Config_memory;
 class Init
 {
 public:
-    Init();
+    Init(Supervisor& supervisor);
     void initNetwork(JsonDocument& json);
     Bme_sensor* get_bme_sensor();
     GPIO_controller* get_GPIO_controller(int adress);
@@ -38,7 +39,8 @@ public:
     void deserializeConfigJson(JsonDocument& json);
 
 private:
-    Logger* m_logger;
+    Logger m_logger;
+    Supervisor& m_supervisor;
     const Screen* m_screen;
     const Keyboard* m_keyboard; 
     SD_reader* m_sd_reader;
@@ -51,6 +53,7 @@ private:
     std::vector<int> m_i2c_adress;
 
     void scan_i2c();
+    bool check_main_i2c_peripherals();
     void generate_expander_controllers();
     void synchronize_with_ntp();
     void check_json_file();

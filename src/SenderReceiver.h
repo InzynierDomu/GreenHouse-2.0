@@ -21,6 +21,7 @@ class SenderReceiver
 public:
   SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient* client);
   void publish();
+  void publish_error();
   std::function<void(const char*, byte*, unsigned int)> get_callback();
 
 private:
