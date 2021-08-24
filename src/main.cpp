@@ -43,7 +43,7 @@ void setup()
   m_supervisor = Supervisor();
   while(m_supervisor.get_state()==Device_state::ok && state!=Setup_state::setup_finished)
   {
-    switch (state)
+    switch(state)
     {
       case Setup_state::hal_init:
       m_hal = new HAL::Init(m_supervisor);
@@ -75,15 +75,15 @@ void loop()
 {
   if(m_supervisor.get_state() == Device_state::ok)
   { 
-  m_hal->wifi_mqtt_reconnect();
-  m_hal->mqtt_loop();
+    m_hal->wifi_mqtt_reconnect();
+    m_hal->mqtt_loop();
 
-  static long last_loop_time = 0;
-  long loop_time = millis();
-  if(loop_time - last_loop_time > 60000)
-  {
-    m_sender_reciver->publish();
-    last_loop_time = millis();
-  }
+    static long last_loop_time = 0;
+    long loop_time = millis();
+    if(loop_time - last_loop_time > 60000)
+    {
+      m_sender_reciver->publish();
+      last_loop_time = millis();
+    }
   }
 }

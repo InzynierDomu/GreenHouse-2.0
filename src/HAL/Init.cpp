@@ -24,24 +24,23 @@ m_supervisor(supervisor)
   }
   else
   {
-  m_keyboard = new Keyboard(Config::keyboard_pcf_adress);
-  m_screen = new Screen();  
-  m_bme_sensor = new Bme_sensor();
-  m_sd_reader = new SD_reader();
-  m_config_memory = new Config_memory();
+    m_keyboard = new Keyboard(Config::keyboard_pcf_adress);
+    m_screen = new Screen();  
+    m_bme_sensor = new Bme_sensor();
+    m_sd_reader = new SD_reader();
+    m_config_memory = new Config_memory();
+    generate_expander_controllers();
 
-  generate_expander_controllers();
-
-  if(m_sd_reader->is_card_available())
-  {
-    String json_file = m_sd_reader->get_json_file();
-    if(!json_file.equals(m_config_memory->get_raw_file()))
+    if(m_sd_reader->is_card_available())
     {
-      m_config_memory->save_json(json_file );
-      m_logger.log("New json saving");
-    }
+      String json_file = m_sd_reader->get_json_file();
+      if(!json_file.equals(m_config_memory->get_raw_file()))
+      {
+        m_config_memory->save_json(json_file );
+        m_logger.log("New json saving");
+      }
     m_logger.log(m_config_memory->get_json());
-  }
+    }
   }
 }
 
@@ -118,7 +117,8 @@ void Init::deserializeConfigJson(JsonDocument& json)
   }
   else
   {
-    m_logger.log("Deserialization " + deserialization_state, Log_type::warning);
+    m_logger.log("Deserialization " + deserialization_state, Log_type::error);
+    m_supervisor.error();
   }
 }
 
