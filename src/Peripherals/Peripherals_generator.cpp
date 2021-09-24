@@ -27,12 +27,14 @@ m_logger(Logger("Peripherals generator"))
 
 std::optional<Digital_output> Peripherals_generator::get_gpio_output(String topic)
 {
-	//TODO: generic
-	for(auto it = m_gpio_outputs.begin(); it != m_gpio_outputs.end(); it++)
+	if(!m_gpio_outputs.empty())
 	{
-		if(topic.equals(it->get_topic()))
+		for(auto it = m_gpio_outputs.begin(); it != m_gpio_outputs.end(); it++)
 		{
-			return *(it);
+			if(topic.equals(it->get_topic()))
+			{
+				return *(it);
+			}
 		}
 	}
 }

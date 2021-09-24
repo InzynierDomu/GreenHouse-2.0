@@ -38,7 +38,7 @@ enum class Setup_state
 void setup() 
 {
   Setup_state state = Setup_state::hal_init;
-  Serial.begin(9600);
+  Serial.begin(115200);
   m_logger.log("Start setup");
   m_supervisor = Supervisor();
   while(m_supervisor.get_state()==Device_state::ok && state!=Setup_state::setup_finished)
@@ -75,6 +75,7 @@ void loop()
 {
   if(m_supervisor.get_state() == Device_state::ok)
   { 
+    //todo: add check i2c
     m_hal->wifi_mqtt_reconnect();
     m_hal->mqtt_loop();
 

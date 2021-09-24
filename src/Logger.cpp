@@ -8,7 +8,9 @@ Logger::Logger(String name):
 m_module_name(name)
 ,m_clock(HAL::Real_clock::get_instance())
 {
-  Serial.println(name + "::create logger");
+  Serial.print(m_clock->get_time());
+  Serial.print("::");
+  Serial.println(m_module_name + "::create logger");
 }
 
 /**

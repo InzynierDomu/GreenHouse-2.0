@@ -14,6 +14,7 @@ public:
   SD_reader();
   bool is_card_available();
   String get_json_file();
+  uint32_t get_crc();
 
 private:
   Logger m_logger;

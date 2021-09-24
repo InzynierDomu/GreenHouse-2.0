@@ -31,6 +31,15 @@ m_rtc(RTC_DS1307())
 String Real_clock::get_time()
 {
   DateTime time = m_rtc.now();
+  // String temp_time = time.timestamp(DateTime::TIMESTAMP_TIME);
+
+  // if(!temp_time.isEmpty())
+  // {
+  //   m_last_time = temp_time;
+  // }
+  
+  // return m_last_time;
+
   return time.timestamp(DateTime::TIMESTAMP_TIME);
 }
 

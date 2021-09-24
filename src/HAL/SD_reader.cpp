@@ -28,7 +28,8 @@ String SD_reader::get_json_file()
   if (dataFile)
   {
     String json_file;  
-    while (dataFile.available()) {
+    while (dataFile.available()) 
+    {
       json_file += (char)dataFile.read();
     }
     dataFile.close();
@@ -38,6 +39,35 @@ String SD_reader::get_json_file()
   {
     m_logger.log("Config file not found", Log_type::warning);
   }
+}
+
+uint32_t SD_reader::get_crc()
+{
+  File dataFile = SD.open("config.json");
+  int open_bracket_count = 0;
+  int close_bracket_count = 0;
+  String crc;
+  if (dataFile)
+  {
+    while (dataFile.available()) 
+    {
+      char read_character = (char)dataFile.read();
+      if( read_character == '{')
+      {
+        open_bracket_count++;
+      }
+      else if(read_character == '}')    
+      {
+        close_bracket_count++;
+      }
+      else if(open_bracket_count == close_bracket_count)
+      {
+        crc += read_character;
+      }
+    }
+  }
+  dataFile.close();
+  return (uint32_t)strtoul(&crc[0], nullptr, 16); //todo
 }
 
 } // namespace HAL

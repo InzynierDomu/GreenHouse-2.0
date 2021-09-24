@@ -20,6 +20,7 @@ protected:
 
 private:
   static Real_clock* m_instance;
+  // String m_last_time;
   RTC_DS1307 m_rtc;
 };
 

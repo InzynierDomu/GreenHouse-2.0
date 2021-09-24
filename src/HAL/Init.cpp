@@ -33,13 +33,15 @@ m_supervisor(supervisor)
 
     if(m_sd_reader->is_card_available())
     {
-      String json_file = m_sd_reader->get_json_file();
-      if(!json_file.equals(m_config_memory->get_raw_file()))
+      String json_file = m_sd_reader->get_json_file(); 
+      if(!json_file.equals(m_config_memory->get_json())) //todo: add crc
       {
         m_config_memory->save_json(json_file );
         m_logger.log("New json saving");
+        m_logger.log("SD json: " + json_file, Log_type::debug);
+        m_logger.log("SD crc: " + String(m_sd_reader->get_crc()));
       }
-    m_logger.log(m_config_memory->get_json());
+    m_logger.log("memory json: " + m_config_memory->get_json(), Log_type::debug);
     }
   }
 }
@@ -57,6 +59,11 @@ Bme_sensor* Init::get_bme_sensor()
 
 GPIO_controller* Init::get_GPIO_controller(int adress)
 {
+  if(m_gpio_controllers.empty())
+  {
+    return nullptr;
+    m_logger.log("Couldn't find gpio controller", Log_type::warning);
+  }
   for(auto it = m_gpio_controllers.begin(); it != m_gpio_controllers.end(); ++it)
   {
     if(it->get_adress() == adress)
@@ -110,7 +117,17 @@ void Init::mqtt_loop()
 
 void Init::deserializeConfigJson(JsonDocument& json)
 {
-  String deserialization_state = deserializeJson(json, m_config_memory->get_json()).c_str();
+  //todo: check crc
+  String deserialization_state;
+
+  #ifdef LOCAL_JSON
+  #include "local_json.h"
+  deserialization_state = deserializeJson(json, local_json).c_str();
+  #endif
+  #ifndef LOCAL_JSON
+  deserialization_state = deserializeJson(json, m_config_memory->get_json()).c_str();
+  #endif
+
   if(!deserialization_state.compareTo("Ok"))
   {
     m_logger.log("Deserialization Ok");
