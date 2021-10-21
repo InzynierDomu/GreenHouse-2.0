@@ -20,7 +20,6 @@
 #include <optional>
 #include <vector>
 
-
 class Logger;
 
 namespace Peripherals

@@ -5,7 +5,6 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-
 namespace HAL
 {
 

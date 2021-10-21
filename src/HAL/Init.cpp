@@ -11,7 +11,6 @@
 #include "Supervisor.h"
 #include "Wifi.h"
 
-
 namespace HAL
 {
 

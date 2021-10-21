@@ -11,7 +11,6 @@
 #include <optional>
 #include <vector>
 
-
 class Supervisor;
 
 namespace HAL

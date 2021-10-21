@@ -2,7 +2,6 @@
 
 #include "Config.h"
 
-
 namespace HAL
 {
 

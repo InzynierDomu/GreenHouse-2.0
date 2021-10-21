@@ -7,7 +7,6 @@
 #include <Wire.h>
 #include <istream>
 
-
 namespace HAL
 {
 

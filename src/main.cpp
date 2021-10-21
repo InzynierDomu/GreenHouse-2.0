@@ -17,7 +17,6 @@
 #include <ArduinoJson.h>
 #include <memory>
 
-
 Logger m_logger("Main");
 Supervisor m_supervisor;
 HAL::Init* m_hal;

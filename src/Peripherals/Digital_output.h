@@ -4,7 +4,6 @@
 #include "HAL/GPIO_controller.h"
 #include "Peripheral_output.h"
 
-
 class Logger;
 
 namespace Peripherals

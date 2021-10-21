@@ -7,7 +7,6 @@
 #include <PubSubClient.h>
 #include <time.h>
 
-
 namespace HAL
 {
 

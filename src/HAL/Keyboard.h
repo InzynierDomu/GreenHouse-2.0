@@ -1,7 +1,6 @@
 #include <PCF8574.h>
 #include <Wire.h>
 
-
 #ifndef HAL_KEYBOARD
 #define HAL_KEYBOARD
 

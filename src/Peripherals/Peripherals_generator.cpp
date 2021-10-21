@@ -15,7 +15,6 @@
 
 #include <optional>
 
-
 namespace Peripherals
 {
 

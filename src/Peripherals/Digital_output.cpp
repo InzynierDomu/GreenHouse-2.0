@@ -4,7 +4,6 @@
 
 #include <PubSubClient.h>
 
-
 namespace Peripherals
 {
 

@@ -7,7 +7,6 @@
 
 #include <SPI.h>
 
-
 namespace HAL
 {
 
