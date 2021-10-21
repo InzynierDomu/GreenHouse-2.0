@@ -1,9 +1,12 @@
-#include <PubSubClient.h>
-
-#include "Logger.h"
 #include "Digital_input.h"
 
-namespace Peripherals{
+#include "Logger.h"
+
+#include <PubSubClient.h>
+
+
+namespace Peripherals
+{
 
 Digital_input::Digital_input(HAL::GPIO_controller& controller, int pin, String topic)
 : m_controller(controller)
@@ -20,6 +23,6 @@ void Digital_input::publish(PubSubClient* client)
   uint8_t state = m_controller.get_state(m_pin);
   m_logger.log(String(state));
   client->publish(topic, &state, 1);
-} 
+}
 
-}//Peripherals
+} // namespace Peripherals

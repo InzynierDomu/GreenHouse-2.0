@@ -3,11 +3,11 @@
 
 enum class Keyboard_button
 {
-    Up,
-    Down,
-    Right,
-    Left,
-    None
+  Up,
+  Down,
+  Right,
+  Left,
+  None
 };
 
-#endif //KEYBOARD_BUTTON
+#endif // KEYBOARD_BUTTON

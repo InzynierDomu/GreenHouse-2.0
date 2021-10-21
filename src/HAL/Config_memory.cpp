@@ -5,24 +5,23 @@
 namespace HAL
 {
 
-Config_memory::Config_memory():
-m_logger(Logger("Config_memory"))//,
+Config_memory::Config_memory()
+: m_logger(Logger("Config_memory")) //,
 // m_stream(std::ostream(buf))
-{
-}
+{}
 
 void Config_memory::save_json(String file)
 {
-  for(int i =0; i < file.length(); i++ ) 
+  for (int i = 0; i < file.length(); i++)
   {
     write_EEPROM(i, file[i]);
   }
 }
 
-//todo: chagne to stream
-//check first char == {
-//check lenght < max size
-//check crc
+// todo: chagne to stream
+// check first char == {
+// check lenght < max size
+// check crc
 
 String Config_memory::get_json()
 {
@@ -37,19 +36,19 @@ String Config_memory::get_json()
   do
   {
     char read_character = read_EEPROM(i);
-    if( read_character == '{')
+    if (read_character == '{')
     {
       open_bracket_count++;
     }
-    else if(read_character == '}')    
+    else if (read_character == '}')
     {
       close_bracket_count++;
     }
 
-    output_file+=read_character;
+    output_file += read_character;
     i++;
-  }while (open_bracket_count != close_bracket_count || Config::max_json_size > i );
-  
+  } while (open_bracket_count != close_bracket_count || Config::max_json_size > i);
+
   String crc;
   const int crc_lenght = i + 8;
   for (i; i < crc_lenght; i++)
@@ -86,22 +85,22 @@ int Config_memory::get_json_size()
   do
   {
     char read_character = read_EEPROM(i);
-    if( read_character == '{')
+    if (read_character == '{')
     {
       open_bracket_count++;
     }
-    else if(read_character == '}')    
+    else if (read_character == '}')
     {
       close_bracket_count++;
     }
     i++;
-  }while (open_bracket_count != close_bracket_count && Config::max_json_size > i );
+  } while (open_bracket_count != close_bracket_count && Config::max_json_size > i);
   m_logger.log("json size=" + String(i));
   return i;
 }
 
-//todo: chagne to stream
-//test
+// todo: chagne to stream
+// test
 // std::ostream* Config_memory::get_stream()
 // {
 //   return &m_stream;
@@ -117,7 +116,7 @@ int Config_memory::get_json_size()
 void Config_memory::write_EEPROM(unsigned int eeaddress, char data)
 {
   Wire.beginTransmission(Config::memory_adress);
-  Wire.write((int)(eeaddress >> 8));   // MSB
+  Wire.write((int)(eeaddress >> 8)); // MSB
   Wire.write((int)(eeaddress & 0xFF)); // LSB
   Wire.write(data);
   Wire.endTransmission();
@@ -130,15 +129,16 @@ char Config_memory::read_EEPROM(unsigned int eeaddress)
   char rdata = '0';
 
   Wire.beginTransmission(Config::memory_adress);
-  Wire.write((int)(eeaddress >> 8));   // MSB
+  Wire.write((int)(eeaddress >> 8)); // MSB
   Wire.write((int)(eeaddress & 0xFF)); // LSB
   Wire.endTransmission();
 
-  Wire.requestFrom(Config::memory_adress ,1);
+  Wire.requestFrom(Config::memory_adress, 1);
 
-  if (Wire.available()) rdata = Wire.read();
- 
+  if (Wire.available())
+    rdata = Wire.read();
+
   return rdata;
 }
 
-}
+} // namespace HAL

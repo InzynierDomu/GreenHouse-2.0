@@ -1,21 +1,24 @@
 #ifndef HAL_SCREEN
 #define HAL_SCREEN
 
-#include <Wire.h>
+#include "Config.h"
+
 #include <Adafruit_BusIO_Register.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "Config.h"
+#include <Wire.h>
 
-namespace HAL{
+
+namespace HAL
+{
 class Screen
 {
-public:
-    Screen();
-    void Print(String text);
-private:
-    
-};  
+  public:
+  Screen();
+  void Print(String text);
+
+  private:
+};
 } // namespace HAL
 
 #endif // HAL_SCREEN

@@ -3,7 +3,8 @@
 #include "Logger.h"
 #include "Pin_config.h"
 
-namespace HAL{
+namespace HAL
+{
 
 Keyboard* keyboard;
 static void ICACHE_RAM_ATTR readpcf();
@@ -21,15 +22,15 @@ Keyboard::Keyboard(uint8_t adress)
 
 Keyboard::~Keyboard()
 {
-    delete m_expander;
+  delete m_expander;
 }
 
 void Keyboard::keyboard_action()
 {
   byte state = m_expander->read8();
-  if(state != 0xFF)
+  if (state != 0xFF)
   {
-    byte button = ~state;  
+    byte button = ~state;
     button = button & 0x7F;
     switch (button)
     {
@@ -45,8 +46,8 @@ void Keyboard::keyboard_action()
       case m_button_up:
         m_logger->log("up");
         break;
-    }      
-  }    
+    }
+  }
 }
 
 static void ICACHE_RAM_ATTR readpcf()
@@ -54,4 +55,4 @@ static void ICACHE_RAM_ATTR readpcf()
   keyboard->m_keyboatd_button_presed = true;
 }
 
-}
+} // namespace HAL

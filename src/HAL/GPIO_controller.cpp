@@ -1,11 +1,14 @@
 #include "GPIO_controller.h"
+
 #include "Config.h"
 
-namespace HAL{
 
-GPIO_controller::GPIO_controller(const int adress):
-m_adress(adress),
-m_exspander(Adafruit_MCP23017())
+namespace HAL
+{
+
+GPIO_controller::GPIO_controller(const int adress)
+: m_adress(adress)
+, m_exspander(Adafruit_MCP23017())
 {
   m_exspander.begin(adress - Config::min_adress_gpio_controllers);
 }
@@ -30,4 +33,4 @@ int GPIO_controller::get_adress() const
   return m_adress;
 }
 
-} //namespace HAL
+} // namespace HAL

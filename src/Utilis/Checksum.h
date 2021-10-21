@@ -8,10 +8,10 @@ namespace UTIILS
 
 class Checksum
 {
-public:
+  public:
   Checksum();
 };
 
-} //UTIILS
+} // namespace UTIILS
 
-#endif //UTIILS_CHECKSUM
+#endif // UTIILS_CHECKSUM

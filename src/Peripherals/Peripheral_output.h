@@ -6,17 +6,17 @@
 namespace Peripherals
 {
 
-class Peripheral_output : public Peripheral 
+class Peripheral_output : public Peripheral
 {
-public:
-  virtual ~Peripheral_output(){}
+  public:
+  virtual ~Peripheral_output() {}
   virtual void set_value(byte value) = 0;
 
-protected:
+  protected:
   String m_topic;
   int m_pin;
 };
 
-} //Peripherals
+} // namespace Peripherals
 
-#endif //PERIPHERALS_PERIPHERAL_INPUT
+#endif // PERIPHERALS_PERIPHERAL_INPUT

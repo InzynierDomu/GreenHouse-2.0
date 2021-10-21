@@ -1,22 +1,25 @@
 #ifndef SDREADER_SCREEN
 #define SDREADER_SCREEN
 
-#include <SPI.h>
-#include "SD.h"
-#include "Pin_config.h"
 #include "Logger.h"
+#include "Pin_config.h"
+#include "SD.h"
 
-namespace HAL{
+#include <SPI.h>
+
+
+namespace HAL
+{
 
 class SD_reader
 {
-public:
+  public:
   SD_reader();
   bool is_card_available();
   String get_json_file();
   uint32_t get_crc();
 
-private:
+  private:
   Logger m_logger;
   bool m_card_available;
 };

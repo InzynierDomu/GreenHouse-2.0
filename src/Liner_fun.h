@@ -11,14 +11,16 @@
 
 struct Linear_function
 {
-  //y = ax + b
+  // y = ax + b
   double a;
-  double b; 
+  double b;
 };
 
 struct Point
 {
-  Point(int _y, int _x):y(_y), x(_x){};
+  Point(int _y, int _x)
+  : y(_y)
+  , x(_x){};
   int y;
   int x;
 };
@@ -26,14 +28,14 @@ struct Point
 Linear_function calculate(Point first, Point second)
 {
   Linear_function f;
-  f.a = (second.y - first.y)/(double)(second.x - first.x);
+  f.a = (second.y - first.y) / (double)(second.x - first.x);
   f.b = first.y - (f.a * first.x);
   return f;
 }
 
 double find_y(int x, Linear_function f)
 {
-  return(f.a * x + f.b);
+  return (f.a * x + f.b);
 }
 
-#endif //LINER_FUN
+#endif // LINER_FUN
