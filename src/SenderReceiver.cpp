@@ -16,7 +16,7 @@
  * @param preipherals: pointer to preipherals
  * @param client: pointer to MQTT client
  */
-SenderReceiver::SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient* client)
+SenderReceiver::SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient& client)
 : m_logger(Logger("Sender and reciver"))
 , m_peripherals(std::move(preipherals))
 , m_client(client)

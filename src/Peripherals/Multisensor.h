@@ -21,7 +21,7 @@ class Multisensor : public Peripheral
 {
   public:
   Multisensor(HAL::Bme_sensor* bme_sensor, char* topic, int pin = 0);
-  void publish(PubSubClient* client);
+  void publish(PubSubClient& client);
 
   private:
   HAL::Bme_sensor* m_bme_sensor;

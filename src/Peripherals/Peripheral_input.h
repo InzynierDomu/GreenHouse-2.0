@@ -3,6 +3,8 @@
 
 #include "Peripheral.h"
 
+#include <PubSubClient.h>
+
 namespace Peripherals
 {
 
@@ -12,7 +14,7 @@ class Peripheral_input : public Peripheral
 {
   public:
   virtual ~Peripheral_input() {}
-  virtual void publish(PubSubClient* client) = 0;
+  virtual void publish(PubSubClient& client) = 0;
 
   protected:
   String m_topic;

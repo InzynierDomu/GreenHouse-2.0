@@ -20,7 +20,7 @@ class Config_memory
   int get_json_size();
 
   // todo: add check function before parse
-  // todo: chagne toó stream
+  // todo: chagne to stream
   // std::ostream* get_stream();
   // bool stream();
 

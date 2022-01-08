@@ -28,7 +28,7 @@ namespace Peripherals
 class Peripherals_generator
 {
   public:
-  Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient* client);
+  Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client);
   std::optional<Digital_output> get_gpio_output(String topic);
   Multisensor* get_multisensor();
   std::vector<Digital_input>* get_gpio_inputs();
@@ -38,7 +38,7 @@ class Peripherals_generator
   std::vector<Digital_output> m_gpio_outputs;
   std::vector<Digital_input> m_gpio_inputs;
   std::vector<Analog_input> m_analog_inputs;
-  PubSubClient* m_client;
+  PubSubClient& m_client;
   Multisensor* m_multisensor;
   Logger m_logger;
 

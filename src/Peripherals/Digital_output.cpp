@@ -2,12 +2,10 @@
 
 #include "Logger.h"
 
-#include <PubSubClient.h>
-
 namespace Peripherals
 {
 
-Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient* client, int pin, String topic)
+Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic)
 : m_controller(controller)
 , m_logger(new Logger("Digital output (topic:" + topic + " pin:" + String(pin) + ")"))
 {
@@ -18,7 +16,7 @@ Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient* c
 
   char convert_buf[30];
   m_topic.toCharArray(convert_buf, 30);
-  client->subscribe(convert_buf);
+  client.subscribe(convert_buf);
 }
 
 void Digital_output::set_value(byte value)

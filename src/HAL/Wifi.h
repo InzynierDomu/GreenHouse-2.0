@@ -14,7 +14,7 @@ class Wifi
 {
   public:
   Wifi(const char* ssid, const char* pass, const char* mqtt_addres);
-  PubSubClient* get_mqtt_client();
+  PubSubClient& get_mqtt_client();
   void mqtt_reconnect(const char* topic);
   void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
   void loop();
@@ -22,7 +22,7 @@ class Wifi
   private:
   Logger m_logger;
   WiFiClient m_espClient;
-  PubSubClient* m_mqtt_client;
+  std::unique_ptr<PubSubClient> m_mqtt_client;
 
   void connect_wifi(const char* ssid, const char* pass);
 };

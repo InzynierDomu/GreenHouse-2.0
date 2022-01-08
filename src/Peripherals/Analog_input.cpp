@@ -15,14 +15,14 @@ Analog_input::Analog_input(HAL::Analog_controller& controller, const int pin, co
   m_topic = topic;
 }
 
-void Analog_input::publish(PubSubClient* client)
+void Analog_input::publish(PubSubClient& client)
 {
   char buf[4];
   String topic = m_topic;
   int value = m_controller.get_value(m_pin);
   sprintf(buf, "%d", value);
   m_logger.log(String(value), Log_type::debug);
-  client->publish(topic.c_str(), buf);
+  client.publish(topic.c_str(), buf);
 }
 
 } // namespace Peripherals

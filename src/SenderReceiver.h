@@ -20,7 +20,7 @@ class Logger;
 class SenderReceiver
 {
   public:
-  SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient* client);
+  SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient& client);
   void publish();
   void publish_error();
   std::function<void(const char*, byte*, unsigned int)> get_callback();
@@ -28,7 +28,7 @@ class SenderReceiver
   private:
   Logger m_logger; ///< serial logger
   std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals; ///< peripherals inputs/outputs
-  PubSubClient* m_client; ///< MQTT client
+  PubSubClient& m_client; ///< MQTT client
 
   void callback(const char* topic, byte* payload, unsigned int length);
 };

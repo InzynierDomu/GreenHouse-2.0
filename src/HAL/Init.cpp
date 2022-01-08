@@ -41,7 +41,6 @@ Init::Init(Supervisor& supervisor)
         m_config_memory->save_json(json_file);
         m_logger.log("New json saving");
         m_logger.log("SD json: " + json_file, Log_type::debug);
-        m_logger.log("SD crc: " + String(m_sd_reader->get_crc()));
       }
       m_logger.log("memory json: " + m_config_memory->get_json(), Log_type::debug);
     }
@@ -96,7 +95,7 @@ Analog_controller* Init::get_analog_controller(int adress)
   }
 }
 
-PubSubClient* Init::get_wifi_mqtt_client()
+PubSubClient& Init::get_wifi_mqtt_client()
 {
   return m_wifi->get_mqtt_client();
 }

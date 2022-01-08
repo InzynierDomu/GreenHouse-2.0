@@ -10,6 +10,7 @@ class Checksum
 {
   public:
   Checksum();
+  
 };
 
 } // namespace UTIILS
