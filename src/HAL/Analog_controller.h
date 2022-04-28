@@ -3,7 +3,6 @@
 
 #include "Logger.h"
 
-#include <Arduino.h>
 #include <PCF8591.h>
 
 namespace HAL

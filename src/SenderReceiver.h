@@ -11,9 +11,7 @@
 
 #include "Peripherals/Peripherals_generator.h"
 
-#include <Arduino.h>
 #include <memory>
-
 
 class Logger;
 

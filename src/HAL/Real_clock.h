@@ -3,8 +3,6 @@
 
 #include "RTClib.h"
 
-#include <Arduino.h>
-
 namespace HAL
 {
 

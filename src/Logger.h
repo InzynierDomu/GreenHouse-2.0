@@ -9,9 +9,12 @@
 #ifndef LOGGER
 #define LOGGER
 
+#ifndef UNIT_TEST
+
 #include "HAL/Real_clock.h"
 
-#include <Arduino.h>
+#endif
+
 #include <map>
 
 enum class Log_type

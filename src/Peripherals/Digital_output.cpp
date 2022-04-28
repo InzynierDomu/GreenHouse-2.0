@@ -19,7 +19,7 @@ Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& c
   client.subscribe(convert_buf);
 }
 
-void Digital_output::set_value(byte value)
+void Digital_output::set_value(uint8_t value)
 {
   m_logger->log("value seted");
   m_logger->log(String(value));

@@ -8,7 +8,6 @@
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
 
-
 namespace HAL
 {
 class Screen

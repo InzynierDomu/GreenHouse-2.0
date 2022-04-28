@@ -2,10 +2,11 @@
 #define PERIPHERALS_DIGITAL_OUTPUT
 
 #include "HAL/GPIO_controller.h"
-#include "Peripheral_output.h"
 #include "Logger.h"
+#include "Peripheral_output.h"
 
 #include <PubSubClient.h>
+
 
 class Logger;
 
@@ -16,7 +17,7 @@ class Digital_output : public Peripheral_output
 {
   public:
   Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic);
-  void set_value(byte value) override;
+  void set_value(uint8_t value) override;
   String get_topic();
 
   private:

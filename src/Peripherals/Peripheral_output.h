@@ -10,7 +10,7 @@ class Peripheral_output : public Peripheral
 {
   public:
   virtual ~Peripheral_output() {}
-  virtual void set_value(byte value) = 0;
+  virtual void set_value(uint8_t value) = 0;
 
   protected:
   String m_topic;

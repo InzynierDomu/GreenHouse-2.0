@@ -17,12 +17,12 @@ void GPIO_controller::set_in_out(const int type, const int pin)
   m_exspander.pinMode(pin, type);
 }
 
-byte GPIO_controller::get_state(const int pin)
+uint8_t GPIO_controller::get_state(const int pin)
 {
   return m_exspander.digitalRead(pin);
 }
 
-void GPIO_controller::set_state(const int pin, const byte state)
+void GPIO_controller::set_state(const int pin, const uint8_t state)
 {
   m_exspander.digitalWrite(pin, state);
 }

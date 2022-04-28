@@ -1,7 +1,7 @@
-#include <Arduino.h>
-
 #ifndef HAL_CONFIG
 #define HAL_CONFIG
+
+#include <stdint.h>
 
 namespace HAL
 {
@@ -10,11 +10,11 @@ namespace Config
 
 const int max_json_size = 1024;
 
-const byte screen_adress = 0x3C;
+const uint8_t screen_adress = 0x3C;
 const int screen_width = 128;
 const int screen_height = 64;
 
-const byte keyboard_pcf_adress = 0x20;
+const uint8_t keyboard_pcf_adress = 0x20;
 
 const int memory_adress = 0x50;
 

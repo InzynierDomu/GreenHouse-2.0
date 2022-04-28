@@ -27,10 +27,10 @@ bool SD_reader::is_card_available() const
 
 String SD_reader::get_json_file()
 {
-  File dataFile = SD.open("config.json");
-  CRC32 crc_calculate;
+  File dataFile = SD.open("config.json");  
   if (dataFile)
   {
+    CRC32 crc_calculate;
     String json_file;
     String crc_from_json;
     int open_bracket_count = 0;
@@ -59,6 +59,8 @@ String SD_reader::get_json_file()
     }
     dataFile.close();
 
+    // todo: split to json and crc
+
     compare_crc(crc_from_json, crc_calculate);
 
     return json_file;
@@ -71,6 +73,8 @@ String SD_reader::get_json_file()
 
 bool SD_reader::compare_crc(String crc_from_json, CRC32& crc_calculated)
 {
+  m_logger.log("crc from json" + crc_from_json, Log_type::debug);
+  m_logger.log("crc calculated" + String(crc_calculated.finalize()), Log_type::debug);
   uint32_t crc = (uint32_t)strtoul(&crc_from_json[0], nullptr, 16);
   if (crc_calculated.finalize() == crc)
   {

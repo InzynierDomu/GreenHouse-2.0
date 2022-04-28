@@ -1,8 +1,6 @@
 #ifndef PERIPHERALS_PERIPHERAL
 #define PERIPHERALS_PERIPHERAL
 
-#include <Arduino.h>
-
 namespace Peripherals
 {
 
