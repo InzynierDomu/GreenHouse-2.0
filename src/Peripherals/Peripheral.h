@@ -1,21 +1,19 @@
 #ifndef PERIPHERALS_PERIPHERAL
 #define PERIPHERALS_PERIPHERAL
 
-#include <Arduino.h>
-
 namespace Peripherals
 {
 
 class Peripheral
 {
-public:
-  virtual ~Peripheral(){}
+  public:
+  virtual ~Peripheral() {}
 
-protected:
+  protected:
   String m_topic;
   int m_pin;
 };
 
-} //Peripherals
+} // namespace Peripherals
 
-#endif //PERIPHERALS_PERIPHERAL
+#endif // PERIPHERALS_PERIPHERAL

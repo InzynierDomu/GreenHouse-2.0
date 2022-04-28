@@ -3,14 +3,14 @@
 namespace HAL
 {
 
-Bme_sensor::Bme_sensor():
-m_logger(Logger("Bme_sensor"))
+Bme_sensor::Bme_sensor()
+: m_logger(Logger("Bme_sensor"))
 {
-  if(m_bme_sensor.begin(BME280_ADDRESS_ALTERNATE))
+  if (m_bme_sensor.begin(BME280_ADDRESS_ALTERNATE))
   {
-    m_logger.log("BME sensor found on alt address"); 
+    m_logger.log("BME sensor found on alt address");
   }
-  else if(m_bme_sensor.begin(BME280_ADDRESS))
+  else if (m_bme_sensor.begin(BME280_ADDRESS))
   {
     m_logger.log("BME sensor found");
   }
@@ -35,4 +35,4 @@ float Bme_sensor::get_bme_pres()
   return m_bme_sensor.readPressure();
 }
 
-} //namespace HAL
+} // namespace HAL

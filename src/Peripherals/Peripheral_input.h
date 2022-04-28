@@ -3,22 +3,24 @@
 
 #include "Peripheral.h"
 
+#include <PubSubClient.h>
+
 namespace Peripherals
 {
 
 class PubSubClien;
 
-class Peripheral_input : public Peripheral 
+class Peripheral_input : public Peripheral
 {
-public:
-  virtual ~Peripheral_input(){}
-  virtual void publish(PubSubClient* client) = 0;
+  public:
+  virtual ~Peripheral_input() {}
+  virtual void publish(PubSubClient& client) = 0;
 
-protected:
+  protected:
   String m_topic;
   int m_pin;
 };
 
-} //Peripherals
+} // namespace Peripherals
 
-#endif //PERIPHERALS_PERIPHERAL_INPUT
+#endif // PERIPHERALS_PERIPHERAL_INPUT

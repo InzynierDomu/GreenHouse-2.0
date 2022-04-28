@@ -4,11 +4,13 @@
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(String name):
-m_module_name(name)
-,m_clock(HAL::Real_clock::get_instance())
+Logger::Logger(String name)
+: m_module_name(name)
+, m_clock(HAL::Real_clock::get_instance())
 {
-  Serial.println(name + "::create logger");
+  Serial.print(m_clock->get_time());
+  Serial.print("::");
+  Serial.println(m_module_name + "::create logger");
 }
 
 /**
@@ -18,10 +20,10 @@ m_module_name(name)
  */
 void Logger::log(const String content, const Log_type type)
 {
-  #ifndef DEBUG
-  if(type != Log_type::debug)
+#ifndef DEBUG
+  if (type != Log_type::debug)
   {
-  #endif  
+#endif
     Serial.print(m_clock->get_time());
     Serial.print("::");
     Serial.print(m_module_name);
@@ -30,7 +32,7 @@ void Logger::log(const String content, const Log_type type)
     Serial.print(it->second);
     Serial.print("::");
     Serial.println(content);
-  #ifndef DEBUG
+#ifndef DEBUG
   }
-  #endif
+#endif
 }
