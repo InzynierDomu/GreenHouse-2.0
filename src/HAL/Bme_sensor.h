@@ -12,9 +12,9 @@ class Bme_sensor
 {
   public:
   Bme_sensor();
-  float get_bme_temp();
-  float get_bme_hum();
-  float get_bme_pres();
+  float get_temp();
+  float get_hum();
+  float get_pres();
 
   private:
   Logger m_logger;

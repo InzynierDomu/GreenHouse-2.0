@@ -20,17 +20,17 @@ Bme_sensor::Bme_sensor()
   }
 }
 
-float Bme_sensor::get_bme_temp()
+float Bme_sensor::get_temp()
 {
   return m_bme_sensor.readTemperature();
 }
 
-float Bme_sensor::get_bme_hum()
+float Bme_sensor::get_hum()
 {
   return m_bme_sensor.readHumidity();
 }
 
-float Bme_sensor::get_bme_pres()
+float Bme_sensor::get_pres()
 {
   return m_bme_sensor.readPressure();
 }

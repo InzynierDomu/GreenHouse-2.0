@@ -9,7 +9,7 @@
 #ifndef PERIPHERALS_MULTISENSOR
 #define PERIPHERALS_MULTISENSOR
 
-#include "HAL/Bme_sensor.h"
+#include "HAL/Dht_sensor.h"
 #include "Peripheral.h"
 
 #include <PubSubClient.h>
@@ -20,11 +20,11 @@ namespace Peripherals
 class Multisensor : public Peripheral
 {
   public:
-  Multisensor(HAL::Bme_sensor* bme_sensor, char* topic, int pin = 0);
+  Multisensor(HAL::Dht_sensor* dht_sensor, char* topic, int pin = 0);
   void publish(PubSubClient& client);
 
   private:
-  HAL::Bme_sensor* m_bme_sensor;
+  HAL::Dht_sensor* m_dht_sensor;
 };
 
 } // namespace Peripherals

@@ -1,5 +1,4 @@
-#ifndef HAL_CONFIG
-#define HAL_CONFIG
+#pragma once
 
 #include <stdint.h>
 
@@ -30,9 +29,9 @@ const int max_adress_gpio_controllers = 39;
 const int min_adress_analog_controllers = 71;
 const int max_adress_analog_controllers = 79;
 
+const uint8_t dht_pin = 2;
+
 // const char *m_json_file_name = "datalog.json";
 
 } // namespace Config
 } // namespace HAL
-
-#endif // HAL_CONFIG

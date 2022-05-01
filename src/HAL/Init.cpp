@@ -1,7 +1,7 @@
 #include "Init.h"
 
 #include "Analog_controller.h"
-#include "Bme_sensor.h"
+#include "Dht_sensor.h"
 #include "Config_memory.h"
 #include "GPIO_controller.h"
 #include "Keyboard.h"
@@ -28,7 +28,7 @@ Init::Init(Supervisor& supervisor)
   {
     m_keyboard = new Keyboard(Config::keyboard_pcf_adress);
     m_screen = new Screen();
-    m_bme_sensor = new Bme_sensor();
+    m_dht_sensor = new Dht_sensor();
     m_sd_reader = new SD_reader();
     m_config_memory = new Config_memory();
     generate_expander_controllers();
@@ -53,9 +53,9 @@ void Init::initNetwork(JsonDocument& json)
   synchronize_with_ntp();
 }
 
-Bme_sensor* Init::get_bme_sensor()
+Dht_sensor* Init::get_dht_sensor()
 {
-  return m_bme_sensor;
+  return m_dht_sensor;
 }
 
 GPIO_controller* Init::get_GPIO_controller(int adress)

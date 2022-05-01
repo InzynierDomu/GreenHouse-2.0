@@ -17,7 +17,7 @@ namespace HAL
 {
 
 class Screen;
-class Bme_sensor;
+class Dht_sensor;
 class Keyboard;
 class GPIO_controller;
 class Analog_controller;
@@ -30,7 +30,7 @@ class Init
   public:
   Init(Supervisor& supervisor);
   void initNetwork(JsonDocument& json);
-  Bme_sensor* get_bme_sensor();
+  Dht_sensor* get_dht_sensor();
   GPIO_controller* get_GPIO_controller(int adress);
   Analog_controller* get_analog_controller(int adress);
   PubSubClient& get_wifi_mqtt_client();
@@ -47,7 +47,7 @@ class Init
   SD_reader* m_sd_reader;
   std::vector<GPIO_controller> m_gpio_controllers;
   std::vector<Analog_controller> m_analog_controllers;
-  Bme_sensor* m_bme_sensor;
+  Dht_sensor* m_dht_sensor;
   Wifi* m_wifi;
   Config_memory* m_config_memory;
 
