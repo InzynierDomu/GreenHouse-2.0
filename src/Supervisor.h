@@ -1,5 +1,4 @@
-#ifndef SUPERVISOR
-#define SUPERVISOR
+#pragma once
 
 enum class Device_state
 {
@@ -23,5 +22,3 @@ class Supervisor
 
   Device_state m_state;
 };
-
-#endif // SUPERVISOR

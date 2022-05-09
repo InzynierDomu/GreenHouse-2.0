@@ -24,7 +24,7 @@ void Wifi::mqtt_reconnect(const char* topic)
   while (!m_mqtt_client->connected())
   {
     m_logger.log("Attempting MQTT connection");
-    if (m_mqtt_client->connect("123", "user", "pass"))
+    if (m_mqtt_client->connect("123", "homeassistant", "UxaiquoKub6chum4egaf8eiPhathaShahdahRaajohkudifie4ein3siefou1Sie"))
     {
       m_logger.log("Connected");
       m_mqtt_client->subscribe(topic);

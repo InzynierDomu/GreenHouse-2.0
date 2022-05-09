@@ -1,5 +1,4 @@
-#ifndef PERIPHERALS_ANALOG_INPUT
-#define PERIPHERALS_ANALOG_INPUT
+#pragma once
 
 #include "HAL/Analog_controller.h"
 #include "Peripheral_input.h"
@@ -21,5 +20,3 @@ class Analog_input : public Peripheral_input
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_ANALOG_INPUT

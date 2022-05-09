@@ -1,5 +1,4 @@
-#ifndef HAL_CONFIGMEMORY_CONTROLLER
-#define HAL_CONFIGMEMORY_CONTROLLER
+#pragma once
 
 #include "Logger.h"
 #include "Utilis/Checksum.h"
@@ -37,5 +36,3 @@ class Config_memory
 };
 
 } // namespace HAL
-
-#endif // HAL_CONFIGMEMORY_CONTROLLER

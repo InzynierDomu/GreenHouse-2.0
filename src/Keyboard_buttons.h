@@ -1,5 +1,4 @@
-#ifndef KEYBOARD_BUTTON
-#define KEYBOARD_BUTTON
+#pragma once
 
 enum class Keyboard_button
 {
@@ -9,5 +8,3 @@ enum class Keyboard_button
   Left,
   None
 };
-
-#endif // KEYBOARD_BUTTON

@@ -6,8 +6,7 @@
  * @date 01-2021
  */
 
-#ifndef LOGGER
-#define LOGGER
+#pragma once
 
 #ifndef UNIT_TEST
 
@@ -40,5 +39,3 @@ class Logger
 
   HAL::Real_clock* m_clock;
 };
-
-#endif // LOGGER

@@ -1,5 +1,4 @@
-#ifndef HAL_GPIO_CONTROLLER
-#define HAL_GPIO_CONTROLLER
+#pragma once
 
 #include <Adafruit_MCP23017.h>
 #include <Wire.h>
@@ -23,5 +22,3 @@ class GPIO_controller
   Adafruit_MCP23017 m_exspander;
 };
 } // namespace HAL
-
-#endif // HAL_GPIO_CONTROLLER

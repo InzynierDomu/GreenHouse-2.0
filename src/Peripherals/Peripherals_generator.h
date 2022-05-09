@@ -6,8 +6,7 @@
  * @date 01-2021
  */
 
-#ifndef PERIPHERALS_PERIPHERALS_GENERATOR
-#define PERIPHERALS_PERIPHERALS_GENERATOR
+#pragma once
 
 #include "Analog_input.h"
 #include "Digital_input.h"
@@ -50,5 +49,3 @@ class Peripherals_generator
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_PERIPHERALS_GENERATOR

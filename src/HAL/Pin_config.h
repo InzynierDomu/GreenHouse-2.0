@@ -1,5 +1,4 @@
-#ifndef HAL_PINS
-#define HAL_PINS
+#pragma once
 
 namespace HAL
 {
@@ -9,5 +8,3 @@ const uint8_t m_keyboard_int = D5;
 const uint8_t m_SD_reader_CS = D8;
 } // namespace Pins
 } // namespace HAL
-
-#endif // HAL_PINS

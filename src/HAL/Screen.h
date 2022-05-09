@@ -1,5 +1,4 @@
-#ifndef HAL_SCREEN
-#define HAL_SCREEN
+#pragma once
 
 #include "Config.h"
 
@@ -19,5 +18,3 @@ class Screen
   private:
 };
 } // namespace HAL
-
-#endif // HAL_SCREEN

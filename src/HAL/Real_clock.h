@@ -1,5 +1,4 @@
-#ifndef HAL_REALCLOCK_CONTROLLER
-#define HAL_REALCLOCK_CONTROLLER
+#pragma once
 
 #include "RTClib.h"
 
@@ -23,5 +22,3 @@ class Real_clock
 };
 
 } // namespace HAL
-
-#endif // HAL_REALCLOCK_CONTROLLER

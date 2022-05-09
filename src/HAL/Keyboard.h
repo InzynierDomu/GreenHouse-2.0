@@ -1,8 +1,7 @@
+#pragma once
+
 #include <PCF8574.h>
 #include <Wire.h>
-
-#ifndef HAL_KEYBOARD
-#define HAL_KEYBOARD
 
 class Logger;
 
@@ -28,6 +27,5 @@ class Keyboard
   static const byte m_button_left = 2;
   static const byte m_button_up = 1;
 };
-}; // namespace HAL
 
-#endif // HAL_KEYBOARD
+} // namespace HAL

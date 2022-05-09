@@ -6,8 +6,7 @@
  * @date 01-2021
  */
 
-#ifndef PERIPHERALS_MULTISENSOR
-#define PERIPHERALS_MULTISENSOR
+#pragma once
 
 #include "HAL/Dht_sensor.h"
 #include "Peripheral.h"
@@ -28,5 +27,3 @@ class Multisensor : public Peripheral
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_MULTISENSOR

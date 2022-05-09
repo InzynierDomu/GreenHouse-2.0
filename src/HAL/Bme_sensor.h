@@ -1,5 +1,4 @@
-#ifndef HAL_BME_SENSOR
-#define HAL_BME_SENSOR
+#pragma once
 
 #include "Logger.h"
 
@@ -21,5 +20,3 @@ class Bme_sensor
   Adafruit_BME280 m_bme_sensor;
 };
 } // namespace HAL
-
-#endif // HAL_BME_SENSOR

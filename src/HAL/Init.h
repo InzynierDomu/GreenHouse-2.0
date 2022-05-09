@@ -1,5 +1,4 @@
-#ifndef HAL_INIT
-#define HAL_INIT
+#pragma once
 
 #include "../Keyboard_buttons.h"
 #include "Config.h"
@@ -61,5 +60,3 @@ class Init
 };
 
 } // namespace HAL
-
-#endif // HAL_INIT

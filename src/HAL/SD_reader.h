@@ -1,5 +1,4 @@
-#ifndef SDREADER_SCREEN
-#define SDREADER_SCREEN
+#pragma once
 
 #ifndef UNIT_TEST
 
@@ -30,5 +29,3 @@ class SD_reader
 };
 
 } // namespace HAL
-
-#endif // SDREADER_SCREEN

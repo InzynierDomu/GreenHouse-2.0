@@ -6,8 +6,7 @@
  * @date 01-2021
  */
 
-#ifndef SENDERRECEIVER
-#define SENDERRECEIVER
+#pragma once
 
 #include "Peripherals/Peripherals_generator.h"
 
@@ -30,5 +29,3 @@ class SenderReceiver
 
   void callback(const char* topic, byte* payload, unsigned int length);
 };
-
-#endif // SENDERRECEIVER

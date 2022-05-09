@@ -1,5 +1,4 @@
-#ifndef HAL_WIFI
-#define HAL_WIFI
+#pragma once
 
 #include "Logger.h"
 
@@ -27,5 +26,3 @@ class Wifi
   void connect_wifi(const char* ssid, const char* pass);
 };
 } // namespace HAL
-
-#endif // HAL_WIFI

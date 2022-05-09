@@ -1,5 +1,4 @@
-#ifndef HAL_ANALOG_CONTROLLER
-#define HAL_ANALOG_CONTROLLER
+#pragma once
 
 #include "Logger.h"
 
@@ -23,5 +22,3 @@ class Analog_controller
 };
 
 } // namespace HAL
-
-#endif // HAL_ANALOG_CONTROLLER

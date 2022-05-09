@@ -1,5 +1,4 @@
-#ifndef UTIILS_CHECKSUM
-#define UTIILS_CHECKSUM
+#pragma once
 
 #include <CRC32.h>
 
@@ -14,5 +13,3 @@ class Checksum
 };
 
 } // namespace UTIILS
-
-#endif // UTIILS_CHECKSUM

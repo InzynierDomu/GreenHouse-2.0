@@ -1,5 +1,4 @@
-#ifndef PERIPHERALS_DIGITAL_INPUT
-#define PERIPHERALS_DIGITAL_INPUT
+#pragma once
 
 #include "HAL/GPIO_controller.h"
 #include "Logger.h"
@@ -22,5 +21,3 @@ class Digital_input : public Peripheral_input
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_DIGITAL_INPUT

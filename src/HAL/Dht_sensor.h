@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Logger.h"
 #include "Config.h"
 #include "DHT.h"
+#include "Logger.h"
 
 namespace HAL
 {

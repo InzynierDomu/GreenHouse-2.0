@@ -1,12 +1,10 @@
-#ifndef PERIPHERALS_DIGITAL_OUTPUT
-#define PERIPHERALS_DIGITAL_OUTPUT
+#pragma once
 
 #include "HAL/GPIO_controller.h"
 #include "Logger.h"
 #include "Peripheral_output.h"
 
 #include <PubSubClient.h>
-
 
 class Logger;
 
@@ -26,5 +24,3 @@ class Digital_output : public Peripheral_output
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_DIGITAL_OUTPUT

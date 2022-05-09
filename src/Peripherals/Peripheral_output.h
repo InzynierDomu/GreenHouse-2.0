@@ -1,5 +1,4 @@
-#ifndef PERIPHERALS_PERIPHERAL_OUTPUT
-#define PERIPHERALS_PERIPHERAL_OUTPUT
+#pragma once
 
 #include "Peripheral.h"
 
@@ -18,5 +17,3 @@ class Peripheral_output : public Peripheral
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_PERIPHERAL_INPUT

@@ -6,8 +6,7 @@
  * @date 01-2021
  */
 
-#ifndef LINER_FUN
-#define LINER_FUN
+#pragma once
 
 struct Linear_function
 {
@@ -37,5 +36,3 @@ double find_y(int x, Linear_function f)
 {
   return (f.a * x + f.b);
 }
-
-#endif // LINER_FUN

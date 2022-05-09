@@ -1,5 +1,4 @@
-#ifndef PERIPHERALS_PERIPHERAL
-#define PERIPHERALS_PERIPHERAL
+#pragma once
 
 namespace Peripherals
 {
@@ -15,5 +14,3 @@ class Peripheral
 };
 
 } // namespace Peripherals
-
-#endif // PERIPHERALS_PERIPHERAL
