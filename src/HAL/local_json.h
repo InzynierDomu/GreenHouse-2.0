@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-String local_json = "{\"SSID\":\"Jeremek_NET\","
-                    "\"PASS\":\"Kotek_9193\","
+String local_json = "{\"SSID\":\"\","
+                    "\"PASS\":\"\","
                     "\"MQTT_SERVER\":\"192.168.1.139\","
                     "\"HARDWARE_CONFIGURATION\":"
                     "	{\"SENSOR\":\"greenhouse/sensor\","
