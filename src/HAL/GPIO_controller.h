@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Adafruit_MCP23017.h>
+#include <Adafruit_MCP23X17.h>
 #include <Wire.h>
 
 namespace HAL
@@ -19,6 +19,6 @@ class GPIO_controller
   private:
   const int m_adress;
 
-  Adafruit_MCP23017 m_exspander;
+  Adafruit_MCP23X17 m_exspander;
 };
 } // namespace HAL

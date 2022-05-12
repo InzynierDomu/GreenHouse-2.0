@@ -7,9 +7,9 @@ namespace HAL
 
 GPIO_controller::GPIO_controller(const int adress)
 : m_adress(adress)
-, m_exspander(Adafruit_MCP23017())
+, m_exspander(Adafruit_MCP23X17())
 {
-  m_exspander.begin(adress - Config::min_adress_gpio_controllers);
+  m_exspander.begin_I2C(adress - Config::min_adress_gpio_controllers);
 }
 
 void GPIO_controller::set_in_out(const int type, const int pin)

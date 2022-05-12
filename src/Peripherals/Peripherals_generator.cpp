@@ -58,13 +58,13 @@ std::vector<Analog_input>* Peripherals_generator::get_analog_inputs()
 
 void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
 {
-  Serial.println(json["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
+  Serial.println(json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
   m_multisensor = new Multisensor(hal->get_dht_sensor(), "greenhouse/sensor");
 }
 
 void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json)
 {
-  JsonArray array = json["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
+  JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
   const int gpio_count = array.size();
   for (int i = 0; i < gpio_count; i++)
   {
@@ -73,7 +73,7 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
     auto gpio_controller = hal->get_GPIO_controller(hw_adress);
     if (gpio_controller != nullptr)
     {
-      JsonArray pins = json["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][i]["GPIOS"].as<JsonArray>();
+      JsonArray pins = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][i]["GPIOS"].as<JsonArray>();
       for (int pin = 0; pin < pins.size(); pin++)
       {
         String pin_type = pins[pin]["TYPE"].as<String>();
@@ -94,7 +94,7 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
 
 void Peripherals_generator::generate_analog_in(HAL::Init* hal, JsonDocument& json)
 {
-  JsonArray array = json["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"].as<JsonArray>();
+  JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"].as<JsonArray>();
   const int analog_count = array.size();
   for (int i = 0; i < analog_count; i++)
   {
@@ -103,7 +103,7 @@ void Peripherals_generator::generate_analog_in(HAL::Init* hal, JsonDocument& jso
     auto analog_controller = hal->get_analog_controller(hw_adress);
     if (analog_controller != nullptr)
     {
-      JsonArray pins = json["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"][i]["INPUTS"].as<JsonArray>();
+      JsonArray pins = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"][i]["INPUTS"].as<JsonArray>();
       for (int pin = 0; pin < pins.size(); pin++)
       {
         m_analog_inputs.push_back(Analog_input(*analog_controller, pin, pins[pin]["TOPIC"].as<String>()));

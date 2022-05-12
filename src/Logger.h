@@ -8,13 +8,10 @@
 
 #pragma once
 
-#ifndef UNIT_TEST
-
 #include "HAL/Real_clock.h"
 
-#endif
-
 #include <map>
+#include <string>
 
 enum class Log_type
 {
@@ -27,8 +24,14 @@ enum class Log_type
 class Logger
 {
   public:
-  Logger(String name);
+  Logger(const String name);
+  Logger(const std::string name);
+  Logger(const char* name);
+
+  //todo: think about template
+  void log(const std::string content, const Log_type type = Log_type::info);
   void log(const String content, const Log_type type = Log_type::info);
+  void log(const char* content, const Log_type type = Log_type::info);
 
   private:
   const String m_module_name; ///< object owner name

@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
-String local_json = "{\"SSID\":\"\","
+String local_json = "{\"CONFIGURATION\":"
+                    "{\"SSID\":\"\","
                     "\"PASS\":\"\","
                     "\"MQTT_SERVER\":\"192.168.1.139\","
                     "\"HARDWARE_CONFIGURATION\":"
@@ -31,4 +32,4 @@ String local_json = "{\"SSID\":\"\","
                     "           {\"TOPIC\":\"greenhouse/input/moisture\"}"
                     "       ]}"
                     "   ]}"
-                    "}9965d3c1";
+                    "}}9965d3c1";
