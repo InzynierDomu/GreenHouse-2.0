@@ -8,9 +8,7 @@ Logger::Logger(const std::string name)
 : m_module_name(name.c_str())
 , m_clock(HAL::Real_clock::get_instance())
 {
-  Serial.print(m_clock->get_time());
-  Serial.print("::");
-  Serial.println(m_module_name + "::create logger");
+  print_create();
 }
 
 /**
@@ -21,9 +19,7 @@ Logger::Logger(const String name)
 : m_module_name(name)
 , m_clock(HAL::Real_clock::get_instance())
 {
-  Serial.print(m_clock->get_time());
-  Serial.print("::");
-  Serial.println(m_module_name + "::create logger");
+  print_create();
 }
 
 /**
@@ -34,9 +30,7 @@ Logger::Logger(const char* name)
 : m_module_name(name)
 , m_clock(HAL::Real_clock::get_instance())
 {
-  Serial.print(m_clock->get_time());
-  Serial.print("::");
-  Serial.println(m_module_name + "::create logger");
+  print_create();
 }
 
 /**
@@ -44,19 +38,13 @@ Logger::Logger(const char* name)
  * @param content main content of log
  * @param type log type, default = info
  */
-void Logger::log(const std::string content, const Log_type type)
+void Logger::log(const std::string& content, const Log_type type)
 {
 #ifndef DEBUG
   if (type != Log_type::debug)
   {
 #endif
-    Serial.print(m_clock->get_time());
-    Serial.print("::");
-    Serial.print(m_module_name);
-    Serial.print("::");
-    auto it = m_msg_type_name.find(type);
-    Serial.print(it->second);
-    Serial.print("::");
+    print_type(type);
     Serial.println(content.c_str());
 #ifndef DEBUG
   }
@@ -74,13 +62,7 @@ void Logger::log(const char* content, const Log_type type)
   if (type != Log_type::debug)
   {
 #endif
-    Serial.print(m_clock->get_time());
-    Serial.print("::");
-    Serial.print(m_module_name);
-    Serial.print("::");
-    auto it = m_msg_type_name.find(type);
-    Serial.print(it->second);
-    Serial.print("::");
+    print_type(type);
     Serial.println(content);
 #ifndef DEBUG
   }
@@ -92,21 +74,33 @@ void Logger::log(const char* content, const Log_type type)
  * @param content main content of log
  * @param type log type, default = info
  */
-void Logger::log(const String content, const Log_type type)
+void Logger::log(const String& content, const Log_type type)
 {
 #ifndef DEBUG
   if (type != Log_type::debug)
   {
 #endif
-    Serial.print(m_clock->get_time());
-    Serial.print("::");
-    Serial.print(m_module_name);
-    Serial.print("::");
-    auto it = m_msg_type_name.find(type);
-    Serial.print(it->second);
-    Serial.print("::");
+    print_type(type);
     Serial.println(content);
 #ifndef DEBUG
   }
 #endif
+}
+
+void Logger::print_create()
+{
+  Serial.print(m_clock->get_time());
+  Serial.print("::");
+  Serial.println(m_module_name + "::create logger");
+}
+
+void Logger::print_type(const Log_type type)
+{
+  Serial.print(m_clock->get_time());
+  Serial.print("::");
+  Serial.print(m_module_name);
+  Serial.print("::");
+  auto it = m_msg_type_name.find(type);
+  Serial.print(it->second);
+  Serial.print("::");
 }
