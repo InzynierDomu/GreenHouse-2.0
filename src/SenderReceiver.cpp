@@ -9,7 +9,7 @@
 #include "SenderReceiver.h"
 
 #include "Logger.h"
-
+#include "HAL/Real_clock.h" 
 
 /**
  * @brief constructor
@@ -17,7 +17,7 @@
  * @param client: pointer to MQTT client
  */
 SenderReceiver::SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient& client)
-: m_logger(Logger("Sender and reciver"))
+: m_logger(Logger("Sender and reciver", HAL::Real_clock::get_instance()->get_time_callback()))
 , m_peripherals(std::move(preipherals))
 , m_client(client)
 {}

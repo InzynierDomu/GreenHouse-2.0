@@ -1,5 +1,7 @@
 #include "Digital_input.h"
 
+#include "HAL/Real_clock.h"
+
 #include <PubSubClient.h>
 
 namespace Peripherals
@@ -7,7 +9,7 @@ namespace Peripherals
 
 Digital_input::Digital_input(HAL::GPIO_controller& controller, int pin, String topic)
 : m_controller(controller)
-, m_logger(Logger("Digital input (topic:" + topic + " pin:" + String(pin) + ")"))
+, m_logger(Logger("Digital input (topic:" + topic + " pin:" + String(pin) + ")", HAL::Real_clock::get_instance()->get_time_callback()))
 {
   m_pin = pin;
   m_topic = topic;

@@ -1,12 +1,13 @@
 #include "SD_reader.h"
 
 #include "Config.h"
+#include "Real_clock.h"
 
 namespace HAL
 {
 
 SD_reader::SD_reader()
-: m_logger(Logger("SD reader"))
+: m_logger(Logger("SD reader", Real_clock::get_instance()->get_time_callback()))
 {
   if (!SD.begin(Pins::m_SD_reader_CS))
   {

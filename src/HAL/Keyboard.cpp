@@ -2,6 +2,7 @@
 
 #include "Logger.h"
 #include "Pin_config.h"
+#include "Real_clock.h"
 
 namespace HAL
 {
@@ -11,7 +12,7 @@ static void ICACHE_RAM_ATTR readpcf();
 
 Keyboard::Keyboard(uint8_t adress)
 {
-  m_logger = new Logger("Keyboard");
+  m_logger = new Logger("Keyboard", Real_clock::get_instance()->get_time_callback());
   m_expander = new PCF8574(adress);
   m_expander->begin();
 

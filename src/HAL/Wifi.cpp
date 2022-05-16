@@ -1,12 +1,13 @@
 #include "WiFi.h"
 
+#include "Real_clock.h"
 #include "config.h"
 
 namespace HAL
 {
 
 Wifi::Wifi(const char* ssid, const char* pass, const char* mqtt_addres)
-: m_logger(Logger("WiFi"))
+: m_logger(Logger("WiFi", Real_clock::get_instance()->get_time_callback()))
 {
   connect_wifi(ssid, pass);
 

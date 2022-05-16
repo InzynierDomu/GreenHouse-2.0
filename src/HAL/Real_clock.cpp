@@ -38,8 +38,19 @@ Real_clock::Real_clock()
 
 String Real_clock::get_time()
 {
-  DateTime time = m_rtc.now();
+  auto time = m_rtc.now();
   return time.timestamp(DateTime::TIMESTAMP_TIME);
+}
+
+time_t Real_clock::get_raw_time()
+{
+  auto time = m_rtc.now();
+  return time.unixtime();
+}
+
+std::function<time_t()> Real_clock::get_time_callback()
+{
+  return [this](){ return get_raw_time(); };
 }
 
 void Real_clock::adjust(const DateTime& data_time)

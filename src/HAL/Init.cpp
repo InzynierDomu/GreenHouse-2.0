@@ -15,7 +15,7 @@ namespace HAL
 {
 
 Init::Init(Supervisor& supervisor)
-: m_logger(Logger("HAL"))
+: m_logger(Logger("HAL", Real_clock::get_instance()->get_time_callback()))
 , m_supervisor(supervisor)
 {
   scan_i2c();

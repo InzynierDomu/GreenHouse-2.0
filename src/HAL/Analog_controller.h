@@ -16,9 +16,9 @@ class Analog_controller
   int get_value(int pin);
 
   private:
+  Logger m_logger;
   const int m_address;
   PCF8591 m_expander;
-  Logger m_logger;
 };
 
 } // namespace HAL

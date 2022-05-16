@@ -4,9 +4,9 @@
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const std::string name)
+Logger::Logger(const std::string name, std::function<time_t()> get_time)
 : m_module_name(name.c_str())
-, m_clock(HAL::Real_clock::get_instance())
+, m_get_time(get_time)
 {
   print_create();
 }
@@ -15,9 +15,9 @@ Logger::Logger(const std::string name)
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const String name)
+Logger::Logger(const String name, std::function<time_t()> get_time)
 : m_module_name(name)
-, m_clock(HAL::Real_clock::get_instance())
+, m_get_time(get_time)
 {
   print_create();
 }
@@ -26,9 +26,9 @@ Logger::Logger(const String name)
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const char* name)
+Logger::Logger(const char* name, std::function<time_t()> get_time)
 : m_module_name(name)
-, m_clock(HAL::Real_clock::get_instance())
+, m_get_time(get_time)
 {
   print_create();
 }
@@ -89,18 +89,25 @@ void Logger::log(const String& content, const Log_type type)
 
 void Logger::print_create()
 {
-  Serial.print(m_clock->get_time());
+  Serial.print(get_time());
   Serial.print("::");
   Serial.println(m_module_name + "::create logger");
 }
 
 void Logger::print_type(const Log_type type)
 {
-  Serial.print(m_clock->get_time());
+  Serial.print(get_time());
   Serial.print("::");
   Serial.print(m_module_name);
   Serial.print("::");
   auto it = m_msg_type_name.find(type);
   Serial.print(it->second);
   Serial.print("::");
+}
+
+String Logger::get_time()
+{
+  auto now = m_get_time();
+  auto local_now = asctime(localtime(&now));
+  return String(local_now);
 }

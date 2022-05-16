@@ -9,6 +9,7 @@
 #include "Peripherals_generator.h"
 
 #include "HAL/Config.h"
+#include "HAL/Real_clock.h"
 #include "Logger.h"
 #include "Peripheral.h"
 #include "math.h"
@@ -20,7 +21,7 @@ namespace Peripherals
 
 Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client)
 : m_client(client)
-, m_logger(Logger("Peripherals generator"))
+, m_logger(Logger("Peripherals generator", HAL::Real_clock::get_instance()->get_time_callback()))
 {
   add_multisensor(hal, json);
   generate_digital_in_out(hal, json);

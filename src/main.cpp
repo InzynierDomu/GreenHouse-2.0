@@ -7,6 +7,7 @@
  */
 
 #include "HAL/Init.h"
+#include "HAL/Real_clock.h"
 #include "Liner_fun.h"
 #include "Logger.h"
 #include "Peripherals/Peripherals_generator.h"
@@ -17,7 +18,7 @@
 #include <ArduinoJson.h>
 #include <memory>
 
-Logger m_logger("Main");
+Logger m_logger("Main", HAL::Real_clock::get_instance()->get_time_callback());
 Supervisor m_supervisor;
 HAL::Init* m_hal;
 std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;

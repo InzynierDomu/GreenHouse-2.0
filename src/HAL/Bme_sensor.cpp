@@ -1,10 +1,12 @@
 #include "Bme_sensor.h"
 
+#include "Real_clock.h" 
+
 namespace HAL
 {
 
 Bme_sensor::Bme_sensor()
-: m_logger(Logger("Bme_sensor"))
+: m_logger(Logger("Bme_sensor", Real_clock::get_instance()->get_time_callback()))
 {
   if (m_bme_sensor.begin(BME280_ADDRESS_ALTERNATE))
   {

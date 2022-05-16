@@ -1,5 +1,6 @@
 #include "Digital_output.h"
 
+#include "HAL/Real_clock.h"
 #include "Logger.h"
 
 namespace Peripherals
@@ -7,7 +8,7 @@ namespace Peripherals
 
 Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic)
 : m_controller(controller)
-, m_logger(new Logger("Digital output (topic:" + topic + " pin:" + String(pin) + ")"))
+, m_logger(new Logger("Digital output (topic:" + topic + " pin:" + String(pin) + ")", HAL::Real_clock::get_instance()->get_time_callback()))
 {
   m_pin = pin;
   m_topic = topic;
