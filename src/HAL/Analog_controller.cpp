@@ -1,7 +1,7 @@
 #include "Analog_controller.h"
 
 #include "Config.h"
-#include "Real_clock.h" 
+#include "Real_clock.h"
 
 namespace HAL
 {
@@ -11,7 +11,6 @@ Analog_controller::Analog_controller(const int address)
 , m_address(address)
 , m_expander(PCF8591(address))
 {
-
   m_expander.begin();
 }
 

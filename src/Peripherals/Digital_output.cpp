@@ -25,6 +25,7 @@ void Digital_output::set_value(uint8_t value)
   m_logger->log("value seted");
   m_logger->log(String(value));
   // TODO: for test
+  // todo: 48(0)off, 49(1) on, ... on for time e.g. 53(4)on for 3 sec
   m_controller.set_state(m_pin, value - 48);
 }
 

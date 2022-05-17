@@ -14,7 +14,7 @@ namespace Peripherals
 class Digital_output : public Peripheral_output
 {
   public:
-  Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic);
+  Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic); //todo: add reference to scheduler
   void set_value(uint8_t value) override;
   String get_topic();
 
