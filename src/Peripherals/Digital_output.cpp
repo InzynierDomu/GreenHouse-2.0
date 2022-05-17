@@ -6,9 +6,10 @@
 namespace Peripherals
 {
 
-Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic)
+Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& client, int pin, String topic, Scheduler* scheduler)
 : m_controller(controller)
 , m_logger(new Logger("Digital output (topic:" + topic + " pin:" + String(pin) + ")", HAL::Real_clock::get_instance()->get_time_callback()))
+, m_scheduler(scheduler)
 {
   m_pin = pin;
   m_topic = topic;
@@ -22,16 +23,35 @@ Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& c
 
 void Digital_output::set_value(uint8_t value)
 {
-  m_logger->log("value seted");
-  m_logger->log(String(value));
-  // TODO: for test
-  // todo: 48(0)off, 49(1) on, ... on for time e.g. 53(4)on for 3 sec
-  m_controller.set_state(m_pin, value - 48);
+  value -= 48;
+  if (value < 2)
+  {
+    m_controller.set_state(m_pin, value);
+    if(value)
+    {
+      m_logger->log("turn on");
+    }
+    else
+    {
+      m_logger->log("turn off");
+    }
+  }
+  else
+  {
+    m_scheduler->add_action([this]() { turn_off(); }, value - 1);
+    m_logger->log("turn on for " + String(value-1) + "s");
+  }
 }
 
 String Digital_output::get_topic()
 {
   return m_topic;
+}
+
+void Digital_output::turn_off()
+{
+  m_controller.set_state(m_pin, 0);
+  m_logger->log("turn off");
 }
 
 } // namespace Peripherals

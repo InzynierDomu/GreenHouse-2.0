@@ -3,18 +3,17 @@
 #include "Logger.h"
 
 #include <functional>
-
-using event = std::pair<long, std::function<void()>>;
+#include <map>
 
 // todo: maybe singleton
 class Scheduler
 {
   public:
   Scheduler();
-  void add_action(std::function<void()>, long time);
-  void check_events();
+  void add_action(std::function<void()> callback, long time);
+  void check_events(long now);
 
   private:
   Logger m_logger; ///< serial logger
-  // todo: container for events
+  std::map<long, std::function<void()>> m_events;
 };

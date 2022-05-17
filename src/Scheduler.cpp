@@ -6,12 +6,19 @@ Scheduler::Scheduler()
 : m_logger(Logger("Scheduler", HAL::Real_clock::get_instance()->get_time_callback()))
 {}
 
-void Scheduler::add_action(std::function<void()>, long time)
+void Scheduler::add_action(std::function<void()> callback, long time)
 {
-  // add event to container
+  m_logger.log("Add event to scheduler");
+  long finish_time = millis() + (time * 1000);
+  m_events.insert({finish_time, callback});
 }
 
-void Scheduler::check_events()
+void Scheduler::check_events(long now)
 {
-  // check event in conteiner
+  if (!m_events.empty())
+  {
+    auto event = m_events.lower_bound(now);
+    event->second();
+    m_events.erase(event->first);
+  }
 }

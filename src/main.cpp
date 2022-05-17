@@ -11,6 +11,7 @@
 #include "Liner_fun.h"
 #include "Logger.h"
 #include "Peripherals/Peripherals_generator.h"
+#include "Scheduler.h"
 #include "SenderReceiver.h"
 #include "Supervisor.h"
 
@@ -23,6 +24,7 @@ Supervisor m_supervisor;
 HAL::Init* m_hal;
 std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;
 std::unique_ptr<SenderReceiver> m_sender_reciver;
+std::unique_ptr<Scheduler> m_scheduler;
 
 StaticJsonDocument<2048> doc;
 
@@ -59,7 +61,8 @@ void setup()
         state = Setup_state::generation_peripherals;
         break;
       case Setup_state::generation_peripherals:
-        m_peripherals = std::make_unique<Peripherals::Peripherals_generator>(m_hal, doc, m_hal->get_wifi_mqtt_client());
+        m_scheduler = std::make_unique<Scheduler>();
+        m_peripherals = std::make_unique<Peripherals::Peripherals_generator>(m_hal, doc, m_hal->get_wifi_mqtt_client(), m_scheduler.get());
         state = Setup_state::connect_sender_reciver;
         break;
       case Setup_state::connect_sender_reciver:
@@ -82,10 +85,11 @@ void loop()
 
     static long last_loop_time = 0;
     long loop_time = millis();
+    m_scheduler->check_events(loop_time);
     if (loop_time - last_loop_time > 60000)
     {
       m_sender_reciver->publish();
       last_loop_time = millis();
-    }
+    }    
   }
 }

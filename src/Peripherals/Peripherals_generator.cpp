@@ -19,12 +19,12 @@
 namespace Peripherals
 {
 
-Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client)
+Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client, Scheduler* scheduler)
 : m_client(client)
 , m_logger(Logger("Peripherals generator", HAL::Real_clock::get_instance()->get_time_callback()))
 {
   add_multisensor(hal, json);
-  generate_digital_in_out(hal, json);
+  generate_digital_in_out(hal, json, scheduler);
   generate_analog_in(hal, json);
 }
 
@@ -63,7 +63,7 @@ void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
   m_multisensor = new Multisensor(hal->get_dht_sensor(), "greenhouse/sensor");
 }
 
-void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json)
+void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler* scheduler)
 {
   JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
   const int gpio_count = array.size();
@@ -86,7 +86,7 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
         else if (!pin_type.compareTo("OUT"))
         {
           gpio_controller->set_in_out(OUTPUT, pin);
-          m_gpio_outputs.push_back(Digital_output(*gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>()));
+          m_gpio_outputs.push_back(Digital_output(*gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>(), scheduler));
         }
       }
     }

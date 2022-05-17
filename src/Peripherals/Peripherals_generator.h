@@ -13,6 +13,7 @@
 #include "Digital_output.h"
 #include "HAL/Init.h"
 #include "Multisensor.h"
+#include "Scheduler.h"
 
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
@@ -27,7 +28,7 @@ namespace Peripherals
 class Peripherals_generator
 {
   public:
-  Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client);
+  Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client, Scheduler* scheduler);
   std::optional<Digital_output> get_gpio_output(String topic);
   Multisensor* get_multisensor();
   std::vector<Digital_input>* get_gpio_inputs();
@@ -42,7 +43,7 @@ class Peripherals_generator
   Logger m_logger;
 
   void add_multisensor(HAL::Init* hal, JsonDocument& json);
-  void generate_digital_in_out(HAL::Init* hal, JsonDocument& json);
+  void generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler* Scheduler);
   void generate_analog_in(HAL::Init* hal, JsonDocument& json);
 
   int convert_bin_to_dec(String number);
