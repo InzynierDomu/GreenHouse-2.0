@@ -12,7 +12,7 @@
 #include <functional>
 #include <map>
 #include <string>
-#include <time.h>
+#include <ctime>
 
 enum class Log_type
 {
@@ -40,7 +40,7 @@ class Logger
   String get_time();
 
   const String m_module_name; ///< object owner name
-  std::function<time_t()>& m_get_time;
+  std::function<time_t()> m_get_time;
 
   const std::map<Log_type, String> m_msg_type_name{{Log_type::info, "Info"},
                                                    {Log_type::warning, "Warning"},

@@ -108,6 +108,7 @@ void Logger::print_type(const Log_type type)
 String Logger::get_time()
 {
   auto now = m_get_time();
-  auto local_now = asctime(localtime(&now));
-  return String(local_now);
+  std::tm tm = *std::localtime(&now);
+  String time_formated = String(tm.tm_hour) + ":" + String(tm.tm_min) + ":" + String(tm.tm_sec);
+  return time_formated;
 }
