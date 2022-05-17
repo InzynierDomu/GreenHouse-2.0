@@ -53,9 +53,16 @@ std::function<time_t()> Real_clock::get_time_callback()
   return [this](){ return get_raw_time(); };
 }
 
-void Real_clock::adjust(const DateTime& data_time)
+void Real_clock::adjust(const time_t data_time)
 {
-  m_rtc.adjust(data_time);
+  auto time = DateTime(data_time);
+  Serial.println("set time: " + String(time.hour()) + ":" + String(time.minute()) + ":" + String(time.second()));
+  m_rtc.adjust(time);
+  auto now = m_rtc.now();
+  if(abs(now.unixtime() - data_time) > 100)
+  {
+    Serial.println("error in time adjust");
+  }
 }
 
 } // namespace HAL

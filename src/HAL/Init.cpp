@@ -1,8 +1,8 @@
 #include "Init.h"
 
 #include "Analog_controller.h"
-#include "Dht_sensor.h"
 #include "Config_memory.h"
+#include "Dht_sensor.h"
 #include "GPIO_controller.h"
 #include "Keyboard.h"
 #include "Real_clock.h"
@@ -10,6 +10,7 @@
 #include "Screen.h"
 #include "Supervisor.h"
 #include "Wifi.h"
+
 
 namespace HAL
 {
@@ -49,7 +50,11 @@ Init::Init(Supervisor& supervisor)
 
 void Init::initNetwork(JsonDocument& json)
 {
-  m_wifi = new Wifi(json["CONFIGURATION"]["SSID"], json["CONFIGURATION"]["PASS"], json["CONFIGURATION"]["MQTT_SERVER"]);
+  Mqtt_config mqtt_config = Mqtt_config(json["CONFIGURATION"]["MQTT_SERVER"],
+                                        json["CONFIGURATION"]["MQTT_USER"],
+                                        json["CONFIGURATION"]["MQTT_ID"],
+                                        json["CONFIGURATION"]["MQTT_PASS"]);
+  m_wifi = new Wifi(json["CONFIGURATION"]["SSID"], json["CONFIGURATION"]["PASS"], mqtt_config);
   synchronize_with_ntp();
 }
 
@@ -198,7 +203,6 @@ void Init::synchronize_with_ntp()
     delay(500);
     m_logger.log("*");
   } while ((now < 1546300800) && !((last_loop_time - loop_time) > Config::time_synchronization_timeout));
-  m_logger.log(String(now));
   auto clock = Real_clock::get_instance();
   clock->adjust(now);
 }

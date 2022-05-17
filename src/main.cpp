@@ -24,7 +24,7 @@ HAL::Init* m_hal;
 std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;
 std::unique_ptr<SenderReceiver> m_sender_reciver;
 
-StaticJsonDocument<1000> doc;
+StaticJsonDocument<2048> doc;
 
 enum class Setup_state
 {

@@ -3,7 +3,7 @@
 #include "RTClib.h"
 
 #include <functional>
-#include <time.h>
+#include <ctime>
 
 namespace HAL
 {
@@ -14,7 +14,7 @@ class Real_clock
   static Real_clock* get_instance();
   String get_time();
   std::function<time_t()> get_time_callback();
-  void adjust(const DateTime& data_time);
+  void adjust(const time_t data_time);
 
   protected:
   Real_clock();
