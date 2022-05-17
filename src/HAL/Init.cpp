@@ -49,7 +49,7 @@ Init::Init(Supervisor& supervisor)
 
 void Init::initNetwork(JsonDocument& json)
 {
-  m_wifi = new Wifi(json["SSID"], json["PASS"], json["MQTT_SERVER"]);
+  m_wifi = new Wifi(json["CONFIGURATION"]["SSID"], json["CONFIGURATION"]["PASS"], json["CONFIGURATION"]["MQTT_SERVER"]);
   synchronize_with_ntp();
 }
 
