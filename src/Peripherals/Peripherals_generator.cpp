@@ -59,8 +59,8 @@ std::vector<Analog_input>* Peripherals_generator::get_analog_inputs()
 
 void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
 {
-  Serial.println(json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>());
-  m_multisensor = new Multisensor(hal->get_dht_sensor(), "greenhouse/sensor");
+  auto topic = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>();
+  m_multisensor = new Multisensor(hal->get_dht_sensor(), topic.c_str());
 }
 
 void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler* scheduler)

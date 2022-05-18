@@ -19,7 +19,7 @@ namespace Peripherals
 class Multisensor : public Peripheral
 {
   public:
-  Multisensor(HAL::Dht_sensor* dht_sensor, char* topic, int pin = 0);
+  Multisensor(HAL::Dht_sensor* dht_sensor, const char* topic, int pin = 0);
   void publish(PubSubClient& client);
 
   private:

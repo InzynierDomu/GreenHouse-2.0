@@ -90,6 +90,8 @@ void loop()
     {
       m_sender_reciver->publish();
       last_loop_time = millis();
-    }    
+    }
+
+    // error if loop > 1s turn off evrything
   }
 }
