@@ -8,6 +8,7 @@
 
 #include "HAL/Init.h"
 #include "HAL/Real_clock.h"
+#include "HAL/Screen.h"
 #include "Liner_fun.h"
 #include "Logger.h"
 #include "Peripherals/Peripherals_generator.h"
@@ -50,6 +51,7 @@ void setup()
     {
       case Setup_state::hal_init:
         m_hal = new HAL::Init(m_supervisor);
+        m_hal->get_screen()->print("Startup");
         state = Setup_state::json_deserialize;
         break;
       case Setup_state::json_deserialize:
@@ -73,6 +75,7 @@ void setup()
     }
   }
   m_logger.log("Setup finished");
+  m_hal->get_screen()->print("Geenhouse 2.0");
 }
 
 void loop()
@@ -93,5 +96,10 @@ void loop()
     }
 
     // error if loop > 1s turn off evrything
+  }
+  else
+  {
+    m_hal->get_screen()->print("error");
+    delay(500);
   }
 }

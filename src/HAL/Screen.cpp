@@ -4,27 +4,22 @@ namespace HAL
 {
 
 Screen::Screen()
+:m_display(Config::screen_width, Config::screen_height, &Wire)
 {
-  Adafruit_SSD1306 display(Config::screen_width, Config::screen_height, &Wire);
-  display.begin(SSD1306_SWITCHCAPVCC, Config::screen_adress);
+  m_display.begin(SSD1306_SWITCHCAPVCC, Config::screen_adress);
 
-  display.clearDisplay();
-  display.setRotation(2);
-  display.setTextSize(2);
-  display.setTextColor(SSD1306_WHITE);
-
-  display.setCursor(0, 0);
-  display.println("GreenHouse 2.0");
-
-  display.display();
+  m_display.clearDisplay();
+  m_display.setRotation(0);
+  m_display.setTextSize(2);
+  m_display.setTextColor(SSD1306_WHITE);
 }
 
-void Screen::Print(String text)
+void Screen::print(String text)
 {
-  // display.clearDisplay();
-  // display.setCursor(0, 0);
-  // display.println(text);
-  // display.display();
+  m_display.clearDisplay();
+  m_display.setCursor(0, 0);
+  m_display.println(text);
+  m_display.display();
 }
 
 } // namespace HAL

@@ -22,13 +22,14 @@ Init::Init(Supervisor& supervisor)
   scan_i2c();
   if (!check_main_i2c_peripherals())
   {
-    m_logger.log("Main peripherals not found", Log_type::error);
+    m_screen = std::make_unique<Screen>();
+    m_logger.log("memory not found", Log_type::error);
     m_supervisor.error();
   }
   else
   {
-    m_keyboard = new Keyboard(Config::keyboard_pcf_adress);
-    m_screen = new Screen();
+    // m_keyboard = new Keyboard(Config::keyboard_pcf_adress);    
+    m_screen = std::make_unique<Screen>();
     m_dht_sensor = new Dht_sensor();
     m_sd_reader = new SD_reader();
     m_config_memory = new Config_memory();
@@ -103,6 +104,11 @@ Analog_controller* Init::get_analog_controller(int adress)
 PubSubClient& Init::get_wifi_mqtt_client()
 {
   return m_wifi->get_mqtt_client();
+}
+
+Screen* Init::get_screen()
+{
+  return m_screen.get();
 }
 
 void Init::wifi_mqtt_reconnect()

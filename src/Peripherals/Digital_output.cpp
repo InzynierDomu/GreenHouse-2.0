@@ -50,7 +50,7 @@ String Digital_output::get_topic()
 
 void Digital_output::turn_off()
 {
-  m_controller.set_state(m_pin, 0);
+  // m_controller.set_state(m_pin, 0);
   m_logger->log("turn off");
 }
 

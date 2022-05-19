@@ -13,8 +13,8 @@ class Screen
 {
   public:
   Screen();
-  void Print(String text);
-
+  void print(String text);
   private:
+  Adafruit_SSD1306 m_display;
 };
 } // namespace HAL

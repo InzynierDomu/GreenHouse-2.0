@@ -9,6 +9,7 @@
 #include <PubSubClient.h>
 #include <optional>
 #include <vector>
+#include <memory>
 
 class Supervisor;
 
@@ -33,6 +34,7 @@ class Init
   GPIO_controller* get_GPIO_controller(int adress);
   Analog_controller* get_analog_controller(int adress);
   PubSubClient& get_wifi_mqtt_client();
+  Screen* get_screen();
   void wifi_mqtt_reconnect();
   void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
   void mqtt_loop();
@@ -41,7 +43,7 @@ class Init
   private:
   Logger m_logger;
   Supervisor& m_supervisor;
-  const Screen* m_screen;
+  std::unique_ptr<Screen> m_screen;
   const Keyboard* m_keyboard;
   SD_reader* m_sd_reader;
   std::vector<GPIO_controller> m_gpio_controllers;
