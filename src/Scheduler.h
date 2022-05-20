@@ -10,7 +10,7 @@ class Scheduler
 {
   public:
   Scheduler();
-  void add_action(std::function<void()> callback, long time);
+  void add_action(std::function<void()> callback, uint8_t time);
   void check_events(long now);
 
   private:

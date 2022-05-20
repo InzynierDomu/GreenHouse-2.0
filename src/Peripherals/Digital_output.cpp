@@ -21,6 +21,12 @@ Digital_output::Digital_output(HAL::GPIO_controller& controller, PubSubClient& c
   client.subscribe(convert_buf);
 }
 
+void Digital_output::turn_off()
+{
+  m_controller.set_state(m_pin, 0);
+  m_logger->log("turn off");
+}
+
 void Digital_output::set_value(uint8_t value)
 {
   value -= 48;
@@ -38,7 +44,8 @@ void Digital_output::set_value(uint8_t value)
   }
   else
   {
-    m_scheduler->add_action([this]() { turn_off(); }, value - 1);
+    std::function<void()> foo = [this]() { turn_off(); };
+    m_scheduler->add_action(foo, value - 1);
     m_logger->log("turn on for " + String(value-1) + "s");
   }
 }
@@ -46,12 +53,6 @@ void Digital_output::set_value(uint8_t value)
 String Digital_output::get_topic()
 {
   return m_topic;
-}
-
-void Digital_output::turn_off()
-{
-  // m_controller.set_state(m_pin, 0);
-  m_logger->log("turn off");
 }
 
 } // namespace Peripherals
