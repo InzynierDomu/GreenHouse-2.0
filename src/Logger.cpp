@@ -4,7 +4,7 @@
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const std::string name, std::function<time_t()> get_time)
+Logger::Logger(const std::string name, std::function<time_t()> get_time = nullptr)
 : m_module_name(name.c_str())
 , m_get_time(get_time)
 {
@@ -15,7 +15,7 @@ Logger::Logger(const std::string name, std::function<time_t()> get_time)
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const String name, std::function<time_t()> get_time)
+Logger::Logger(const String name, std::function<time_t()> get_time = nullptr)
 : m_module_name(name)
 , m_get_time(get_time)
 {
@@ -26,7 +26,7 @@ Logger::Logger(const String name, std::function<time_t()> get_time)
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const char* name, std::function<time_t()> get_time)
+Logger::Logger(const char* name, std::function<time_t()> get_time = nullptr)
 : m_module_name(name)
 , m_get_time(get_time)
 {
@@ -107,8 +107,15 @@ void Logger::print_type(const Log_type type)
 
 String Logger::get_time()
 {
-  auto now = m_get_time();
-  std::tm tm = *std::localtime(&now);
-  String time_formated = String(tm.tm_hour) + ":" + String(tm.tm_min) + ":" + String(tm.tm_sec);
-  return time_formated;
+  if (m_get_time != nullptr)
+  {
+    auto now = m_get_time();
+    std::tm tm = *std::localtime(&now);
+    String time_formated = String(tm.tm_hour) + ":" + String(tm.tm_min) + ":" + String(tm.tm_sec);
+    return time_formated;
+  }
+  else
+  {
+    return "0:0:0";
+  }
 }

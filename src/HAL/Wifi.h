@@ -2,7 +2,11 @@
 
 #include "Logger.h"
 
+#ifdef ESP8266
 #include <ESP8266WiFi.h>
+#elif ESP32
+#include <WiFi.h>
+#endif
 #include <PubSubClient.h>
 #include <time.h>
 

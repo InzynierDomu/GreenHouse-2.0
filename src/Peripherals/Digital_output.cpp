@@ -33,7 +33,7 @@ void Digital_output::set_value(uint8_t value)
   if (value < 2)
   {
     m_controller.set_state(m_pin, value);
-    if(value)
+    if (value)
     {
       m_logger->log("turn on");
     }
@@ -44,9 +44,8 @@ void Digital_output::set_value(uint8_t value)
   }
   else
   {
-    std::function<void()> foo = [this]() { turn_off(); };
-    m_scheduler->add_action(foo, value - 1);
-    m_logger->log("turn on for " + String(value-1) + "s");
+    m_scheduler->add_action([this]() { turn_off(); }, value - 1); //todo: error, probably main 71: move m_peripherals is a problem with move and correct address
+    m_logger->log("turn on for " + String(value - 1) + "s");
   }
 }
 

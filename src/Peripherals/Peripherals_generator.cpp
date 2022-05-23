@@ -40,6 +40,7 @@ std::optional<Digital_output> Peripherals_generator::get_gpio_output(String topi
       }
     }
   }
+  return std::nullopt;
 }
 
 Multisensor* Peripherals_generator::get_multisensor()
