@@ -47,7 +47,7 @@ void SenderReceiver::callback(const char* topic, byte* payload, unsigned int len
 {
   m_logger.log("Message arrived");
   auto output = m_peripherals->get_gpio_output(topic);
-  if (output)
+  if (output != std::nullopt)
   {
     output.value().set_value(*payload);
   }

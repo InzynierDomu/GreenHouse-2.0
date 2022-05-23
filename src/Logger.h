@@ -9,10 +9,10 @@
 #pragma once
 
 #include <Arduino.h>
+#include <ctime>
 #include <functional>
 #include <map>
 #include <string>
-#include <ctime>
 
 enum class Log_type
 {
@@ -25,9 +25,9 @@ enum class Log_type
 class Logger
 {
   public:
-  Logger(const String name, std::function<time_t()> get_time);
-  Logger(const std::string name, std::function<time_t()> get_time);
-  Logger(const char* name, std::function<time_t()> get_time);
+  Logger(const String name, std::function<time_t()> get_time = nullptr);
+  Logger(const std::string name, std::function<time_t()> get_time = nullptr);
+  Logger(const char* name, std::function<time_t()> get_time = nullptr);
 
   // todo: think about template
   void log(const std::string& content, const Log_type type = Log_type::info);

@@ -4,7 +4,7 @@
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const std::string name, std::function<time_t()> get_time = nullptr)
+Logger::Logger(const std::string name, std::function<time_t()> get_time)
 : m_module_name(name.c_str())
 , m_get_time(get_time)
 {
@@ -15,7 +15,7 @@ Logger::Logger(const std::string name, std::function<time_t()> get_time = nullpt
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const String name, std::function<time_t()> get_time = nullptr)
+Logger::Logger(const String name, std::function<time_t()> get_time)
 : m_module_name(name)
 , m_get_time(get_time)
 {
@@ -26,7 +26,7 @@ Logger::Logger(const String name, std::function<time_t()> get_time = nullptr)
  * @brief constructor
  * @param name: object owner name
  */
-Logger::Logger(const char* name, std::function<time_t()> get_time = nullptr)
+Logger::Logger(const char* name, std::function<time_t()> get_time)
 : m_module_name(name)
 , m_get_time(get_time)
 {
