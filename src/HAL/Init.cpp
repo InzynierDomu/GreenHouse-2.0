@@ -67,8 +67,8 @@ GPIO_controller* Init::get_GPIO_controller(int adress)
 {
   if (m_gpio_controllers.empty())
   {
-    return nullptr;
     m_logger.log("Couldn't find gpio controller", Log_type::warning);
+    return nullptr;    
   }
   for (auto it = m_gpio_controllers.begin(); it != m_gpio_controllers.end(); ++it)
   {
@@ -86,6 +86,11 @@ GPIO_controller* Init::get_GPIO_controller(int adress)
 
 Analog_controller* Init::get_analog_controller(int adress)
 {
+  if (m_analog_controllers.empty())
+  {
+    m_logger.log("Couldn't analog controller", Log_type::warning);
+    return nullptr;    
+  }
   for (auto it = m_analog_controllers.begin(); it != m_analog_controllers.end(); ++it)
   {
     if (it->get_adress() == adress)

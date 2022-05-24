@@ -67,8 +67,8 @@ void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
 void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler* scheduler)
 {
   JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
-  const int gpio_count = array.size();
-  for (int i = 0; i < gpio_count; i++)
+  const int gpio_controllers_count = array.size();
+  for (int i = 0; i < gpio_controllers_count; i++)
   {
     const String adress = array[i]["ADDRES"].as<String>();
     const int hw_adress = HAL::Config::min_adress_gpio_controllers + convert_bin_to_dec(adress);
@@ -97,8 +97,8 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
 void Peripherals_generator::generate_analog_in(HAL::Init* hal, JsonDocument& json)
 {
   JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"].as<JsonArray>();
-  const int analog_count = array.size();
-  for (int i = 0; i < analog_count; i++)
+  const int analog_controllers_count = array.size();
+  for (int i = 0; i < analog_controllers_count; i++)
   {
     const String adress = array[i]["ADDRES"].as<String>();
     const int hw_adress = HAL::Config::min_adress_analog_controllers + convert_bin_to_dec(adress);
