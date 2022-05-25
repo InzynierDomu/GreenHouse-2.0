@@ -18,7 +18,7 @@ namespace HAL
 
 class Screen;
 class Dht_sensor;
-class Keyboard;
+// class Keyboard;
 class GPIO_controller;
 class Analog_controller;
 class Wifi;
