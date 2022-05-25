@@ -11,8 +11,8 @@ The development process is presented on live streams [Playlist - live](https://w
 
 ## Scheme
 
-Bhe basic part of the driver
-[schem](https://www.inzynierdomu.pl/wp-content/uploads/2019/12/kicad_8LYc8QVG40.png)
+The basic part of the driver.
+![schem](https://www.inzynierdomu.pl/wp-content/uploads/2019/12/kicad_8LYc8QVG40.png)
 
 ## IDE
 
