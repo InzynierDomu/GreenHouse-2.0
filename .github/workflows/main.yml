@@ -28,7 +28,7 @@ jobs:
           pip install --upgrade platformio
 
       - name: Install platform esp
-        run: pio pkg install -p "espressif8266" -p "mcspr/toolchain-xtensa@5.100200.201223" -p  "framework-arduinoespressif8266@https://github.com/esp8266/Arduino.git"
+        run: pio pkg install -p "espressif8266" -p "platformio/toolchain-xtensa@~2.100300.0" -p  "framework-arduinoespressif8266@https://github.com/esp8266/Arduino.git"
 
       - name: Install lib adafruit screen
         run: pio lib -g install https://github.com/adafruit/Adafruit_SSD1306/archive/refs/tags/2.5.3.zip
