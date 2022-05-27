@@ -1,5 +1,6 @@
 #include "Dht_sensor.h"
 
+#include "Pin_config.h"
 #include "Real_clock.h"
 
 namespace HAL

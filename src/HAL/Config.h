@@ -13,8 +13,6 @@ const uint8_t screen_adress = 0x3C;
 const int screen_width = 128;
 const int screen_height = 64;
 
-const uint8_t keyboard_pcf_adress = 0x20;
-
 const int memory_adress = 0x50;
 
 const int mqtt_port = 1883;
@@ -28,8 +26,6 @@ const int max_adress_gpio_controllers = 39;
 
 const int min_adress_analog_controllers = 71;
 const int max_adress_analog_controllers = 79;
-
-const uint8_t dht_pin = 2;
 
 // const char *m_json_file_name = "datalog.json";
 

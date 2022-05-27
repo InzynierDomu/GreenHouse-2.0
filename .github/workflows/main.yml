@@ -1,0 +1,64 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Cache PlatformIO
+        uses: actions/cache@v2
+        with:
+          path: ~/.platformio
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade platformio
+
+      - name: Install platform esp
+        run: pio pkg install -p "espressif8266" -p "mcspr/toolchain-xtensa@5.100200.201223" -p  "framework-arduinoespressif8266@https://github.com/esp8266/Arduino.git"
+
+      - name: Install lib adafruit screen
+        run: pio lib -g install https://github.com/adafruit/Adafruit_SSD1306/archive/refs/tags/2.5.3.zip
+      - name: Install lib adafruit GFX
+        run: pio lib -g install https://github.com/adafruit/Adafruit-GFX-Library/archive/refs/tags/1.11.1.zip
+      - name: Install lib adafruit BusIO
+        run: pio lib -g install https://github.com/adafruit/Adafruit_BusIO/archive/refs/tags/1.11.6.zip
+      - name: Install lib ArduinoJSON
+        run: pio lib -g install ArduinoJson@6.19.4
+      - name: Install lib adafruit mcp23017
+        run: pio lib -g install https://github.com/adafruit/Adafruit-MCP23017-Arduino-Library/archive/refs/tags/2.1.0.zip
+      - name: Install lib adafruit unified sensos
+        run: pio lib -g install https://github.com/adafruit/Adafruit_Sensor/archive/refs/tags/1.1.5.zip
+      - name: Install lib adafruit RTClib
+        run: pio lib -g install https://github.com/adafruit/RTClib/archive/refs/tags/2.0.3.zip
+      - name: Install lib sd
+        run: pio lib -g install SD(esp8266)
+      - name: Install lib PCF8591
+        run: pio lib -g install robtillaart/PCF8591
+      - name: Install lib crc
+        run: pio lib -g install bakercp/CRC32
+      - name: Install lib dht
+        run: pio lib -g install https://github.com/adafruit/DHT-sensor-library/archive/refs/tags/1.4.3.zip
+
+      - name: Run PlatformIO
+        run: pio run -e nodemcuv2
+        env:
+          PLATFORMIO_BUILD_FLAGS: -D ESP8266 -fexceptions
+
+      - name: Install native
+        run: pio platform install native
+      - name: Run check
+        run: pio check -e check

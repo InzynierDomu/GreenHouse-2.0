@@ -18,7 +18,6 @@ namespace HAL
 
 class Screen;
 class Dht_sensor;
-// class Keyboard;
 class GPIO_controller;
 class Analog_controller;
 class Wifi;
@@ -44,7 +43,6 @@ class Init
   Logger m_logger;
   Supervisor& m_supervisor;
   std::unique_ptr<Screen> m_screen;
-  const Keyboard* m_keyboard;
   SD_reader* m_sd_reader;
   std::vector<GPIO_controller> m_gpio_controllers;
   std::vector<Analog_controller> m_analog_controllers;

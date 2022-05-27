@@ -4,7 +4,6 @@
 #include "Config_memory.h"
 #include "Dht_sensor.h"
 #include "GPIO_controller.h"
-#include "Keyboard.h"
 #include "Real_clock.h"
 #include "SD_reader.h"
 #include "Screen.h"
@@ -26,8 +25,7 @@ Init::Init(Supervisor& supervisor)
     m_supervisor.error();
   }
   else
-  {
-    // m_keyboard = new Keyboard(Config::keyboard_pcf_adress);    
+  {  
     m_screen = std::make_unique<Screen>();
     m_dht_sensor = new Dht_sensor();
     m_sd_reader = new SD_reader();
@@ -216,7 +214,5 @@ void Init::synchronize_with_ntp()
   auto clock = Real_clock::get_instance();
   clock->adjust(now);
 }
-
-void Init::check_json_file() {}
 
 } // namespace HAL

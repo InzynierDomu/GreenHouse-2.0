@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Config.h"
+#include "Pin_config.h"
 #include "DHT.h"
 #include "Logger.h"
 
