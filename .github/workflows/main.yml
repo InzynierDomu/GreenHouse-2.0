@@ -50,6 +50,8 @@ jobs:
         run: pio lib -g install bakercp/CRC32
       - name: Install lib dht
         run: pio lib -g install https://github.com/adafruit/DHT-sensor-library/archive/refs/tags/1.4.3.zip
+      - name: Install lib mqtt
+        run: pio lib -g install knolleary/PubSubClient@2.8
 
       - name: Run PlatformIO
         run: pio run -e nodemcuv2
