@@ -28,11 +28,11 @@ bool SD_reader::is_card_available() const
 
 String SD_reader::get_json_file()
 {
-  File dataFile = SD.open("config.json");  
+  File dataFile = SD.open("config.json");
+  String json_file;
   if (dataFile)
   {
     CRC32 crc_calculate;
-    String json_file;
     String crc_from_json;
     int open_bracket_count = 0;
     int close_bracket_count = 0;
