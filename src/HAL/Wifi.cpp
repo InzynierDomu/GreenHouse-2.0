@@ -1,7 +1,7 @@
 #include "Wifi.h"
 
+#include "Config.h"
 #include "Real_clock.h"
-#include "config.h"
 
 namespace HAL
 {
