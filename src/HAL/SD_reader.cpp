@@ -32,44 +32,20 @@ String SD_reader::get_json_file()
   String json_file;
   if (dataFile)
   {
-    CRC32 crc_calculate;
-    String crc_from_json;
-    int open_bracket_count = 0;
-    int close_bracket_count = 0;
     while (dataFile.available())
     {
       char read_character = (char)dataFile.read();
-      if (read_character == '{')
-      {
-        open_bracket_count++;
-      }
-      else if (read_character == '}')
-      {
-        close_bracket_count++;
-      }
-
-      if (open_bracket_count == close_bracket_count)
-      {
-        crc_from_json += read_character;
-      }
-      else
-      {
-        json_file += read_character;
-        crc_calculate.update(read_character);
-      }
+      json_file += read_character;
     }
     dataFile.close();
 
     // todo: split to json and crc
-
-    compare_crc(crc_from_json, crc_calculate);
-
-    return json_file;
   }
   else
   {
     m_logger.log("Config file not found", Log_type::warning);
   }
+  return json_file;
 }
 
 bool SD_reader::compare_crc(String crc_from_json, CRC32& crc_calculated)
