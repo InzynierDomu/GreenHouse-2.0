@@ -1,4 +1,4 @@
-#include "WiFi.h"
+#include "Wifi.h"
 
 #include "Real_clock.h"
 #include "config.h"
@@ -7,8 +7,8 @@ namespace HAL
 {
 
 Wifi::Wifi(const char* ssid, const char* pass, const Mqtt_config mqtt_config)
-: m_logger(Logger("WiFi", Real_clock::get_instance()->get_time_callback())),
-m_mqtt_config(mqtt_config) //todo: posible better move
+: m_logger(Logger("WiFi", Real_clock::get_instance()->get_time_callback()))
+, m_mqtt_config(mqtt_config) // todo: posible better move
 {
   connect_wifi(ssid, pass);
 
