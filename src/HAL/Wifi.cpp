@@ -63,7 +63,8 @@ void Wifi::connect_wifi(const char* ssid, const char* pass)
   }
 
   m_logger.log("Connected");
-  m_logger.log("IP address:" + WiFi.localIP());
+  auto address = WiFi.localIP();
+  m_logger.log("IP address: " + String(address[3]) + ":" + String(address[2]) + ":" + String(address[1]) + ":" + String(address[0]));
 }
 
 } // namespace HAL
