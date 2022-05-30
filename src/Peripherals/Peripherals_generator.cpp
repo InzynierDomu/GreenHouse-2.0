@@ -76,7 +76,7 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
     if (gpio_controller != nullptr)
     {
       JsonArray pins = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"][i]["GPIOS"].as<JsonArray>();
-      for (int pin = 0; pin < pins.size(); pin++)
+      for (uint8_t pin = 0; pin < static_cast<uint8_t>(pins.size()); pin++)
       {
         String pin_type = pins[pin]["TYPE"].as<String>();
         if (!pin_type.compareTo("IN"))
@@ -106,7 +106,7 @@ void Peripherals_generator::generate_analog_in(HAL::Init* hal, JsonDocument& jso
     if (analog_controller != nullptr)
     {
       JsonArray pins = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"][i]["INPUTS"].as<JsonArray>();
-      for (int pin = 0; pin < pins.size(); pin++)
+      for (uint8_t pin = 0; pin < static_cast<uint8_t>(pins.size()); pin++)
       {
         m_analog_inputs.push_back(Analog_input(*analog_controller, pin, pins[pin]["TOPIC"].as<String>()));
       }

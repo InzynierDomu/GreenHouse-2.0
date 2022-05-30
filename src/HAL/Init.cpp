@@ -25,7 +25,7 @@ Init::Init(Supervisor& supervisor)
     m_supervisor.error();
   }
   else
-  {  
+  {
     m_screen = std::make_unique<Screen>();
     m_dht_sensor = new Dht_sensor();
     m_sd_reader = new SD_reader();
@@ -63,44 +63,45 @@ Dht_sensor* Init::get_dht_sensor()
 
 GPIO_controller* Init::get_GPIO_controller(int adress)
 {
-  if (m_gpio_controllers.empty())
+  if (!m_gpio_controllers.empty())
   {
-    m_logger.log("Couldn't find gpio controller", Log_type::warning);
-    return nullptr;    
-  }
-  for (auto it = m_gpio_controllers.begin(); it != m_gpio_controllers.end(); ++it)
-  {
-    if (it->get_adress() == adress)
+    for (auto it = m_gpio_controllers.begin(); it != m_gpio_controllers.end(); ++it)
     {
-      return &(*it);
-    }
-    else
-    {
-      m_logger.log("Couldn't find gpio controller", Log_type::warning);
-      return nullptr;
+      if (it->get_adress() == adress)
+      {
+        return &(*it);
+      }
+      else
+      {
+        m_logger.log("Couldn't find gpio controller", Log_type::warning);
+        return nullptr;
+      }
     }
   }
+  m_logger.log("Couldn't find gpio controller", Log_type::warning);
+  return nullptr;
 }
 
 Analog_controller* Init::get_analog_controller(int adress)
 {
-  if (m_analog_controllers.empty())
+  if (!m_analog_controllers.empty())
   {
-    m_logger.log("Couldn't analog controller", Log_type::warning);
-    return nullptr;    
-  }
-  for (auto it = m_analog_controllers.begin(); it != m_analog_controllers.end(); ++it)
-  {
-    if (it->get_adress() == adress)
+
+    for (auto it = m_analog_controllers.begin(); it != m_analog_controllers.end(); ++it)
     {
-      return &(*it);
-    }
-    else
-    {
-      m_logger.log("Couldn't find analog controller", Log_type::warning);
-      return nullptr;
+      if (it->get_adress() == adress)
+      {
+        return &(*it);
+      }
+      else
+      {
+        m_logger.log("Couldn't find analog controller", Log_type::warning);
+        return nullptr;
+      }
     }
   }
+  m_logger.log("Couldn't analog controller", Log_type::warning);
+  return nullptr;
 }
 
 PubSubClient& Init::get_wifi_mqtt_client()
@@ -115,7 +116,7 @@ Screen* Init::get_screen()
 
 void Init::wifi_mqtt_reconnect()
 {
-  // todo: fromconfig
+  // todo: from config
   m_wifi->mqtt_reconnect("greenhouse/output/#");
 }
 
