@@ -44,8 +44,6 @@ jobs:
         run: pio lib -g install https://github.com/adafruit/Adafruit_Sensor/archive/refs/tags/1.1.5.zip
       - name: Install lib adafruit RTClib
         run: pio lib -g install https://github.com/adafruit/RTClib/archive/refs/tags/2.0.3.zip
-      - name: Install lib sd
-        run: pio lib -g install SD(esp8266)
       - name: Install lib PCF8591
         run: pio lib -g install robtillaart/PCF8591
       - name: Install lib crc
