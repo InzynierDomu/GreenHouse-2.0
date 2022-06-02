@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Logger.h"
-#include "Pin_config.h"
 #include "SD.h"
 
 #include <CRC32.h>

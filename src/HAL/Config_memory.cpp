@@ -50,16 +50,16 @@ String Config_memory::get_json()
     i++;
   } while (open_bracket_count != close_bracket_count || Config::max_json_size > i);
 
-  String crc;
-  const int crc_lenght = i + 8;
-  for (i; i < crc_lenght; i++)
-  {
-    char read_character = read_EEPROM(i);
-    crc += read_character;
-  }
-  m_crc = crc.toInt();
-  m_logger.log("crc from memory = " + crc);
-  m_logger.log("crc from memory = " + String(m_crc));
+  // String crc;
+  // const int crc_lenght = i + 8;
+  // for (i; i < crc_lenght; i++)
+  // {
+  //   char read_character = read_EEPROM(i);
+  //   crc += read_character;
+  // }
+  // m_crc = crc.toInt();
+  // m_logger.log("crc from memory = " + crc);
+  // m_logger.log("crc from memory = " + String(m_crc));
 
   return output_file;
 }

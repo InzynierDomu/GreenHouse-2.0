@@ -11,7 +11,6 @@
 #include "HAL/Config.h"
 #include "HAL/Real_clock.h"
 #include "Logger.h"
-#include "Peripheral.h"
 #include "math.h"
 
 #include <optional>
@@ -19,7 +18,7 @@
 namespace Peripherals
 {
 
-Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client, Scheduler* scheduler)
+Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client, Scheduler& scheduler)
 : m_client(client)
 , m_logger(Logger("Peripherals generator", HAL::Real_clock::get_instance()->get_time_callback()))
 {
@@ -64,7 +63,7 @@ void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
   m_multisensor = new Multisensor(hal->get_dht_sensor(), topic.c_str());
 }
 
-void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler* scheduler)
+void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler& scheduler)
 {
   JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
   const int gpio_controllers_count = array.size();
@@ -87,7 +86,7 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
         else if (!pin_type.compareTo("OUT"))
         {
           gpio_controller->set_in_out(OUTPUT, pin);
-          m_gpio_outputs.push_back(Digital_output(*gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>(), scheduler));
+          m_gpio_outputs.push_back(Digital_output(gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>(), scheduler));
         }
       }
     }

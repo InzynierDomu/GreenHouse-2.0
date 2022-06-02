@@ -41,8 +41,6 @@ void SenderReceiver::publish()
   }
 }
 
-void SenderReceiver::publish_error() {}
-
 void SenderReceiver::callback(const char* topic, byte* payload, unsigned int length)
 {
   m_logger.log("Message arrived");

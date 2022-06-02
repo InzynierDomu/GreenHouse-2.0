@@ -17,6 +17,9 @@ class Analog_input : public Peripheral_input
   private:
   HAL::Analog_controller& m_controller;
   Logger m_logger;
+
+  String m_topic;
+  uint8_t m_pin;
 };
 
 } // namespace Peripherals

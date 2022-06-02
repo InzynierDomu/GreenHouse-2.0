@@ -1,19 +1,13 @@
 #pragma once
 
-#include "Peripheral.h"
-
 namespace Peripherals
 {
 
-class Peripheral_output : public Peripheral
+class Peripheral_output
 {
   public:
   virtual ~Peripheral_output() {}
   virtual void set_value(uint8_t value) = 0;
-
-  protected:
-  String m_topic;
-  int m_pin;
 };
 
 } // namespace Peripherals

@@ -28,7 +28,7 @@ class Config_memory
   char read_EEPROM(unsigned int eeaddress);
 
   Logger m_logger;
-  int m_crc;
+  // int m_crc;
 
   // todo: chagne to stream
   // char* buf;

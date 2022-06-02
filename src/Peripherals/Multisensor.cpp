@@ -11,11 +11,10 @@
 namespace Peripherals
 {
 
-Multisensor::Multisensor(HAL::Dht_sensor* dht_sensor, const char* topic, int pin)
+Multisensor::Multisensor(HAL::Dht_sensor* dht_sensor, const char* topic)
 : m_dht_sensor(dht_sensor)
 {
   m_topic = topic;
-  m_pin = pin;
 }
 
 void Multisensor::publish(PubSubClient& client)
