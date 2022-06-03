@@ -11,7 +11,8 @@
 #include "HAL/Screen.h"
 #include "Liner_fun.h"
 #include "Logger.h"
-#include "Peripherals/Peripherals_generator.h"
+#include "Peripherals/Peripherals.h"
+#include "Peripherals/Peripherals_creator.h"
 #include "Scheduler.h"
 #include "SenderReceiver.h"
 #include "Supervisor.h"
@@ -23,7 +24,8 @@
 Logger m_logger("Main", HAL::Real_clock::get_instance()->get_time_callback());
 Supervisor m_supervisor;
 HAL::Init* m_hal;
-std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals;
+std::unique_ptr<Peripherals::Peripherals_creator> m_peripherals_creator;
+std::unique_ptr<Peripherals::Peripherals> m_peripherals;
 std::unique_ptr<SenderReceiver> m_sender_reciver;
 Scheduler m_scheduler;
 
@@ -62,7 +64,9 @@ void setup()
         state = Setup_state::generation_peripherals;
         break;
       case Setup_state::generation_peripherals:
-        m_peripherals = std::make_unique<Peripherals::Peripherals_generator>(m_hal, doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
+        m_peripherals = std::make_unique<Peripherals::Peripherals>();
+        m_peripherals_creator =
+            std::make_unique<Peripherals::Peripherals_creator>(m_peripherals.get(), m_hal, doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
         state = Setup_state::connect_sender_reciver;
         break;
       case Setup_state::connect_sender_reciver:
@@ -93,7 +97,7 @@ void loop()
       last_loop_time = millis();
     }
 
-    //todo: error if loop > 1s, supervisor
+    // todo: error if loop > 1s, supervisor
   }
   else
   {

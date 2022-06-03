@@ -8,22 +8,21 @@
 
 #pragma once
 
-#include "Peripherals/Peripherals_generator.h"
+#include "Logger.h"
+#include "Peripherals/Peripherals.h"
 
 #include <memory>
-
-class Logger;
 
 class SenderReceiver
 {
   public:
-  SenderReceiver(std::unique_ptr<Peripherals::Peripherals_generator> preipherals, PubSubClient& client);
+  SenderReceiver(std::unique_ptr<Peripherals::Peripherals> preipherals, PubSubClient& client);
   void publish();
   std::function<void(const char*, byte*, unsigned int)> get_callback();
 
   private:
   Logger m_logger; ///< serial logger
-  std::unique_ptr<Peripherals::Peripherals_generator> m_peripherals; ///< peripherals inputs/outputs
+  std::unique_ptr<Peripherals::Peripherals> m_peripherals; ///< peripherals inputs/outputs
   PubSubClient& m_client; ///< MQTT client
 
   void callback(const char* topic, byte* payload, unsigned int length);

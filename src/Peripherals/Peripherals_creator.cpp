@@ -1,12 +1,12 @@
 /**
- * @file Peripherals_generator.cpp
+ * @file Peripherals_creator.cpp
  * @brief GreenHouse 2.0 - Class for genereting peripherals object from json config
  * @author Szymon Markiewicz
  * @details http://www.inzynierdomu.pl/
  * @date 01-2021
  */
 
-#include "Peripherals_generator.h"
+#include "Peripherals_creator.h"
 
 #include "HAL/Config.h"
 #include "HAL/Real_clock.h"
@@ -18,52 +18,24 @@
 namespace Peripherals
 {
 
-Peripherals_generator::Peripherals_generator(HAL::Init* hal, JsonDocument& json, PubSubClient& client, Scheduler& scheduler)
+Peripherals_creator::Peripherals_creator(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json, PubSubClient& client,
+                                         Scheduler& scheduler)
 : m_client(client)
-, m_logger(Logger("Peripherals generator", HAL::Real_clock::get_instance()->get_time_callback()))
+, m_logger(Logger("Peripherals creator", HAL::Real_clock::get_instance()->get_time_callback()))
 {
-  add_multisensor(hal, json);
-  generate_digital_in_out(hal, json, scheduler);
-  generate_analog_in(hal, json);
+  add_multisensor(peripherals, hal, json);
+  generate_digital_in_out(peripherals, hal, json, scheduler);
+  generate_analog_in(peripherals, hal, json);
 }
 
-std::optional<Digital_output> Peripherals_generator::get_gpio_output(String topic)
-{
-  if (!m_gpio_outputs.empty())
-  {
-    for (auto it = m_gpio_outputs.begin(); it != m_gpio_outputs.end(); it++)
-    {
-      if (topic.equals(it->get_topic()))
-      {
-        return *(it);
-      }
-    }
-  }
-  return std::nullopt;
-}
-
-Multisensor* Peripherals_generator::get_multisensor()
-{
-  return m_multisensor;
-}
-
-std::vector<Digital_input>* Peripherals_generator::get_gpio_inputs()
-{
-  return &m_gpio_inputs;
-}
-
-std::vector<Analog_input>* Peripherals_generator::get_analog_inputs()
-{
-  return &m_analog_inputs;
-}
-
-void Peripherals_generator::add_multisensor(HAL::Init* hal, JsonDocument& json)
+void Peripherals_creator::add_multisensor(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json)
 {
   auto topic = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>();
-  m_multisensor = new Multisensor(hal->get_dht_sensor(), topic.c_str());
+  // m_multisensor = new Multisensor(hal->get_dht_sensor(), topic.c_str());
+  peripherals->m_inputs.push_back(new Multisensor(hal->get_dht_sensor(), topic.c_str()));
 }
 
-void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument& json, Scheduler& scheduler)
+void Peripherals_creator::generate_digital_in_out(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json, Scheduler& scheduler)
 {
   JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["GPIO_CONTROLLERS"].as<JsonArray>();
   const int gpio_controllers_count = array.size();
@@ -81,19 +53,19 @@ void Peripherals_generator::generate_digital_in_out(HAL::Init* hal, JsonDocument
         if (!pin_type.compareTo("IN"))
         {
           gpio_controller->set_in_out(INPUT, pin);
-          m_gpio_inputs.push_back(Digital_input(*gpio_controller, pin, pins[pin]["TOPIC"].as<String>()));
+          peripherals->m_inputs.push_back(new Digital_input(*gpio_controller, pin, pins[pin]["TOPIC"].as<String>()));
         }
         else if (!pin_type.compareTo("OUT"))
         {
           gpio_controller->set_in_out(OUTPUT, pin);
-          m_gpio_outputs.push_back(Digital_output(gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>(), scheduler));
+          peripherals->m_outputs.push_back(new Digital_output(gpio_controller, m_client, pin, pins[pin]["TOPIC"].as<String>(), scheduler));
         }
       }
     }
   }
 }
 
-void Peripherals_generator::generate_analog_in(HAL::Init* hal, JsonDocument& json)
+void Peripherals_creator::generate_analog_in(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json)
 {
   JsonArray array = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"].as<JsonArray>();
   const int analog_controllers_count = array.size();
@@ -107,13 +79,13 @@ void Peripherals_generator::generate_analog_in(HAL::Init* hal, JsonDocument& jso
       JsonArray pins = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"][i]["INPUTS"].as<JsonArray>();
       for (uint8_t pin = 0; pin < static_cast<uint8_t>(pins.size()); pin++)
       {
-        m_analog_inputs.push_back(Analog_input(*analog_controller, pin, pins[pin]["TOPIC"].as<String>()));
+        peripherals->m_inputs.push_back(new Analog_input(*analog_controller, pin, pins[pin]["TOPIC"].as<String>()));
       }
     }
   }
 }
 
-int Peripherals_generator::convert_bin_to_dec(String number)
+int Peripherals_creator::convert_bin_to_dec(String number)
 {
   int retvalue = 0;
   int i = 0;
