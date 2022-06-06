@@ -44,6 +44,7 @@ void Digital_output::set_value(uint8_t value)
   }
   else
   {
+    m_controller->set_state(m_pin, 1);
     m_scheduler.add_action([this]() { turn_off(); }, value - 1); //todo: error, probably main 71: move m_peripherals is a problem with move and correct address
     m_logger->log("turn on for " + String(value - 1) + "s");
   }

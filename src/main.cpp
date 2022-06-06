@@ -23,7 +23,7 @@
 
 Logger m_logger("Main", HAL::Real_clock::get_instance()->get_time_callback());
 Supervisor m_supervisor;
-HAL::Init* m_hal;
+std::unique_ptr<HAL::Init> m_hal;
 std::unique_ptr<Peripherals::Peripherals_creator> m_peripherals_creator;
 std::unique_ptr<Peripherals::Peripherals> m_peripherals;
 std::unique_ptr<SenderReceiver> m_sender_reciver;
@@ -51,7 +51,7 @@ void setup()
     switch (state)
     {
       case Setup_state::hal_init:
-        m_hal = new HAL::Init(m_supervisor);
+        m_hal = std::make_unique<HAL::Init>(m_supervisor);
         m_hal->get_screen()->print("Startup");
         state = Setup_state::json_deserialize;
         break;
@@ -66,7 +66,7 @@ void setup()
       case Setup_state::generation_peripherals:
         m_peripherals = std::make_unique<Peripherals::Peripherals>();
         m_peripherals_creator =
-            std::make_unique<Peripherals::Peripherals_creator>(m_peripherals.get(), m_hal, doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
+            std::make_unique<Peripherals::Peripherals_creator>(m_peripherals.get(), m_hal.get(), doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
         state = Setup_state::connect_sender_reciver;
         break;
       case Setup_state::connect_sender_reciver:

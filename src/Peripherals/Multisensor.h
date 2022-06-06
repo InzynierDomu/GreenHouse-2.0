@@ -9,6 +9,7 @@
 #pragma once
 
 #include "HAL/Dht_sensor.h"
+#include "Logger.h"
 #include "Peripheral_input.h"
 
 #include <PubSubClient.h>
@@ -23,6 +24,7 @@ class Multisensor : public Peripheral_input
 
   private:
   HAL::Dht_sensor* m_dht_sensor;
+  Logger m_logger;
 
   String m_topic;
 };

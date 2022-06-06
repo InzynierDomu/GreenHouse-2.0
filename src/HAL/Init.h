@@ -7,9 +7,10 @@
 
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
+#include <memory>
 #include <optional>
 #include <vector>
-#include <memory>
+
 
 class Supervisor;
 
@@ -46,7 +47,7 @@ class Init
   SD_reader* m_sd_reader;
   std::vector<GPIO_controller> m_gpio_controllers;
   std::vector<Analog_controller> m_analog_controllers;
-  Dht_sensor* m_dht_sensor;
+  std::unique_ptr<Dht_sensor> m_dht_sensor;
   Wifi* m_wifi;
   Config_memory* m_config_memory;
 

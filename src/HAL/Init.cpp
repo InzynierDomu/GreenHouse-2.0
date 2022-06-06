@@ -18,16 +18,16 @@ Init::Init(Supervisor& supervisor)
 , m_supervisor(supervisor)
 {
   scan_i2c();
+  // todo: if screen
+  m_screen = std::make_unique<Screen>();
   if (!check_main_i2c_peripherals())
   {
-    m_screen = std::make_unique<Screen>();
     m_logger.log("memory not found", Log_type::error);
     m_supervisor.error();
   }
   else
   {
-    m_screen = std::make_unique<Screen>();
-    m_dht_sensor = new Dht_sensor();
+    m_dht_sensor = std::make_unique<Dht_sensor>();
     m_sd_reader = new SD_reader();
     m_config_memory = new Config_memory();
     generate_expander_controllers();
@@ -58,7 +58,7 @@ void Init::initNetwork(JsonDocument& json)
 
 Dht_sensor* Init::get_dht_sensor()
 {
-  return m_dht_sensor;
+  return m_dht_sensor.get();
 }
 
 GPIO_controller* Init::get_GPIO_controller(int adress)

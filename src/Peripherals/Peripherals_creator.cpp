@@ -31,7 +31,6 @@ Peripherals_creator::Peripherals_creator(Peripherals* peripherals, HAL::Init* ha
 void Peripherals_creator::add_multisensor(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json)
 {
   auto topic = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["SENSOR"].as<String>();
-  // m_multisensor = new Multisensor(hal->get_dht_sensor(), topic.c_str());
   peripherals->m_inputs.push_back(new Multisensor(hal->get_dht_sensor(), topic.c_str()));
 }
 
@@ -53,7 +52,7 @@ void Peripherals_creator::generate_digital_in_out(Peripherals* peripherals, HAL:
         if (!pin_type.compareTo("IN"))
         {
           gpio_controller->set_in_out(INPUT, pin);
-          peripherals->m_inputs.push_back(new Digital_input(*gpio_controller, pin, pins[pin]["TOPIC"].as<String>()));
+          peripherals->m_inputs.push_back(new Digital_input(gpio_controller, pin, pins[pin]["TOPIC"].as<String>()));
         }
         else if (!pin_type.compareTo("OUT"))
         {
@@ -79,7 +78,7 @@ void Peripherals_creator::generate_analog_in(Peripherals* peripherals, HAL::Init
       JsonArray pins = json["CONFIGURATION"]["HARDWARE_CONFIGURATION"]["ANALOG_CONTROLLERS"][i]["INPUTS"].as<JsonArray>();
       for (uint8_t pin = 0; pin < static_cast<uint8_t>(pins.size()); pin++)
       {
-        peripherals->m_inputs.push_back(new Analog_input(*analog_controller, pin, pins[pin]["TOPIC"].as<String>()));
+        peripherals->m_inputs.push_back(new Analog_input(analog_controller, pin, pins[pin]["TOPIC"].as<String>()));
       }
     }
   }
