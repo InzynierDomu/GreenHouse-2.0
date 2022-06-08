@@ -1,12 +1,12 @@
 #include <Arduino.h>
 
 String local_json = "{\"CONFIGURATION\":"
-                    "{\"SSID\":\"\","
-                    "\"PASS\":\"\","
+                    "{\"SSID\":\"ssid\","
+                    "\"PASS\":\"pass\","
                     "\"MQTT_SERVER\":\"192.168.1.139\","
-                    "\"MQTT_USER\":\"123\","
-                    "\"MQTT_ID\":\"123\","
-                    "\"MQTT_PASS\":\"123\","
+                    "\"MQTT_USER\":\"ha_user\","
+                    "\"MQTT_ID\":\"124\","
+                    "\"MQTT_PASS\":\"ha_pass\","
                     "\"HARDWARE_CONFIGURATION\":"
                     "	{\"SENSOR\":\"greenhouse/sensor\","
                     "	\"GPIO_CONTROLLERS\":["
@@ -35,4 +35,5 @@ String local_json = "{\"CONFIGURATION\":"
                     "           {\"TOPIC\":\"greenhouse/input/moisture\"}"
                     "       ]}"
                     "   ]}"
-                    "}}9965d3c1";
+                    "},"
+                    "\"CRC\":\"123\"}";
