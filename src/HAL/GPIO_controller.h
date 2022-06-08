@@ -13,7 +13,8 @@ class GPIO_controller
 
   void set_in_out(const int type, const int pin);
   uint8_t get_state(const int pin);
-  void set_state(const int pin, const uint8_t state);
+  void turn_on_pin(const int pin);
+  void turn_off_pin(const int pin);  
   int get_adress() const;
 
   private:

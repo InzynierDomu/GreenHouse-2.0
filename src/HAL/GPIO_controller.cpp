@@ -22,10 +22,16 @@ uint8_t GPIO_controller::get_state(const int pin)
   return m_exspander.digitalRead(pin);
 }
 
-void GPIO_controller::set_state(const int pin, const uint8_t state)
+void GPIO_controller::turn_on_pin(const int pin)
 {
-  m_exspander.digitalWrite(pin, state);
+  m_exspander.digitalWrite(pin, LOW);
 }
+
+void GPIO_controller::turn_off_pin(const int pin)
+{
+  m_exspander.digitalWrite(pin, HIGH);
+}
+
 
 int GPIO_controller::get_adress() const
 {
