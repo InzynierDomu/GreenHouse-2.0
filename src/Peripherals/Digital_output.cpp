@@ -29,7 +29,6 @@ void Digital_output::turn_off()
 
 void Digital_output::set_value(uint8_t value)
 {
-  value -= 48;
   if (value < 2)
   {
     if (value)

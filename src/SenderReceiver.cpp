@@ -35,9 +35,11 @@ void SenderReceiver::callback(const char* topic, byte* payload, unsigned int len
 {
   m_logger.log("Message arrived");
   auto output = m_peripherals->get_output(topic);
+  String msg_payload = String((char*)payload);
+  m_logger.log("Msg payload = " + msg_payload);
   if (output != nullptr)
   {
-    output->set_value(*payload);
+    output->set_value(msg_payload.toInt());
   }
 }
 
