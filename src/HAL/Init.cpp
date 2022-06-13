@@ -9,6 +9,7 @@
 #include "Screen.h"
 #include "Supervisor.h"
 #include "Wifi.h"
+#include "Utilis/Checksum.h"
 
 namespace HAL
 {
@@ -132,22 +133,20 @@ void Init::deserializeConfigJson(JsonDocument& json)
     m_logger.log("memory json: " + m_config_memory->get_json(), Log_type::debug);
   }
 
-
-  String deserialization_state;
-
 #ifdef LOCAL_JSON
 #include "local_json.h"
-  deserialization_state = deserializeJson(json, local_json).c_str();
+  String deserialization_state = deserializeJson(json, local_json).c_str();
 #endif
 #ifndef LOCAL_JSON
-  deserialization_state = deserializeJson(json, m_config_memory->get_json()).c_str();
+  String deserialization_state = deserializeJson(json, m_config_memory->get_json()).c_str();
 #endif
 
   if (!deserialization_state.compareTo("Ok"))
   {
     m_logger.log("Deserialization Ok");
     auto crc = json["CRC"].as<String>();
-    m_logger.log("CRC=" + crc);
+    m_logger.log("CRC from file=" + crc);
+    
   }
   else
   {

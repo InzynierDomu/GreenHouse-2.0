@@ -7,7 +7,7 @@ namespace HAL
 namespace Config
 {
 
-const int max_json_size = 1024;
+const int max_json_size = 2048;
 
 const uint8_t screen_adress = 0x3C;
 const int screen_width = 128;

@@ -5,11 +5,7 @@
 namespace UTIILS
 {
 
-class Checksum
-{
-  public:
-  Checksum();
-  
-};
+static uint32_t calculate_crc(String& text) {}
+
 
 } // namespace UTIILS

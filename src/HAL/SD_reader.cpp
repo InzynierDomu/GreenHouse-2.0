@@ -33,14 +33,22 @@ String SD_reader::get_json_file()
   String json_file;
   if (dataFile)
   {
+    int open_bracket_count = 0;
     while (dataFile.available())
     {
       char read_character = (char)dataFile.read();
+      if (open_bracket_count > 1)
+      {
+        //todo: add to calculate crc
+      }
+      else if (read_character == '{')
+      {
+        open_bracket_count++;
+      }
+
       json_file += read_character;
     }
     dataFile.close();
-
-    // todo: split to json and crc
   }
   else
   {

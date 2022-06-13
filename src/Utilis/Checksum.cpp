@@ -3,8 +3,4 @@
 namespace UTIILS
 {
 
-Checksum::Checksum()
-{
-}
-
-} //UTIILS
+} // namespace UTIILS
