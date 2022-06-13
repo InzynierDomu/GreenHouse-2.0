@@ -41,7 +41,11 @@ String Config_memory::get_json()
 
     if (open_bracket_count > 1)
     {
-      // todo: add to calculate crc
+      // TODO: add to calculate crc
+      if ((close_bracket_count - open_bracket_count) == 1)
+      {
+        // stop adding and calculate
+      }
     }
 
     output_file += read_character;

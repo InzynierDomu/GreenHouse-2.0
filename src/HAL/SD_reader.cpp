@@ -39,7 +39,7 @@ String SD_reader::get_json_file()
       char read_character = (char)dataFile.read();
       if (open_bracket_count > 1)
       {
-        //todo: add to calculate crc
+        // TODO: add to calculate crc
       }
       else if (read_character == '{')
       {

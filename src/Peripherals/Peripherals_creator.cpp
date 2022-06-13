@@ -18,6 +18,14 @@
 namespace Peripherals
 {
 
+/**
+ * @brief Construct a new Peripherals_creator::Peripherals_creator object
+ * @param peripherals: peripherals model to fill
+ * @param hal: hardware layer
+ * @param json: configuration
+ * @param client: mqtt client
+ * @param scheduler: scheduler
+ */
 Peripherals_creator::Peripherals_creator(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json, PubSubClient& client,
                                          Scheduler& scheduler)
 : m_client(client)
