@@ -60,5 +60,9 @@ jobs:
 
       - name: Install native
         run: pio platform install native
+
       - name: Run check
         run: pio check -e check
+
+      - name: doxygen
+        uses: mattnotmitt/doxygen-action@v1.9.2

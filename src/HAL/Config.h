@@ -17,7 +17,7 @@ const int memory_adress = 0x50;
 
 const int mqtt_port = 1883;
 
-// const char *time_serwer = "pool.ntp.org";
+static const char* time_server = "pool.ntp.org";
 const int time_zone = 7200;
 const int time_synchronization_timeout = 30000;
 

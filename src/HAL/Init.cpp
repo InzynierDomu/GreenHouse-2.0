@@ -8,8 +8,9 @@
 #include "SD_reader.h"
 #include "Screen.h"
 #include "Supervisor.h"
-#include "Wifi.h"
 #include "Utilis/Checksum.h"
+#include "Wifi.h"
+
 
 namespace HAL
 {
@@ -19,7 +20,7 @@ Init::Init(Supervisor& supervisor)
 , m_supervisor(supervisor)
 {
   scan_i2c();
-  // todo: if screen
+  // TODO: if screen
   m_screen = std::make_unique<Screen>();
   if (!check_main_i2c_peripherals())
   {
@@ -50,13 +51,13 @@ Dht_sensor* Init::get_dht_sensor()
   return m_dht_sensor.get();
 }
 
-GPIO_controller* Init::get_GPIO_controller(int adress)
+GPIO_controller* Init::get_GPIO_controller(int address)
 {
   if (!m_gpio_controllers.empty())
   {
     for (auto it = m_gpio_controllers.begin(); it != m_gpio_controllers.end(); ++it)
     {
-      if (it->get_adress() == adress)
+      if (it->get_address() == address)
       {
         return &(*it);
       }
@@ -71,14 +72,14 @@ GPIO_controller* Init::get_GPIO_controller(int adress)
   return nullptr;
 }
 
-Analog_controller* Init::get_analog_controller(int adress)
+Analog_controller* Init::get_analog_controller(int address)
 {
   if (!m_analog_controllers.empty())
   {
 
     for (auto it = m_analog_controllers.begin(); it != m_analog_controllers.end(); ++it)
     {
-      if (it->get_adress() == adress)
+      if (it->get_address() == address)
       {
         return &(*it);
       }
@@ -105,7 +106,7 @@ Screen* Init::get_screen()
 
 void Init::wifi_mqtt_reconnect()
 {
-  // todo: from config
+  // TODO: from config
   m_wifi->mqtt_reconnect("greenhouse/output/#");
 }
 
@@ -123,7 +124,7 @@ void Init::deserializeConfigJson(JsonDocument& json)
 {
   if (m_sd_reader->is_card_available())
   {
-    String json_file = m_sd_reader->get_json_file(); // todo: get only crc from json on eeprom, and comapre olny crc
+    String json_file = m_sd_reader->get_json_file(); // TODO: get only crc from json on eeprom, and comapre olny crc
     if (!json_file.equals(m_config_memory->get_json()))
     {
       m_config_memory->save_json(json_file);
@@ -146,7 +147,6 @@ void Init::deserializeConfigJson(JsonDocument& json)
     m_logger.log("Deserialization Ok");
     auto crc = json["CRC"].as<String>();
     m_logger.log("CRC from file=" + crc);
-    
   }
   else
   {
@@ -203,7 +203,7 @@ void Init::synchronize_with_ntp()
 {
   time_t now = time(nullptr);
 
-  configTime(Config::time_zone, 0, "pool.ntp.org"); // TODO: move to config
+  configTime(Config::time_zone, 0, Config::time_server);
   static long last_loop_time = 0;
   long loop_time = millis();
   do

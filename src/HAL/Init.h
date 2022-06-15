@@ -31,8 +31,8 @@ class Init
   Init(Supervisor& supervisor);
   void initNetwork(JsonDocument& json);
   Dht_sensor* get_dht_sensor();
-  GPIO_controller* get_GPIO_controller(int adress);
-  Analog_controller* get_analog_controller(int adress);
+  GPIO_controller* get_GPIO_controller(int address);
+  Analog_controller* get_analog_controller(int address);
   PubSubClient& get_wifi_mqtt_client();
   Screen* get_screen();
   void wifi_mqtt_reconnect();
