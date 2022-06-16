@@ -1,7 +1,7 @@
 /**
  * @file Real_clock.h
  * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
- * @brief Real time clock (singleton)
+ * @brief Real time clock handling (singleton)
  * @date 2022-06
  */
 

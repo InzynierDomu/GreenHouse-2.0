@@ -3,8 +3,11 @@
 namespace HAL
 {
 
+/**
+ * @brief Construct a new Screen:: Screen object
+ */
 Screen::Screen()
-:m_display(Config::screen_width, Config::screen_height, &Wire)
+: m_display(Config::screen_width, Config::screen_height, &Wire)
 {
   m_display.begin(SSD1306_SWITCHCAPVCC, Config::screen_adress);
 
@@ -14,7 +17,11 @@ Screen::Screen()
   m_display.setTextColor(SSD1306_WHITE);
 }
 
-void Screen::print(String text)
+/**
+ * @brief print text on screen
+ * @param text: text to print
+ */
+void Screen::print(const String& text)
 {
   m_display.clearDisplay();
   m_display.setCursor(0, 0);
