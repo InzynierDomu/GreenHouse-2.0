@@ -21,12 +21,12 @@ Part list:
 - U2 DHT22 humidity and temperature sensor
 - U3 EEPROM 24C16
 - U4 ESP8266 NodeMCU
-- U5 RTC DS1207
+- U5 RTC DS1307
 - Y1 Oscillator 32,788 KHz
 
 Parts optional (on I2C)
-- MCP23017 (max 8)
-- PCF8591 (max 8)
+- MCP23017 (max 8 pcs)
+- PCF8591 (max 8 pcs)
 
 ## IDE
 

@@ -1,3 +1,10 @@
+/**
+ * @file Init.cpp
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief Main HAL run
+ * @date 2022-06
+ */
+
 #include "Init.h"
 
 #include "Analog_controller.h"

@@ -1,3 +1,10 @@
+/**
+ * @file Init.h
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief Main HAL run
+ * @date 2022-06
+ */
+
 #pragma once
 
 #include "../Keyboard_buttons.h"
@@ -10,7 +17,6 @@
 #include <memory>
 #include <optional>
 #include <vector>
-
 
 class Supervisor;
 

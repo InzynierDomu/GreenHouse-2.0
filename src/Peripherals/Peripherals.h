@@ -1,9 +1,8 @@
 /**
  * @file Peripherals.h
- * @brief GreenHouse 2.0 - Peripherals container structure
- * @author Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
- * @date 06-2022
+ * @brief Peripherals container structure
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @date 2022-06
  */
 
 #pragma once
@@ -19,9 +18,14 @@ namespace Peripherals
 
 struct Peripherals
 {
-  std::vector<Peripheral_output*> m_outputs;
-  std::vector<Peripheral_input*> m_inputs;
+  std::vector<Peripheral_output*> m_outputs; ///< outputs peripherals
+  std::vector<Peripheral_input*> m_inputs; ///< inputs peripherals
 
+  /**
+   * @brief Get the output object
+   * @param topic: with what topic want to find output
+   * @return Peripheral_output* output
+   */
   Peripheral_output* get_output(String topic)
   {
     if (!m_outputs.empty())

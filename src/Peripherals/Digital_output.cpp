@@ -1,3 +1,10 @@
+/**
+ * @file Digital_output.cpp
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief Digital output handling
+ * @date 2022-06
+ */
+
 #include "Digital_output.h"
 
 #include "HAL/Real_clock.h"
@@ -6,14 +13,22 @@
 namespace Peripherals
 {
 
-Digital_output::Digital_output(HAL::GPIO_controller* controller, PubSubClient& client, int pin, String topic, Scheduler& scheduler)
+/**
+ * @brief Construct a new Digital_output::Digital_output object
+ * @param controller: GPIO expander
+ * @param client: MQTT client
+ * @param pin: pin number
+ * @param topic: mqtt topic to subscribe
+ * @param scheduler: event scheduler
+ */
+Digital_output::Digital_output(HAL::GPIO_controller* controller, PubSubClient& client, const uint8_t pin, const String& topic,
+                               Scheduler& scheduler)
 : m_controller(controller)
 , m_logger(new Logger("Digital output (topic:" + topic + " pin:" + String(pin) + ")", HAL::Real_clock::get_instance()->get_time_callback()))
 , m_scheduler(scheduler)
+, m_topic(topic)
+, m_pin(pin)
 {
-  m_pin = pin;
-  m_topic = topic;
-
   m_controller->set_in_out(OUTPUT, m_pin);
 
   char convert_buf[30];
@@ -21,13 +36,11 @@ Digital_output::Digital_output(HAL::GPIO_controller* controller, PubSubClient& c
   client.subscribe(convert_buf);
 }
 
-void Digital_output::turn_off()
-{
-  m_controller->turn_off_pin(m_pin);
-  m_logger->log("turn off");
-}
-
-void Digital_output::set_value(uint8_t value)
+/**
+ * @brief set value on output pin
+ * @param value: turn on, of or turn on for some time
+ */
+void Digital_output::set_value(const uint8_t value)
 {
   if (value < 2)
   {
@@ -50,9 +63,19 @@ void Digital_output::set_value(uint8_t value)
   }
 }
 
-String Digital_output::get_topic()
+/**
+ * @brief get output topic
+ * @return String topic
+ */
+String Digital_output::get_topic() const
 {
   return m_topic;
+}
+
+void Digital_output::turn_off()
+{
+  m_controller->turn_off_pin(m_pin);
+  m_logger->log("turn off");
 }
 
 } // namespace Peripherals
