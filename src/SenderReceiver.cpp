@@ -21,6 +21,9 @@ SenderReceiver::SenderReceiver(std::unique_ptr<Peripherals::Peripherals> preiphe
 , m_client(client)
 {}
 
+/**
+ * @brief publishing value from all peripherals inputs
+ */
 void SenderReceiver::publish()
 {
   m_logger.log("Publish");
@@ -29,6 +32,15 @@ void SenderReceiver::publish()
   {
     (*it)->publish(m_client);
   }
+}
+
+/**
+ * @brief get callback from mqtt recive message 
+ * @return callback from mqtt recive message 
+ */ 
+std::function<void(const char*, byte*, unsigned int)> SenderReceiver::get_callback()
+{
+  return [this](const char* _topic, byte* _payload, unsigned int _lenght) { callback(_topic, _payload, _lenght); };
 }
 
 void SenderReceiver::callback(const char* topic, byte* payload, unsigned int length)
@@ -41,9 +53,4 @@ void SenderReceiver::callback(const char* topic, byte* payload, unsigned int len
   {
     output->set_value(msg_payload.toInt());
   }
-}
-
-std::function<void(const char*, byte*, unsigned int)> SenderReceiver::get_callback()
-{
-  return [this](const char* _topic, byte* _payload, unsigned int _lenght) { callback(_topic, _payload, _lenght); };
 }

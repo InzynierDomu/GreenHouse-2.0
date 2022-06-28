@@ -1,3 +1,9 @@
+/**
+ * @file Scheduler.h
+ * @brief scheduling action on outputs
+ * @author by Szymon Markiewicz (http://www.inzynierdomu.pl/)
+ * @date 01-2021
+ */
 #pragma once
 
 #include "Logger.h"
@@ -5,7 +11,7 @@
 #include <functional>
 #include <map>
 
-// todo: maybe singleton
+// TODO: maybe singleton
 class Scheduler
 {
   public:
@@ -15,5 +21,5 @@ class Scheduler
 
   private:
   Logger m_logger; ///< serial logger
-  std::map<long, std::function<void()>> m_events;
+  std::map<long, std::function<void()>> m_events; ///< scheduled events
 };
