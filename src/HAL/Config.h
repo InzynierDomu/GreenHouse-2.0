@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <Arduino.h>
 
 namespace HAL
 {
@@ -27,7 +28,9 @@ const int max_adress_gpio_controllers = 39;
 const int min_adress_analog_controllers = 71;
 const int max_adress_analog_controllers = 79;
 
-static const char *m_json_file_name = "config.json";
+static const char* m_json_file_name = "config.json";
+
+const String sw_version = "88dd825";
 
 } // namespace Config
 } // namespace HAL

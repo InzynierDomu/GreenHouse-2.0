@@ -18,7 +18,7 @@ namespace Peripherals
  * @param pin: pin number
  * @param topic: mqtt topic to publish
  */
-Digital_input::Digital_input(HAL::GPIO_controller* controller, const uint8_t pin, const String& topic)
+Digital_input::Digital_input(HAL::GPIO_controller* controller, const uint8_t pin, const String topic)
 : m_controller(controller)
 , m_logger(Logger("Digital input (topic:" + topic + " pin:" + String(pin) + ")", HAL::Real_clock::get_instance()->get_time_callback()))
 , m_topic(topic)
@@ -27,13 +27,15 @@ Digital_input::Digital_input(HAL::GPIO_controller* controller, const uint8_t pin
 
 /**
  * @brief publish actual pin state
- * @param client: mqtt client
+ * @param client: mqtt client 
  */
 void Digital_input::publish(PubSubClient& client)
 {
+  char buf[1];
   uint8_t state = m_controller->get_state(m_pin);
-  m_logger.log(String(state));
-  client.publish(m_topic.c_str(), &state, 1);
+  sprintf(buf, "%d", state);
+  m_logger.log(buf);
+  client.publish(m_topic.c_str(), buf);
 }
 
 } // namespace Peripherals

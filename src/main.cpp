@@ -16,6 +16,7 @@
 #include "Scheduler.h"
 #include "SenderReceiver.h"
 #include "Supervisor.h"
+#include "HAL/Config.h"
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
@@ -65,8 +66,8 @@ void setup()
         break;
       case Setup_state::generation_peripherals:
         m_peripherals = std::make_unique<Peripherals::Peripherals>();
-        m_peripherals_creator =
-            std::make_unique<Peripherals::Peripherals_creator>(m_peripherals.get(), m_hal.get(), doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
+        m_peripherals_creator = std::make_unique<Peripherals::Peripherals_creator>(
+            m_peripherals.get(), m_hal.get(), doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
         state = Setup_state::connect_sender_reciver;
         break;
       case Setup_state::connect_sender_reciver:
@@ -77,7 +78,7 @@ void setup()
     }
   }
   m_logger.log("Setup finished");
-  m_hal->get_screen()->print("Geenhouse 2.0");
+  m_hal->get_screen()->print("Greenhouse\nv:" + HAL::Config::sw_version);
 }
 
 void loop()
@@ -88,7 +89,7 @@ void loop()
     m_hal->wifi_mqtt_reconnect();
     m_hal->mqtt_loop();
 
-    static long last_loop_time = 0;
+    static long last_loop_time = 0; // TODO: move to sender reciver
     long loop_time = millis();
     m_scheduler.check_events(loop_time);
     if (loop_time - last_loop_time > 60000)
