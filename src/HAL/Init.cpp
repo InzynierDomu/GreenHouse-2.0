@@ -18,7 +18,6 @@
 #include "Utilis/Checksum.h"
 #include "Wifi.h"
 
-
 namespace HAL
 {
 
@@ -131,12 +130,17 @@ void Init::deserializeConfigJson(JsonDocument& json)
 {
   if (m_sd_reader->is_card_available())
   {
-    String json_file = m_sd_reader->get_json_file(); // TODO: get only crc from json on eeprom, and comapre olny crc
-    if (!json_file.equals(m_config_memory->get_json()))
+    String json_file = m_sd_reader->get_json_file();
+    m_config_memory->get_json();
+    if (m_sd_reader->get_crc() != m_config_memory->get_crc())
     {
       m_config_memory->save_json(json_file);
       m_logger.log("New json saving");
       m_logger.log("SD json: " + json_file, Log_type::debug);
+    }
+    else
+    {
+      m_logger.log("SD and memory config is the same");
     }
     m_logger.log("memory json: " + m_config_memory->get_json(), Log_type::debug);
   }
@@ -152,8 +156,6 @@ void Init::deserializeConfigJson(JsonDocument& json)
   if (!deserialization_state.compareTo("Ok"))
   {
     m_logger.log("Deserialization Ok");
-    auto crc = json["CRC"].as<String>();
-    m_logger.log("CRC from file=" + crc);
   }
   else
   {

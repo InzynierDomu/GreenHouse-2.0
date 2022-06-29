@@ -3,6 +3,7 @@
 #include "Config.h"
 #include "Pin_config.h"
 #include "Real_clock.h"
+#include "Utilis/Checksum.h"
 
 namespace HAL
 {
@@ -29,25 +30,34 @@ bool SD_reader::is_card_available() const
 
 String SD_reader::get_json_file()
 {
-  File dataFile = SD.open("config.json");
+  File dataFile = SD.open(Config::m_json_file_name);
   String json_file;
   if (dataFile)
   {
-    int open_bracket_count = 0;
-    while (dataFile.available())
+    uint16_t open_bracket_count = 0;
+    uint16_t close_bracket_count = 0;
+
+    uint32_t i = 0;
+
+    Utils::Checksum checksum;
+    do
     {
       char read_character = (char)dataFile.read();
-      if (open_bracket_count > 1)
-      {
-        // TODO: add to calculate crc
-      }
-      else if (read_character == '{')
+      if (read_character == '{')
       {
         open_bracket_count++;
       }
+      else if (read_character == '}')
+      {
+        close_bracket_count++;
+      }
 
       json_file += read_character;
-    }
+      checksum.add_char(read_character);
+      i++;
+    } while ((open_bracket_count != close_bracket_count || Config::max_json_size > i) && dataFile.available());
+    m_crc = checksum.calculate_crc();
+    m_logger.log(String(m_crc));
     dataFile.close();
   }
   else
@@ -58,19 +68,24 @@ String SD_reader::get_json_file()
   return json_file;
 }
 
-bool SD_reader::compare_crc(String crc_from_json, CRC32& crc_calculated)
+uint32_t SD_reader::get_crc() const
 {
-  m_logger.log("crc from json" + crc_from_json, Log_type::debug);
-  m_logger.log("crc calculated" + String(crc_calculated.finalize()), Log_type::debug);
-  uint32_t crc = (uint32_t)strtoul(&crc_from_json[0], nullptr, 16);
-
-  if (crc_calculated.finalize() == crc)
-  {
-    m_logger.log("Bad crc compare", Log_type::error);
-    return true;
-  }
-
-  return false;
+  return m_crc;
 }
+
+// bool SD_reader::compare_crc(String crc_from_json, CRC32& crc_calculated)
+// {
+//   m_logger.log("crc from json" + crc_from_json, Log_type::debug);
+//   m_logger.log("crc calculated" + String(crc_calculated.finalize()), Log_type::debug);
+//   uint32_t crc = (uint32_t)strtoul(&crc_from_json[0], nullptr, 16);
+
+//   if (crc_calculated.finalize() == crc)
+//   {
+//     m_logger.log("Bad crc compare", Log_type::error);
+//     return true;
+//   }
+
+//   return false;
+// }
 
 } // namespace HAL

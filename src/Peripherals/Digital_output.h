@@ -22,7 +22,7 @@ namespace Peripherals
 class Digital_output : public Peripheral_output
 {
   public:
-  Digital_output(HAL::GPIO_controller* controller, PubSubClient& client, const uint8_t pin, const String& topic, Scheduler& scheduler);
+  Digital_output(HAL::GPIO_controller* controller, PubSubClient& client, const uint8_t pin, const String topic, Scheduler& scheduler);
   void set_value(const uint8_t value) override;
   String get_topic() const override;
 
@@ -33,7 +33,7 @@ class Digital_output : public Peripheral_output
   Logger* m_logger;
   Scheduler& m_scheduler;
 
-  const String& m_topic; ///< mqtt topic to subscribe
+  const String m_topic; ///< mqtt topic to subscribe
   const uint8_t m_pin; ///< pin number on expander
 };
 

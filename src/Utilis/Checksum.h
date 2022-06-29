@@ -2,11 +2,17 @@
 
 #include <CRC32.h>
 
-namespace UTIILS
+namespace Utils
 {
 
-// FIXME: use
-// static uint32_t calculate_crc(String& text) {}
+class Checksum
+{
+  public:
+  void add_char(char data);
+  uint32_t calculate_crc();
 
+  private:
+  CRC32 m_crc;
+};
 
-} // namespace UTIILS
+} // namespace Utils

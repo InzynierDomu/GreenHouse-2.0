@@ -21,7 +21,7 @@ namespace Peripherals
  * @param topic: mqtt topic to subscribe
  * @param scheduler: event scheduler
  */
-Digital_output::Digital_output(HAL::GPIO_controller* controller, PubSubClient& client, const uint8_t pin, const String& topic,
+Digital_output::Digital_output(HAL::GPIO_controller* controller, PubSubClient& client, const uint8_t pin, const String topic,
                                Scheduler& scheduler)
 : m_controller(controller)
 , m_logger(new Logger("Digital output (topic:" + topic + " pin:" + String(pin) + ")", HAL::Real_clock::get_instance()->get_time_callback()))

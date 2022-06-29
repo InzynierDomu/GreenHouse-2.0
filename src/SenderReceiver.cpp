@@ -35,9 +35,9 @@ void SenderReceiver::publish()
 }
 
 /**
- * @brief get callback from mqtt recive message 
- * @return callback from mqtt recive message 
- */ 
+ * @brief get callback from mqtt recive message
+ * @return callback from mqtt recive message
+ */
 std::function<void(const char*, byte*, unsigned int)> SenderReceiver::get_callback()
 {
   return [this](const char* _topic, byte* _payload, unsigned int _lenght) { callback(_topic, _payload, _lenght); };
@@ -48,9 +48,14 @@ void SenderReceiver::callback(const char* topic, byte* payload, unsigned int len
   m_logger.log("Message arrived");
   auto output = m_peripherals->get_output(topic);
   String msg_payload = String((char*)payload);
+  m_logger.log(topic, Log_type::debug);
   m_logger.log("Msg payload = " + msg_payload);
   if (output != nullptr)
   {
     output->set_value(msg_payload.toInt());
+  }
+  else
+  {
+    m_logger.log("output not found", Log_type::warning);
   }
 }

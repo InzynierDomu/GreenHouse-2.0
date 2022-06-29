@@ -1,7 +1,12 @@
+/**
+ * @file Config_memory.h
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief EEPROM handling for JSON configuration
+ * @date 2022-06
+ */
 #pragma once
 
 #include "Logger.h"
-#include "Utilis/Checksum.h"
 
 #include <Wire.h>
 #include <istream>
@@ -15,12 +20,14 @@ class Config_memory
   Config_memory();
   void save_json(String& file);
   String get_json();
+  uint32_t get_crc() const;
 
   private:
   void write_EEPROM(unsigned int eeaddress, char data);
   char read_EEPROM(unsigned int eeaddress);
 
   Logger m_logger;
+  uint32_t m_crc;
 };
 
 } // namespace HAL

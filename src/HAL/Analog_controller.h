@@ -4,7 +4,6 @@
  * @brief Analog output expander
  * @date 2022-06
  */
-
 #pragma once
 
 #include "Logger.h"

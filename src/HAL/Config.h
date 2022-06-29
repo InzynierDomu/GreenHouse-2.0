@@ -27,7 +27,7 @@ const int max_adress_gpio_controllers = 39;
 const int min_adress_analog_controllers = 71;
 const int max_adress_analog_controllers = 79;
 
-static const char *m_json_file_name = "datalog.json";
+static const char *m_json_file_name = "config.json";
 
 } // namespace Config
 } // namespace HAL

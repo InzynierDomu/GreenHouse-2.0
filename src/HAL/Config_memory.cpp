@@ -1,7 +1,14 @@
+/**
+ * @file Config_memory.cpp
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief EEPROM handling for JSON configuration
+ * @date 2022-06
+ */
 #include "Config_memory.h"
 
 #include "Config.h"
 #include "Real_clock.h"
+#include "Utilis/Checksum.h"
 
 namespace HAL
 {
@@ -10,6 +17,10 @@ Config_memory::Config_memory()
 : m_logger(Logger("Config_memory", Real_clock::get_instance()->get_time_callback()))
 {}
 
+/**
+ * @brief save json file on eeprom
+ * @param file: file to save
+ */
 void Config_memory::save_json(String& file)
 {
   for (uint32_t i = 0; i < file.length(); i++)
@@ -22,10 +33,12 @@ String Config_memory::get_json()
 {
   String output_file;
 
-  int open_bracket_count = 0;
-  int close_bracket_count = 0;
+  uint16_t open_bracket_count = 0;
+  uint16_t close_bracket_count = 0;
 
-  int i = 0;
+  uint32_t i = 0;
+
+  Utils::Checksum checksum;
 
   do
   {
@@ -39,20 +52,19 @@ String Config_memory::get_json()
       close_bracket_count++;
     }
 
-    if (open_bracket_count > 1)
-    {
-      // TODO: add to calculate crc
-      if ((close_bracket_count - open_bracket_count) == 1)
-      {
-        // stop adding and calculate
-      }
-    }
-
     output_file += read_character;
+    checksum.add_char(read_character);
     i++;
   } while (open_bracket_count != close_bracket_count || Config::max_json_size > i);
+  m_crc = checksum.calculate_crc();
+  m_logger.log(String(m_crc));
 
   return output_file;
+}
+
+uint32_t Config_memory::get_crc() const
+{
+  return m_crc;
 }
 
 void Config_memory::write_EEPROM(unsigned int eeaddress, char data)

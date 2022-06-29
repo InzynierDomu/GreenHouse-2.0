@@ -4,7 +4,6 @@
  * @brief Main HAL run
  * @date 2022-06
  */
-
 #pragma once
 
 #include "../Keyboard_buttons.h"
@@ -63,7 +62,6 @@ class Init
   bool check_main_i2c_peripherals();
   void generate_expander_controllers();
   void synchronize_with_ntp();
-  void check_json_file();
 };
 
 } // namespace HAL

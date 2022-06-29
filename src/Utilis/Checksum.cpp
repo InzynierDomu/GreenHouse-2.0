@@ -1,6 +1,16 @@
 #include "Checksum.h"
 
-namespace UTIILS
+namespace Utils
 {
 
-} // namespace UTIILS
+void Checksum::add_char(char data) 
+{
+    m_crc.update<char>(data);
+}
+
+uint32_t Checksum::calculate_crc() 
+{
+    return m_crc.finalize();    
+}
+
+} // namespace Utils

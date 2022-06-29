@@ -31,6 +31,10 @@ GPIO_controller::GPIO_controller(const uint16_t adress)
 void GPIO_controller::set_in_out(const uint8_t type, const uint8_t pin)
 {
   m_exspander.pinMode(pin, type);
+  if(type == OUTPUT)
+  {
+    turn_off_pin(pin);
+  }
 }
 
 /**
