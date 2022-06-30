@@ -9,7 +9,7 @@ namespace HAL
 Screen::Screen()
 : m_display(Config::screen_width, Config::screen_height, &Wire)
 {
-  m_display.begin(SSD1306_SWITCHCAPVCC, Config::screen_adress);
+  m_display.begin(SSD1306_SWITCHCAPVCC, Config::screen_address);
 
   m_display.clearDisplay();
   m_display.setRotation(0);

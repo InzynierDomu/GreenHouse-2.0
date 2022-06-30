@@ -1,8 +1,15 @@
+/**
+ * @file Logger.cpp
+ * @brief Logger info, debug, erros to Serial
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @date 01-2021
+ */
 #include "Logger.h"
 
 /**
  * @brief constructor
  * @param name: object owner name
+ * @param get_time: function to get timestamp
  */
 Logger::Logger(const std::string name, std::function<time_t()> get_time)
 : m_module_name(name.c_str())
@@ -14,6 +21,7 @@ Logger::Logger(const std::string name, std::function<time_t()> get_time)
 /**
  * @brief constructor
  * @param name: object owner name
+ * @param get_time: function to get timestamp
  */
 Logger::Logger(const String name, std::function<time_t()> get_time)
 : m_module_name(name)
@@ -25,6 +33,7 @@ Logger::Logger(const String name, std::function<time_t()> get_time)
 /**
  * @brief constructor
  * @param name: object owner name
+ * @param get_time: function to get timestamp
  */
 Logger::Logger(const char* name, std::function<time_t()> get_time)
 : m_module_name(name)

@@ -1,11 +1,9 @@
 /**
  * @file Logger.h
  * @brief Logger info, debug, erros to Serial
- * @author by Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 01-2021
  */
-
 #pragma once
 
 #include <Arduino.h>
@@ -29,7 +27,6 @@ class Logger
   Logger(const std::string name, std::function<time_t()> get_time = nullptr);
   Logger(const char* name, std::function<time_t()> get_time = nullptr);
 
-  // todo: think about template
   void log(const std::string& content, const Log_type type = Log_type::info);
   void log(const String& content, const Log_type type = Log_type::info);
   void log(const char* content, const Log_type type = Log_type::info);
@@ -40,7 +37,7 @@ class Logger
   String get_time();
 
   const String m_module_name; ///< object owner name
-  std::function<time_t()> m_get_time;
+  std::function<time_t()> m_get_time; ///< function to get timestamp
 
   const std::map<Log_type, String> m_msg_type_name{{Log_type::info, "Info"},
                                                    {Log_type::warning, "Warning"},

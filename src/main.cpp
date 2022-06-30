@@ -1,22 +1,19 @@
 /**
  * @file Main.cpp
  * @brief GreenHouse 2.0 - Main
- * @author Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 01-2021
  */
-
+#include "Config.h"
 #include "HAL/Init.h"
 #include "HAL/Real_clock.h"
 #include "HAL/Screen.h"
-#include "Liner_fun.h"
 #include "Logger.h"
 #include "Peripherals/Peripherals.h"
 #include "Peripherals/Peripherals_creator.h"
 #include "Scheduler.h"
 #include "SenderReceiver.h"
 #include "Supervisor.h"
-#include "HAL/Config.h"
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
@@ -30,7 +27,7 @@ std::unique_ptr<Peripherals::Peripherals> m_peripherals;
 std::unique_ptr<SenderReceiver> m_sender_reciver;
 Scheduler m_scheduler;
 
-StaticJsonDocument<2048> doc;
+StaticJsonDocument<Config::max_json_size> doc;
 
 enum class Setup_state
 {
@@ -45,7 +42,7 @@ enum class Setup_state
 void setup()
 {
   Setup_state state = Setup_state::hal_init;
-  Serial.begin(115200);
+  Serial.begin(Config::serial_baudrate);
   m_logger.log("Start setup");
   while (m_supervisor.get_state() == Device_state::ok && state != Setup_state::setup_finished)
   {
@@ -78,7 +75,7 @@ void setup()
     }
   }
   m_logger.log("Setup finished");
-  m_hal->get_screen()->print("Greenhouse\nv:" + HAL::Config::sw_version);
+  m_hal->get_screen()->print("Greenhouse\nv:" + Config::sw_version);
 }
 
 void loop()
@@ -98,7 +95,7 @@ void loop()
       last_loop_time = millis();
     }
 
-    // todo: error if loop > 1s, supervisor
+    // TODO: error if loop > 1s, supervisor
   }
   else
   {

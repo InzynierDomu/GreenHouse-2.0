@@ -4,7 +4,6 @@
  * @brief GPIO expander
  * @date 2022-06
  */
-
 #pragma once
 
 #include <Adafruit_MCP23X17.h>

@@ -5,10 +5,9 @@
  * @details http://www.inzynierdomu.pl/
  * @date 01-2021
  */
-
 #include "Peripherals_creator.h"
 
-#include "HAL/Config.h"
+#include "Config.h"
 #include "HAL/Real_clock.h"
 #include "Logger.h"
 #include "math.h"
@@ -49,7 +48,7 @@ void Peripherals_creator::generate_digital_in_out(Peripherals* peripherals, HAL:
   for (int i = 0; i < gpio_controllers_count; i++)
   {
     const String adress = array[i]["ADDRES"].as<String>();
-    const int hw_adress = HAL::Config::min_adress_gpio_controllers + convert_bin_to_dec(adress);
+    const int hw_adress = Config::min_adress_gpio_controllers + convert_bin_to_dec(adress);
     auto gpio_controller = hal->get_GPIO_controller(hw_adress);
     if (gpio_controller != nullptr)
     {
@@ -79,7 +78,7 @@ void Peripherals_creator::generate_analog_in(Peripherals* peripherals, HAL::Init
   for (int i = 0; i < analog_controllers_count; i++)
   {
     const String adress = array[i]["ADDRES"].as<String>();
-    const int hw_adress = HAL::Config::min_adress_analog_controllers + convert_bin_to_dec(adress);
+    const int hw_adress = Config::min_adress_analog_controllers + convert_bin_to_dec(adress);
     auto analog_controller = hal->get_analog_controller(hw_adress);
     if (analog_controller != nullptr)
     {
