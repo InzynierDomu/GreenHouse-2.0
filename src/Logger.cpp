@@ -10,10 +10,12 @@
  * @brief constructor
  * @param name: object owner name
  * @param get_time: function to get timestamp
+ * @param save: function call whenever log is call
  */
-Logger::Logger(const std::string name, std::function<time_t()> get_time)
+Logger::Logger(const std::string name, std::function<time_t()> get_time, std::function<void(const String&)> save)
 : m_module_name(name.c_str())
 , m_get_time(get_time)
+, m_saving_callback(save)
 {
   print_create();
 }
@@ -22,10 +24,12 @@ Logger::Logger(const std::string name, std::function<time_t()> get_time)
  * @brief constructor
  * @param name: object owner name
  * @param get_time: function to get timestamp
+ * @param save: function call whenever log is call
  */
-Logger::Logger(const String name, std::function<time_t()> get_time)
+Logger::Logger(const String name, std::function<time_t()> get_time, std::function<void(const String&)> save)
 : m_module_name(name)
 , m_get_time(get_time)
+, m_saving_callback(save)
 {
   print_create();
 }
@@ -34,10 +38,12 @@ Logger::Logger(const String name, std::function<time_t()> get_time)
  * @brief constructor
  * @param name: object owner name
  * @param get_time: function to get timestamp
+ * @param save: function call whenever log is call
  */
-Logger::Logger(const char* name, std::function<time_t()> get_time)
+Logger::Logger(const char* name, std::function<time_t()> get_time, std::function<void(const String&)> save)
 : m_module_name(name)
 , m_get_time(get_time)
+, m_saving_callback(save)
 {
   print_create();
 }
@@ -53,8 +59,7 @@ void Logger::log(const std::string& content, const Log_type type)
   if (type != Log_type::debug)
   {
 #endif
-    print_type(type);
-    Serial.println(content.c_str());
+    print_log(content.c_str(), type);
 #ifndef DEBUG
   }
 #endif
@@ -71,8 +76,7 @@ void Logger::log(const char* content, const Log_type type)
   if (type != Log_type::debug)
   {
 #endif
-    print_type(type);
-    Serial.println(content);
+    print_log(content, type);
 #ifndef DEBUG
   }
 #endif
@@ -89,29 +93,55 @@ void Logger::log(const String& content, const Log_type type)
   if (type != Log_type::debug)
   {
 #endif
-    print_type(type);
-    Serial.println(content);
+    print_log(content, type);
 #ifndef DEBUG
   }
 #endif
 }
 
-void Logger::print_create()
+/**
+ * @brief set callback for saving log to another place
+ * @param callback function call whenever log is call
+ */
+void Logger::set_saving_callback(std::function<void(const String&)> callback)
 {
-  Serial.print(get_time());
-  Serial.print("::");
-  Serial.println(m_module_name + "::create logger");
+  m_saving_callback = callback;
 }
 
-void Logger::print_type(const Log_type type)
+void Logger::print_create()
 {
-  Serial.print(get_time());
-  Serial.print("::");
-  Serial.print(m_module_name);
-  Serial.print("::");
+  String output = get_time();
+  output += "::";
+  output += m_module_name;
+  output += "::create logger";
+  Serial.println(output);
+  if (m_saving_callback != nullptr)
+  {
+    m_saving_callback(output);
+  }
+}
+
+void Logger::print_log(const String& content, const Log_type type)
+{
+  String log = get_preamble(type);
+  log += content;
+  Serial.println(log);
+  if (m_saving_callback != nullptr)
+  {
+    m_saving_callback(log);
+  }
+}
+
+String Logger::get_preamble(const Log_type type)
+{
+  String output = get_time();
+  output += "::";
+  output += m_module_name;
+  output += "::";
   auto it = m_msg_type_name.find(type);
-  Serial.print(it->second);
-  Serial.print("::");
+  output += it->second;
+  output += "::";
+  return output;
 }
 
 String Logger::get_time()

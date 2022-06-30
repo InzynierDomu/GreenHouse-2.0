@@ -4,11 +4,11 @@
  * @brief Real time clock handling (singleton)
  * @date 2022-06
  */
-
 #pragma once
 
 #include "RTClib.h"
 
+#include "Logger.h"
 #include <ctime>
 #include <functional>
 
@@ -29,6 +29,7 @@ class Real_clock
   private:
   static Real_clock* m_instance; ///< instanse of singleton
   RTC_DS1307 m_rtc; ///< RTC DS1307
+  Logger m_logger; ///< logger
 
   time_t get_raw_time();
 };

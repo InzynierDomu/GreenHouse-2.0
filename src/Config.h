@@ -23,6 +23,7 @@ const uint8_t screen_height = 64; ///< OLED height
 const uint8_t memory_adress = 0x50; ///< EEPROM I2C address
 
 const uint16_t mqtt_port = 1883; ///< MQTT using port
+const uint32_t mqtt_publishing_interval = 60000;
 
 static const char* time_server = "pool.ntp.org"; ///< NTP server address
 const int32_t time_zone = 7200; ///< UTC offset in seconds
@@ -36,6 +37,8 @@ const uint8_t max_adress_analog_controllers = 79; ///< PCF8591 maximum I2C addre
 
 static const char* m_json_file_name = "config.json"; ///< json file name to read configuration from SD
 
-const String sw_version = "db4a582"; ///< actual software version
+const String sw_version = "af5abb8"; ///< actual software version
+
+const uint32_t max_log_file_size = 2048; // max log file size in //TODO: unit?
 
 } // namespace Config

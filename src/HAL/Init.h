@@ -26,7 +26,7 @@ class Dht_sensor;
 class GPIO_controller;
 class Analog_controller;
 class Wifi;
-class SD_reader;
+class SD_card;
 class Config_memory;
 
 class Init
@@ -48,7 +48,7 @@ class Init
   Logger m_logger;
   Supervisor& m_supervisor;
   std::unique_ptr<Screen> m_screen;
-  SD_reader* m_sd_reader;
+  SD_card* m_sd_reader;
   std::vector<GPIO_controller> m_gpio_controllers;
   std::vector<Analog_controller> m_analog_controllers;
   std::unique_ptr<Dht_sensor> m_dht_sensor;

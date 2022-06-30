@@ -82,18 +82,14 @@ void loop()
 {
   if (m_supervisor.get_state() == Device_state::ok)
   {
-    // todo: add check i2c
+    // TODO: add check i2c
     m_hal->wifi_mqtt_reconnect();
     m_hal->mqtt_loop();
 
-    static long last_loop_time = 0; // TODO: move to sender reciver
+    m_sender_reciver->check();
+
     long loop_time = millis();
     m_scheduler.check_events(loop_time);
-    if (loop_time - last_loop_time > 60000)
-    {
-      m_sender_reciver->publish();
-      last_loop_time = millis();
-    }
 
     // TODO: error if loop > 1s, supervisor
   }

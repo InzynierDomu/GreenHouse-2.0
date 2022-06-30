@@ -1,4 +1,4 @@
-#include "SD_reader.h"
+#include "SD_card.h"
 
 #include "Config.h"
 #include "Pin_config.h"
@@ -8,13 +8,14 @@
 namespace HAL
 {
 
-SD_reader::SD_reader()
-: m_logger(Logger("SD reader", Real_clock::get_instance()->get_time_callback()))
+SD_card::SD_card()
+: m_logger(Logger("SD card", Real_clock::get_instance()->get_time_callback()))
 , m_card_available(false)
+, m_last_created_file(" ")
 {
   if (!SD.begin(Pins::m_SD_reader_CS))
   {
-    m_logger.log("Card failed, or not present", Log_type::warning);
+    m_logger.log("Card failed, or not present", Log_type::info);
   }
   else
   {
@@ -23,12 +24,12 @@ SD_reader::SD_reader()
   }
 }
 
-bool SD_reader::is_card_available() const
+bool SD_card::is_card_available() const
 {
   return m_card_available;
 }
 
-String SD_reader::get_json_file()
+String SD_card::get_json_file()
 {
   File dataFile = SD.open(Config::m_json_file_name);
   String json_file;
@@ -68,24 +69,50 @@ String SD_reader::get_json_file()
   return json_file;
 }
 
-uint32_t SD_reader::get_crc() const
+uint32_t SD_card::get_crc() const
 {
   return m_crc;
 }
 
-// bool SD_reader::compare_crc(String crc_from_json, CRC32& crc_calculated)
-// {
-//   m_logger.log("crc from json" + crc_from_json, Log_type::debug);
-//   m_logger.log("crc calculated" + String(crc_calculated.finalize()), Log_type::debug);
-//   uint32_t crc = (uint32_t)strtoul(&crc_from_json[0], nullptr, 16);
+void SD_card::create_log_file()
+{
+  if (m_card_available)
+  {
+    String file_name = Real_clock::get_instance()->get_time();
+    File dataFile = SD.open(file_name, FILE_WRITE);
+    if (dataFile)
+    {
+      m_logger.log("Create file");
+    }
+    m_last_created_file = file_name;
+  }
+}
 
-//   if (crc_calculated.finalize() == crc)
-//   {
-//     m_logger.log("Bad crc compare", Log_type::error);
-//     return true;
-//   }
+std::function<void(const String&)> SD_card::get_save_log_callback()
+{
+  return [this](const String& log) { return save_log(log); };
+}
 
-//   return false;
-// }
+void SD_card::save_log(const String& log)
+{
+  if (m_card_available)
+  {
+    if(m_last_created_file == " ")
+    {
+      create_log_file();
+    }
+
+    File dataFile = SD.open(m_last_created_file, FILE_WRITE);
+    if (dataFile)
+    {
+      dataFile.println(log);
+    }
+
+    if (dataFile.size() > Config::max_log_file_size)
+    {
+      create_log_file();
+    }
+  }
+}
 
 } // namespace HAL

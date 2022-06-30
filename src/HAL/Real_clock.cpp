@@ -4,7 +4,6 @@
  * @brief Real time clock handling (singleton)
  * @date 2022-06
  */
-
 #include "Real_clock.h"
 
 namespace HAL
@@ -27,15 +26,16 @@ Real_clock* Real_clock::get_instance()
 
 Real_clock::Real_clock()
 : m_rtc(RTC_DS1307())
+, m_logger(Logger("Real clock"))
 {
   if (!m_rtc.begin())
   {
-    Serial.println("Couldn't find RTC");
+    m_logger.log("Couldn't find RTC", Log_type::error);
   }
 
   if (!m_rtc.isrunning())
   {
-    Serial.println("RTC is not running, need adjust");
+    m_logger.log("RTC is not running, need adjust");
   }
 }
 
@@ -65,13 +65,13 @@ std::function<time_t()> Real_clock::get_time_callback()
 void Real_clock::adjust(const time_t data_time)
 {
   auto time = DateTime(data_time);
-  Serial.println("set time: " + String(time.hour()) + ":" + String(time.minute()) + ":" + String(time.second()));
+  m_logger.log("Set time: " + String(time.hour()) + ":" + String(time.minute()) + ":" + String(time.second()));
   m_rtc.adjust(time);
   auto now = m_rtc.now();
   long time_dif = now.unixtime() - data_time;
   if (abs(time_dif) > 100)
   {
-    Serial.println("error in time adjust");
+    m_logger.log("Time can't adjust", Log_type::error);
   }
 }
 

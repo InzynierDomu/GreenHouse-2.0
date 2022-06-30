@@ -1,13 +1,12 @@
 /**
  * @file SenderReceiver.cpp
  * @brief controlling sending and receiving messages peripherals-MQTT
- * @author by Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 01-2021
  */
-
 #include "SenderReceiver.h"
 
+#include "Config.h"
 #include "HAL/Real_clock.h"
 
 /**
@@ -22,8 +21,19 @@ SenderReceiver::SenderReceiver(std::unique_ptr<Peripherals::Peripherals> preiphe
 {}
 
 /**
- * @brief publishing value from all peripherals inputs
+ * @brief if publishing interval has passed, handling of sending the message
  */
+void SenderReceiver::check()
+{
+  static long last_loop_time = 0;
+  long loop_time = millis();
+  if (loop_time - last_loop_time > Config::mqtt_publishing_interval)
+  {
+    publish();
+    last_loop_time = millis();
+  }
+}
+
 void SenderReceiver::publish()
 {
   m_logger.log("Publish");

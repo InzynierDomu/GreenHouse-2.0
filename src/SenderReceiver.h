@@ -17,13 +17,14 @@ class SenderReceiver
 {
   public:
   SenderReceiver(std::unique_ptr<Peripherals::Peripherals> preipherals, PubSubClient& client);
-  void publish();
   std::function<void(const char*, byte*, unsigned int)> get_callback();
+  void check();
 
   private:
   Logger m_logger; ///< serial logger
   std::unique_ptr<Peripherals::Peripherals> m_peripherals; ///< peripherals inputs/outputs
   PubSubClient& m_client; ///< MQTT client
 
+  void publish();
   void callback(const char* topic, byte* payload, unsigned int length);
 };

@@ -12,7 +12,7 @@
 #include "Dht_sensor.h"
 #include "GPIO_controller.h"
 #include "Real_clock.h"
-#include "SD_reader.h"
+#include "SD_card.h"
 #include "Screen.h"
 #include "Supervisor.h"
 #include "Utilis/Checksum.h"
@@ -35,8 +35,9 @@ Init::Init(Supervisor& supervisor)
   }
   else
   {
+    m_sd_reader = new SD_card();
+    m_logger.set_saving_callback(m_sd_reader->get_save_log_callback());
     m_dht_sensor = std::make_unique<Dht_sensor>();
-    m_sd_reader = new SD_reader();
     m_config_memory = new Config_memory();
     generate_expander_controllers();
   }
@@ -132,7 +133,7 @@ void Init::deserializeConfigJson(JsonDocument& json)
   {
     String json_file = m_sd_reader->get_json_file();
     m_config_memory->get_json();
-    if (m_sd_reader->get_crc() != m_config_memory->get_crc())
+    if (m_sd_reader->get_crc() != m_config_memory->get_crc() && !json_file.isEmpty())
     {
       m_config_memory->save_json(json_file);
       m_logger.log("New json saving");
