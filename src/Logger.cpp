@@ -115,7 +115,7 @@ void Logger::print_create()
   output += m_module_name;
   output += "::create logger";
   Serial.println(output);
-  if (m_saving_callback != nullptr)
+  if (m_saving_callback)
   {
     m_saving_callback(output);
   }
@@ -126,7 +126,7 @@ void Logger::print_log(const String& content, const Log_type type)
   String log = get_preamble(type);
   log += content;
   Serial.println(log);
-  if (m_saving_callback != nullptr)
+  if (m_saving_callback)
   {
     m_saving_callback(log);
   }

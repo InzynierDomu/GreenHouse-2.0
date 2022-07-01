@@ -25,6 +25,8 @@ Init::Init(Supervisor& supervisor)
 : m_logger(Logger("HAL", Real_clock::get_instance()->get_time_callback()))
 , m_supervisor(supervisor)
 {
+  m_sd_reader = SD_card::get_instance();
+  m_logger.set_saving_callback(m_sd_reader->get_save_log_callback());
   scan_i2c();
   // TODO: if screen
   m_screen = std::make_unique<Screen>();
@@ -35,8 +37,6 @@ Init::Init(Supervisor& supervisor)
   }
   else
   {
-    m_sd_reader = new SD_card();
-    m_logger.set_saving_callback(m_sd_reader->get_save_log_callback());
     m_dht_sensor = std::make_unique<Dht_sensor>();
     m_config_memory = new Config_memory();
     generate_expander_controllers();

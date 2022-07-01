@@ -1,3 +1,9 @@
+/**
+ * @file SD_card.cpp
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief sd card handling
+ * @date 2022-06
+ */
 #include "SD_card.h"
 
 #include "Config.h"
@@ -7,6 +13,21 @@
 
 namespace HAL
 {
+
+SD_card* SD_card::m_instance = 0;
+
+/**
+ * @brief get instance of sd card, create if no instance exist
+ * @return instance of sd card
+ */
+SD_card* SD_card::get_instance()
+{
+  if (m_instance == 0)
+  {
+    m_instance = new SD_card();
+  }
+  return m_instance;
+}
 
 SD_card::SD_card()
 : m_logger(Logger("SD card", Real_clock::get_instance()->get_time_callback()))
@@ -24,11 +45,19 @@ SD_card::SD_card()
   }
 }
 
+/**
+ * @brief get inforamation is sd card available
+ * @return is sd card available
+ */
 bool SD_card::is_card_available() const
 {
   return m_card_available;
 }
 
+/**
+ * @brief read configuration json file
+ * @return configuration json
+ */
 String SD_card::get_json_file()
 {
   File dataFile = SD.open(Config::m_json_file_name);
@@ -69,25 +98,41 @@ String SD_card::get_json_file()
   return json_file;
 }
 
+/**
+ * @brief get crc from json configuration
+ * @return crc32
+ */
 uint32_t SD_card::get_crc() const
 {
   return m_crc;
 }
 
+/**
+ * @brief create log file
+ */
 void SD_card::create_log_file()
 {
   if (m_card_available)
   {
-    String file_name = Real_clock::get_instance()->get_time();
+    String file_name = Real_clock::get_instance()->get_date_time_name_format() + ".log";
     File dataFile = SD.open(file_name, FILE_WRITE);
     if (dataFile)
     {
       m_logger.log("Create file");
+      dataFile.close();
+      m_last_created_file = file_name;
     }
-    m_last_created_file = file_name;
+    else
+    {
+      m_logger.log("problem with create log file", Log_type::error);
+    }
   }
 }
 
+/**
+ * @brief get function to save log on sd
+ * @return function to save log on sd
+ */
 std::function<void(const String&)> SD_card::get_save_log_callback()
 {
   return [this](const String& log) { return save_log(log); };
@@ -97,7 +142,7 @@ void SD_card::save_log(const String& log)
 {
   if (m_card_available)
   {
-    if(m_last_created_file == " ")
+    if (m_last_created_file == " ")
     {
       create_log_file();
     }
@@ -106,6 +151,7 @@ void SD_card::save_log(const String& log)
     if (dataFile)
     {
       dataFile.println(log);
+      dataFile.close();
     }
 
     if (dataFile.size() > Config::max_log_file_size)

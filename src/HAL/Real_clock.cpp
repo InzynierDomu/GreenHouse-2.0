@@ -13,7 +13,7 @@ Real_clock* Real_clock::m_instance = 0;
 
 /**
  * @brief get instance of real clock, create if no instance exist
- * @return Real_clock* instance of real clock
+ * @return nstance of real clock
  */
 Real_clock* Real_clock::get_instance()
 {
@@ -47,6 +47,18 @@ String Real_clock::get_time()
 {
   auto time = m_rtc.now();
   return time.timestamp(DateTime::TIMESTAMP_TIME);
+}
+
+/**
+ * @brief get date and time in format
+ * @return date and time
+ */
+String Real_clock::get_date_time_name_format()
+{
+  auto time = m_rtc.now();
+  String output = String(time.year()) + "_" + String(time.month()) + "_" + String(time.day()) + "-" + String(time.hour()) + "_" +
+                  String(time.minute()) + "_" + String(time.second());
+  return output;
 }
 
 /**

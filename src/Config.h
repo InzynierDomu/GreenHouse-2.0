@@ -37,7 +37,7 @@ const uint8_t max_adress_analog_controllers = 79; ///< PCF8591 maximum I2C addre
 
 static const char* m_json_file_name = "config.json"; ///< json file name to read configuration from SD
 
-const String sw_version = "af5abb8"; ///< actual software version
+const String sw_version = "93918ef"; ///< actual software version
 
 const uint32_t max_log_file_size = 2048; // max log file size in //TODO: unit?
 

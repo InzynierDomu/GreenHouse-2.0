@@ -20,6 +20,7 @@ class Real_clock
   public:
   static Real_clock* get_instance();
   String get_time();
+  String get_date_time_name_format();
   std::function<time_t()> get_time_callback();
   void adjust(const time_t data_time);
 

@@ -4,7 +4,6 @@
  * @brief Screen handling
  * @date 2022-06
  */
-
 #pragma once
 
 #include "Config.h"
