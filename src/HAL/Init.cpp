@@ -21,12 +21,15 @@
 namespace HAL
 {
 
+/**
+ * @brief main init hal construct
+ * @param supervisor: supervisor to check state
+ */
 Init::Init(Supervisor& supervisor)
-: m_logger(Logger("HAL", Real_clock::get_instance()->get_time_callback()))
+: m_logger(Logger("HAL", Real_clock::get_instance()->get_time_callback(), SD_card::get_instance()->get_save_log_callback()))
 , m_supervisor(supervisor)
 {
   m_sd_reader = SD_card::get_instance();
-  m_logger.set_saving_callback(m_sd_reader->get_save_log_callback());
   scan_i2c();
   // TODO: if screen
   m_screen = std::make_unique<Screen>();
@@ -43,6 +46,10 @@ Init::Init(Supervisor& supervisor)
   }
 }
 
+/**
+ * @brief network initializing
+ * @param json: configuration with network date
+ */
 void Init::initNetwork(JsonDocument& json)
 {
   Mqtt_config mqtt_config = Mqtt_config(json["CONFIGURATION"]["MQTT_SERVER"],
@@ -53,11 +60,20 @@ void Init::initNetwork(JsonDocument& json)
   synchronize_with_ntp();
 }
 
+/**
+ * @brief get temperature and humidity sensor handling
+ * @return pointer to sensor
+ */
 Dht_sensor* Init::get_dht_sensor()
 {
   return m_dht_sensor.get();
 }
 
+/**
+ * @brief get GPIO expander handling
+ * @param address: i2c expander address
+ * @return pointer to expander
+ */
 GPIO_controller* Init::get_GPIO_controller(int address)
 {
   if (!m_gpio_controllers.empty())
@@ -79,6 +95,11 @@ GPIO_controller* Init::get_GPIO_controller(int address)
   return nullptr;
 }
 
+/**
+ * @brief get analog in/uot expander handling
+ * @param address: i2c expander address
+ * @return pointer to expander
+ */
 Analog_controller* Init::get_analog_controller(int address)
 {
   if (!m_analog_controllers.empty())
@@ -101,38 +122,60 @@ Analog_controller* Init::get_analog_controller(int address)
   return nullptr;
 }
 
+/**
+ * @brief get mqtt client
+ * @return mqtt client
+ */
 PubSubClient& Init::get_wifi_mqtt_client()
 {
   return m_wifi->get_mqtt_client();
 }
 
+/**
+ * @brief get oled screen handling
+ * @return oled screen handling
+ */
 Screen* Init::get_screen()
 {
   return m_screen.get();
 }
 
+/**
+ * @brief mqtt reconnecting
+ */
 void Init::wifi_mqtt_reconnect()
 {
   // TODO: from config
   m_wifi->mqtt_reconnect("greenhouse/output/#");
 }
 
+/**
+ * @brief set callback to mqtt message arrived
+ * @param callback
+ */
 void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
 {
   m_wifi->set_mqtt_callback(callback);
 }
 
+/**
+ * @brief mqtt subscribing
+ */
 void Init::mqtt_loop()
 {
   m_wifi->loop();
 }
 
-void Init::deserializeConfigJson(JsonDocument& json)
+/**
+ * @brief deserializiation and fill configuration file to json
+ * @param json: configuration json to fill
+ */
+void Init::deserialize_config_json(JsonDocument& json)
 {
   if (m_sd_reader->is_card_available())
   {
     String json_file = m_sd_reader->get_json_file();
-    m_config_memory->get_json();
+    m_logger.log("memory json: " + m_config_memory->get_json(), Log_type::debug);
     if (m_sd_reader->get_crc() != m_config_memory->get_crc() && !json_file.isEmpty())
     {
       m_config_memory->save_json(json_file);
@@ -143,7 +186,6 @@ void Init::deserializeConfigJson(JsonDocument& json)
     {
       m_logger.log("SD and memory config is the same");
     }
-    m_logger.log("memory json: " + m_config_memory->get_json(), Log_type::debug);
   }
 
 #ifdef LOCAL_JSON

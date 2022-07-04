@@ -54,7 +54,7 @@ void setup()
         state = Setup_state::json_deserialize;
         break;
       case Setup_state::json_deserialize:
-        m_hal->deserializeConfigJson(doc);
+        m_hal->deserialize_config_json(doc);
         state = Setup_state::network_init;
         break;
       case Setup_state::network_init:

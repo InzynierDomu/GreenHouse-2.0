@@ -42,7 +42,7 @@ class Init
   void wifi_mqtt_reconnect();
   void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
   void mqtt_loop();
-  void deserializeConfigJson(JsonDocument& json);
+  void deserialize_config_json(JsonDocument& json);
 
   private:
   Logger m_logger;

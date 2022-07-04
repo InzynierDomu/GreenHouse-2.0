@@ -29,6 +29,10 @@ void Config_memory::save_json(String& file)
   }
 }
 
+/**
+ * @brief get configuration json file from eeprom
+ * @return configuration json
+ */
 String Config_memory::get_json()
 {
   String output_file;
@@ -62,6 +66,10 @@ String Config_memory::get_json()
   return output_file;
 }
 
+/**
+ * @brief get crc32 from configuration json, after read json
+ * @return json crc32
+ */
 uint32_t Config_memory::get_crc() const
 {
   return m_crc;
