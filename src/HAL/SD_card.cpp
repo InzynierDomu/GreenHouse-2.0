@@ -34,7 +34,7 @@ SD_card::SD_card()
 , m_card_available(false)
 , m_last_created_file(" ")
 {
-  if (!SD.begin(Pins::m_SD_reader_CS))
+  if (!SD.begin(Pins::SD_reader_CS))
   {
     m_logger.log("Card failed, or not present", Log_type::info);
   }

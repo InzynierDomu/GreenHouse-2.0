@@ -1,3 +1,9 @@
+/**
+ * @file Screen.cpp
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief Screen handling
+ * @date 2022-06
+ */
 #include "Screen.h"
 
 namespace HAL

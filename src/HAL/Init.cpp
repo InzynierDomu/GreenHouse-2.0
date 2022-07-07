@@ -11,12 +11,13 @@
 #include "Config_memory.h"
 #include "Dht_sensor.h"
 #include "GPIO_controller.h"
+#include "Network.h"
 #include "Real_clock.h"
 #include "SD_card.h"
 #include "Screen.h"
 #include "Supervisor.h"
 #include "Utilis/Checksum.h"
-#include "Wifi.h"
+
 
 namespace HAL
 {
@@ -56,7 +57,7 @@ void Init::initNetwork(JsonDocument& json)
                                         json["CONFIGURATION"]["MQTT_USER"],
                                         json["CONFIGURATION"]["MQTT_ID"],
                                         json["CONFIGURATION"]["MQTT_PASS"]);
-  m_wifi = new Wifi(json["CONFIGURATION"]["SSID"], json["CONFIGURATION"]["PASS"], mqtt_config);
+  m_network = new Network(json["CONFIGURATION"]["SSID"], json["CONFIGURATION"]["PASS"], mqtt_config);
   synchronize_with_ntp();
 }
 
@@ -126,9 +127,9 @@ Analog_controller* Init::get_analog_controller(int address)
  * @brief get mqtt client
  * @return mqtt client
  */
-PubSubClient& Init::get_wifi_mqtt_client()
+PubSubClient& Init::get_mqtt_client()
 {
-  return m_wifi->get_mqtt_client();
+  return m_network->get_mqtt_client();
 }
 
 /**
@@ -146,7 +147,7 @@ Screen* Init::get_screen()
 void Init::wifi_mqtt_reconnect()
 {
   // TODO: from config
-  m_wifi->mqtt_reconnect("greenhouse/output/#");
+  m_network->mqtt_reconnect("greenhouse/output/#");
 }
 
 /**
@@ -155,7 +156,7 @@ void Init::wifi_mqtt_reconnect()
  */
 void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
 {
-  m_wifi->set_mqtt_callback(callback);
+  m_network->set_mqtt_callback(callback);
 }
 
 /**
@@ -163,7 +164,7 @@ void Init::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int
  */
 void Init::mqtt_loop()
 {
-  m_wifi->loop();
+  m_network->loop();
 }
 
 /**

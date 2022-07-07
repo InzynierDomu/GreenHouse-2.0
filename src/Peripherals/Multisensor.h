@@ -23,8 +23,8 @@ class Multisensor : public Peripheral_input
   void publish(PubSubClient& client);
 
   private:
-  HAL::Dht_sensor* m_dht_sensor;
-  Logger m_logger;
+  HAL::Dht_sensor* m_dht_sensor; ///< temperature and humidity sensor
+  Logger m_logger;  ///< logger
 
   String m_topic;
 };

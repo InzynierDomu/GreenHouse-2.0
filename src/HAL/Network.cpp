@@ -1,4 +1,10 @@
-#include "Wifi.h"
+/**
+ * @file Network.cpp
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief WiFi and MQTT handling
+ * @date 2022-06
+ */
+#include "Network.h"
 
 #include "Config.h"
 #include "Real_clock.h"
@@ -6,9 +12,15 @@
 namespace HAL
 {
 
-Wifi::Wifi(const char* ssid, const char* pass, const Mqtt_config mqtt_config)
+/**
+ * @brief Construct a new Network:: Network object
+ * @param ssid: WiFi ssid
+ * @param pass: WiFi pass
+ * @param mqtt_config: mqtt configuration
+ */
+Network::Network(const char* ssid, const char* pass, const Mqtt_config mqtt_config)
 : m_logger(Logger("WiFi", Real_clock::get_instance()->get_time_callback()))
-, m_mqtt_config(mqtt_config) // todo: posible better move
+, m_mqtt_config(mqtt_config) // TODO: posible better move
 {
   connect_wifi(ssid, pass);
 
@@ -16,12 +28,20 @@ Wifi::Wifi(const char* ssid, const char* pass, const Mqtt_config mqtt_config)
   m_mqtt_client->setServer(m_mqtt_config.address, Config::mqtt_port);
 }
 
-PubSubClient& Wifi::get_mqtt_client()
+/**
+ * @brief get mqtt client
+ * @return mqtt client
+ */
+PubSubClient& Network::get_mqtt_client()
 {
   return *m_mqtt_client;
 }
 
-void Wifi::mqtt_reconnect(const char* topic)
+/**
+ * @brief reconnect mqtt subscription
+ * @param topic: subscribing topic
+ */
+void Network::mqtt_reconnect(const char* topic)
 {
   while (!m_mqtt_client->connected())
   {
@@ -40,17 +60,24 @@ void Wifi::mqtt_reconnect(const char* topic)
   }
 }
 
-void Wifi::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
+/**
+ * @brief set callback for recive mqtt message
+ * @param callback: callback
+ */
+void Network::set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback)
 {
   m_mqtt_client->setCallback(callback);
 }
 
-void Wifi::loop()
+/**
+ * @brief main mqtt check loop
+ */
+void Network::loop()
 {
   m_mqtt_client->loop();
 }
 
-void Wifi::connect_wifi(const char* ssid, const char* pass)
+void Network::connect_wifi(const char* ssid, const char* pass)
 {
   m_logger.log("Connecting to " + String(ssid));
 

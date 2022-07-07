@@ -1,3 +1,9 @@
+/**
+ * @file Network.h
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief WiFi and MQTT handling
+ * @date 2022-06
+ */
 #pragma once
 
 #include "Logger.h"
@@ -27,20 +33,20 @@ struct Mqtt_config
   const char* pass;
 };
 
-class Wifi
+class Network
 {
   public:
-  Wifi(const char* ssid, const char* pass, const Mqtt_config mqtt_config);
+  Network(const char* ssid, const char* pass, const Mqtt_config mqtt_config);
   PubSubClient& get_mqtt_client();
   void mqtt_reconnect(const char* topic);
   void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
   void loop();
 
   private:
-  Logger m_logger;
-  WiFiClient m_espClient;
-  std::unique_ptr<PubSubClient> m_mqtt_client;
-  const Mqtt_config m_mqtt_config;
+  Logger m_logger;  ///< logger
+  WiFiClient m_espClient; ///< WiFi handling 
+  std::unique_ptr<PubSubClient> m_mqtt_client;  ///< mqtt handling
+  const Mqtt_config m_mqtt_config;  ///< mqtt configuration
 
   void connect_wifi(const char* ssid, const char* pass);
 };

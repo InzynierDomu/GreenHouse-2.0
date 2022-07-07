@@ -1,3 +1,9 @@
+/**
+ * @file Dht_sensor.h
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
+ * @brief air temperature and humidity sensor
+ * @date 07-2022
+ */
 #pragma once
 
 #include "Pin_config.h"
@@ -15,8 +21,8 @@ class Dht_sensor
   float get_hum();
 
   private:
-  Logger m_logger;
-  DHT m_sensor;
+  Logger m_logger;  ///< logger
+  DHT m_sensor; ///< DHT 22 handling
 };
 
 } // namespace HAL

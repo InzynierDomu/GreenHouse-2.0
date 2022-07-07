@@ -25,7 +25,7 @@ class Screen;
 class Dht_sensor;
 class GPIO_controller;
 class Analog_controller;
-class Wifi;
+class Network;
 class SD_card;
 class Config_memory;
 
@@ -37,7 +37,7 @@ class Init
   Dht_sensor* get_dht_sensor();
   GPIO_controller* get_GPIO_controller(int address);
   Analog_controller* get_analog_controller(int address);
-  PubSubClient& get_wifi_mqtt_client();
+  PubSubClient& get_mqtt_client();
   Screen* get_screen();
   void wifi_mqtt_reconnect();
   void set_mqtt_callback(std::function<void(const char*, byte*, unsigned int)> callback);
@@ -52,7 +52,7 @@ class Init
   std::vector<GPIO_controller> m_gpio_controllers;
   std::vector<Analog_controller> m_analog_controllers;
   std::unique_ptr<Dht_sensor> m_dht_sensor;
-  Wifi* m_wifi;
+  Network* m_network;
   Config_memory* m_config_memory;
 
   std::vector<int> m_i2c_adress;

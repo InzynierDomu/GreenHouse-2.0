@@ -64,11 +64,11 @@ void setup()
       case Setup_state::generation_peripherals:
         m_peripherals = std::make_unique<Peripherals::Peripherals>();
         m_peripherals_creator = std::make_unique<Peripherals::Peripherals_creator>(
-            m_peripherals.get(), m_hal.get(), doc, m_hal->get_wifi_mqtt_client(), m_scheduler);
+            m_peripherals.get(), m_hal.get(), doc, m_hal->get_mqtt_client(), m_scheduler);
         state = Setup_state::connect_sender_reciver;
         break;
       case Setup_state::connect_sender_reciver:
-        m_sender_reciver = std::make_unique<SenderReceiver>(std::move(m_peripherals), m_hal->get_wifi_mqtt_client());
+        m_sender_reciver = std::make_unique<SenderReceiver>(std::move(m_peripherals), m_hal->get_mqtt_client());
         m_hal->set_mqtt_callback(m_sender_reciver->get_callback());
         state = Setup_state::setup_finished;
         break;
