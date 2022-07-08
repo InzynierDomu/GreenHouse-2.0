@@ -1,11 +1,9 @@
 /**
  * @file Multisensor.h
- * @brief GreenHouse 2.0 - Peripheral for BME280
- * @author Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
+ * @brief air temperature and humidity handling
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 01-2021
  */
-
 #pragma once
 
 #include "HAL/Dht_sensor.h"
@@ -24,9 +22,9 @@ class Multisensor : public Peripheral_input
 
   private:
   HAL::Dht_sensor* m_dht_sensor; ///< temperature and humidity sensor
-  Logger m_logger;  ///< logger
+  Logger m_logger; ///< logger
 
-  String m_topic;
+  String m_topic; ///< mqtt topic
 };
 
 } // namespace Peripherals

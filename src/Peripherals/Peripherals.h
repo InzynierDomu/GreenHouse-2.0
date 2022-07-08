@@ -4,7 +4,6 @@
  * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 2022-06
  */
-
 #pragma once
 
 #include "Peripheral_input.h"

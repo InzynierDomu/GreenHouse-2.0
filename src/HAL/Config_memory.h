@@ -26,8 +26,8 @@ class Config_memory
   void write_EEPROM(unsigned int eeaddress, char data);
   char read_EEPROM(unsigned int eeaddress);
 
-  Logger m_logger;
-  uint32_t m_crc;
+  Logger m_logger; ///< logger
+  uint32_t m_crc; ///< last loaded configuration json crc
 };
 
 } // namespace HAL

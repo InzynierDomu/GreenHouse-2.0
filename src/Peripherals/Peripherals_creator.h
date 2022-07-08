@@ -13,8 +13,8 @@
 #include "Digital_output.h"
 #include "HAL/Init.h"
 #include "Multisensor.h"
-#include "Scheduler.h"
 #include "Peripherals.h"
+#include "Scheduler.h"
 
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
@@ -32,8 +32,8 @@ class Peripherals_creator
   Peripherals_creator(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json, PubSubClient& client, Scheduler& scheduler);
 
   private:
-  PubSubClient& m_client;
-  Logger m_logger;
+  PubSubClient& m_client; ///< mqtt client
+  Logger m_logger; ///< logger
 
   void add_multisensor(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json);
   void generate_digital_in_out(Peripherals* peripherals, HAL::Init* hal, JsonDocument& json, Scheduler& Scheduler);

@@ -13,6 +13,9 @@
 namespace HAL
 {
 
+/**
+ * @brief Construct a new Config_memory::Config_memory object
+ */
 Config_memory::Config_memory()
 : m_logger(Logger("Config_memory", Real_clock::get_instance()->get_time_callback()))
 {}

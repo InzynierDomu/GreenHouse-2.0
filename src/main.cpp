@@ -19,15 +19,15 @@
 #include <ArduinoJson.h>
 #include <memory>
 
-Logger m_logger("Main", HAL::Real_clock::get_instance()->get_time_callback());
-Supervisor m_supervisor;
-std::unique_ptr<HAL::Init> m_hal;
-std::unique_ptr<Peripherals::Peripherals_creator> m_peripherals_creator;
-std::unique_ptr<Peripherals::Peripherals> m_peripherals;
-std::unique_ptr<SenderReceiver> m_sender_reciver;
-Scheduler m_scheduler;
+Logger m_logger("Main", HAL::Real_clock::get_instance()->get_time_callback()); ///< logger
+Supervisor m_supervisor; ///< supervisor
+std::unique_ptr<HAL::Init> m_hal; ///< hardware layer
+std::unique_ptr<Peripherals::Peripherals_creator> m_peripherals_creator; ///< peripherals geneartor from configuration
+std::unique_ptr<Peripherals::Peripherals> m_peripherals; ///< storage of peripherals handling
+std::unique_ptr<SenderReceiver> m_sender_reciver; ///< mqtt publishing and subscribing handling
+Scheduler m_scheduler; ///< scheduler for timing on/off output action
 
-StaticJsonDocument<Config::max_json_size> doc;
+StaticJsonDocument<Config::max_json_size> configuration_json; ///< json with configuration
 
 enum class Setup_state
 {
@@ -39,6 +39,9 @@ enum class Setup_state
   setup_finished
 };
 
+/**
+ * @brief main setup
+ */
 void setup()
 {
   Setup_state state = Setup_state::hal_init;
@@ -54,17 +57,17 @@ void setup()
         state = Setup_state::json_deserialize;
         break;
       case Setup_state::json_deserialize:
-        m_hal->deserialize_config_json(doc);
+        m_hal->deserialize_config_json(configuration_json);
         state = Setup_state::network_init;
         break;
       case Setup_state::network_init:
-        m_hal->initNetwork(doc);
+        m_hal->initNetwork(configuration_json);
         state = Setup_state::generation_peripherals;
         break;
       case Setup_state::generation_peripherals:
         m_peripherals = std::make_unique<Peripherals::Peripherals>();
         m_peripherals_creator = std::make_unique<Peripherals::Peripherals_creator>(
-            m_peripherals.get(), m_hal.get(), doc, m_hal->get_mqtt_client(), m_scheduler);
+            m_peripherals.get(), m_hal.get(), configuration_json, m_hal->get_mqtt_client(), m_scheduler);
         state = Setup_state::connect_sender_reciver;
         break;
       case Setup_state::connect_sender_reciver:
@@ -78,6 +81,9 @@ void setup()
   m_hal->get_screen()->print("Greenhouse\nv:" + Config::sw_version);
 }
 
+/**
+ * @brief main loop
+ */
 void loop()
 {
   if (m_supervisor.get_state() == Device_state::ok)
