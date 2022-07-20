@@ -1,11 +1,9 @@
 /**
  * @file Peripherals_creator.h
- * @brief GreenHouse 2.0 - Class for genereting peripherals object from json config
- * @author Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
+ * @brief Genereting peripherals object from json config
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 01-2021
  */
-
 #pragma once
 
 #include "Analog_input.h"

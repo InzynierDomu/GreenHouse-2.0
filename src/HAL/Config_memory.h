@@ -23,8 +23,8 @@ class Config_memory
   uint32_t get_crc() const;
 
   private:
-  void write_EEPROM(unsigned int eeaddress, char data);
-  char read_EEPROM(unsigned int eeaddress);
+  void write_EEPROM(unsigned int eeaddress, const byte data);
+  byte read_EEPROM(unsigned int eeaddress);
 
   Logger m_logger; ///< logger
   uint32_t m_crc; ///< last loaded configuration json crc

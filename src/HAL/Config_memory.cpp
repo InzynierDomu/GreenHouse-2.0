@@ -78,31 +78,33 @@ uint32_t Config_memory::get_crc() const
   return m_crc;
 }
 
-void Config_memory::write_EEPROM(unsigned int eeaddress, char data)
+void Config_memory::write_EEPROM(unsigned int eeaddress, const byte data)
 {
-  Wire.beginTransmission(Config::memory_adress);
-  Wire.write((int)(eeaddress >> 8)); // MSB
-  Wire.write((int)(eeaddress & 0xFF)); // LSB
-  Wire.write(data);
+  byte devaddr = Config::memory_adress | ((eeaddress >> 8) & 0x07);
+  byte addr = eeaddress;
+  Wire.beginTransmission(devaddr);
+  Wire.write(int(addr));
+  Wire.write(int(data));
   Wire.endTransmission();
-
-  delay(5);
+  delay(10);
 }
 
-char Config_memory::read_EEPROM(unsigned int eeaddress)
+byte Config_memory::read_EEPROM(unsigned int eeaddress)
 {
-  char rdata = '0';
+  byte rdata = -1;
 
-  Wire.beginTransmission(Config::memory_adress);
-  Wire.write((int)(eeaddress >> 8)); // MSB
-  Wire.write((int)(eeaddress & 0xFF)); // LSB
+  // Three lsb of Device address byte are bits 8-10 of eeaddress
+  byte devaddr = Config::memory_adress | ((eeaddress >> 8) & 0x07);
+  byte addr = eeaddress;
+
+  Wire.beginTransmission(devaddr);
+  Wire.write(int(addr));
   Wire.endTransmission();
-
-  Wire.requestFrom(Config::memory_adress, 1);
-
+  Wire.requestFrom(int(devaddr), 1);
   if (Wire.available())
+  {
     rdata = Wire.read();
-
+  }
   return rdata;
 }
 

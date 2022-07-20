@@ -1,8 +1,7 @@
 /**
  * @file Peripherals_creator.cpp
- * @brief GreenHouse 2.0 - Class for genereting peripherals object from json config
- * @author Szymon Markiewicz
- * @details http://www.inzynierdomu.pl/
+ * @brief Genereting peripherals object from json config
+ * @author by Szymon Markiewicz (https://github.com/InzynierDomu/)
  * @date 01-2021
  */
 #include "Peripherals_creator.h"
