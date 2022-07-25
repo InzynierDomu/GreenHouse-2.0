@@ -86,8 +86,17 @@ String SD_card::get_json_file()
       checksum.add_char(read_character);
       i++;
     } while ((open_bracket_count != close_bracket_count || Config::max_json_size > i) && dataFile.available());
+
     m_crc = checksum.calculate_crc();
-    m_logger.log(String(m_crc));
+    m_logger.log("calculated crc =" + String(m_crc));
+    
+    String readed_crc = "";
+    for(uint8_t i = 0; i < 10; i++)
+    {
+      readed_crc += (char)dataFile.read();
+    }
+    m_logger.log("readed crc =" + String(m_crc));
+
     dataFile.close();
   }
   else

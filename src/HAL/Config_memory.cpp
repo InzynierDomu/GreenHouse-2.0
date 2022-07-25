@@ -64,7 +64,16 @@ String Config_memory::get_json()
     i++;
   } while (open_bracket_count != close_bracket_count || Config::max_json_size > i);
   m_crc = checksum.calculate_crc();
-  m_logger.log(String(m_crc));
+
+  m_logger.log("calculated crc =" + String(m_crc));
+
+  String readed_crc = "";
+  for (uint8_t j = 0; j < 10; j++)
+  {
+    readed_crc += read_EEPROM(i);
+    i++;
+  }
+  m_logger.log("readed crc =" + String(m_crc));
 
   return output_file;
 }
