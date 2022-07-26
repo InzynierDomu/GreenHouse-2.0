@@ -89,13 +89,18 @@ String SD_card::get_json_file()
 
     m_crc = checksum.calculate_crc();
     m_logger.log("calculated crc =" + String(m_crc));
-    
+
     String readed_crc = "";
-    for(uint8_t i = 0; i < 10; i++)
+    for (uint8_t i = 0; i < 10; i++)
     {
       readed_crc += (char)dataFile.read();
     }
-    m_logger.log("readed crc =" + String(m_crc));
+    m_logger.log("readed crc =" + String(readed_crc));
+
+    if (Utils::Checksum::compare_crc(m_crc, readed_crc))
+    {
+      m_logger.log("crc is correct");
+    }
 
     dataFile.close();
   }

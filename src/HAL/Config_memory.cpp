@@ -73,7 +73,12 @@ String Config_memory::get_json()
     readed_crc += read_EEPROM(i);
     i++;
   }
-  m_logger.log("readed crc =" + String(m_crc));
+  m_logger.log("readed crc =" + String(readed_crc));
+
+  if (Utils::Checksum::compare_crc(m_crc, readed_crc))
+  {
+    m_logger.log("crc is correct");
+  }
 
   return output_file;
 }
