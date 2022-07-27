@@ -9,6 +9,8 @@
 
 #include "HAL/Real_clock.h"
 
+#include <charconv>
+
 namespace Peripherals
 {
 
@@ -27,13 +29,14 @@ Digital_input::Digital_input(HAL::GPIO_controller* controller, const uint8_t pin
 
 /**
  * @brief publish actual pin state
- * @param client: mqtt client 
+ * @param client: mqtt client
  */
 void Digital_input::publish(PubSubClient& client)
 {
   char buf[1];
   uint8_t state = m_controller->get_state(m_pin);
-  sprintf(buf, "%d", state);
+  // sprintf(buf, "%d", state);
+  std::to_chars(buf, buf + 1, state);
   m_logger.log(buf);
   client.publish(m_topic.c_str(), buf);
 }

@@ -32,6 +32,7 @@ SD_card* SD_card::get_instance()
 SD_card::SD_card()
 : m_logger(Logger("SD card", Real_clock::get_instance()->get_time_callback()))
 , m_card_available(false)
+, m_crc(0)
 , m_last_created_file(" ")
 {
   if (!SD.begin(Pins::SD_reader_CS))

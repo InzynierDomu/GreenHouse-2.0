@@ -18,6 +18,7 @@ namespace HAL
  */
 Config_memory::Config_memory()
 : m_logger(Logger("Config_memory", Real_clock::get_instance()->get_time_callback()))
+, m_crc(0)
 {}
 
 /**
