@@ -18,7 +18,7 @@ class Multisensor : public Peripheral_input
 {
   public:
   Multisensor(HAL::Dht_sensor* dht_sensor, const char* topic);
-  void publish(PubSubClient& client);
+  void publish(PubSubClient& client) override;
 
   private:
   HAL::Dht_sensor* m_dht_sensor; ///< temperature and humidity sensor
