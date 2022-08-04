@@ -94,7 +94,7 @@ void loop()
 
     m_sender_reciver->check();
 
-    long loop_time = millis();
+    auto loop_time = millis();
     m_scheduler.check_events(loop_time);
 
     // TODO: error if loop > 1s, supervisor
