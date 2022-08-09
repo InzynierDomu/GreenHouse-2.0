@@ -53,8 +53,13 @@ jobs:
       - name: Install lib mqtt
         run: pio lib -g install knolleary/PubSubClient@2.8
 
-      - name: Run PlatformIO
+      - name: Run PlatformIO nodemcu
         run: pio run -e nodemcuv2
+        env:
+          PLATFORMIO_BUILD_FLAGS: -D ESP8266 -fexceptions
+
+      - name: Run PlatformIO wemos
+        run: pio run -e d1_mini_lite
         env:
           PLATFORMIO_BUILD_FLAGS: -D ESP8266 -fexceptions
 
