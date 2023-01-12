@@ -1,6 +1,6 @@
 # GreenHouse-2.0
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/InzynierDomu/GreenHouse-2.0/CI?logo=github&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/InzynierDomu/GreenHouse-2.0/main.yml?logo=github&style=flat-square)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/InzynierDomu/GreenHouse-2.0?style=flat-square)
 <a href="https://inzynierdomu.github.io/GreenHouse-2.0/">![GitHub docs deployments](https://img.shields.io/github/deployments/InzynierDomu/GreenHouse-2.0/github-pages?label=docs&logo=BookStack&logoColor=white&style=flat-square)</a>
 <a href="https://discord.gg/KmW6mHdg">![Discord](https://img.shields.io/discord/815929748882587688?logo=discord&logoColor=green&style=flat-square)</a>
