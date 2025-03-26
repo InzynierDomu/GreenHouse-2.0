@@ -5,7 +5,6 @@
 <a href="https://inzynierdomu.github.io/GreenHouse-2.0/">![GitHub docs deployments](https://img.shields.io/github/deployments/InzynierDomu/GreenHouse-2.0/github-pages?label=docs&logo=BookStack&logoColor=white&style=flat-square)</a>
 <a href="https://discord.gg/KmW6mHdg">![Discord](https://img.shields.io/discord/815929748882587688?logo=discord&logoColor=green&style=flat-square)</a>
 ![GitHub](https://img.shields.io/github/license/InzynierDomu/GreenHouse-2.0?style=flat-square)
-<a href="https://tipo.live/p/inzynierdomu">![support](https://img.shields.io/badge/support-tipo.live-yellow?style=flat-square)</a>
 
 - [Description](#Description)
 - [Scheme](#Scheme)
@@ -15,6 +14,12 @@
 
 More descriptions are available on the blog: [Projekt GREENHOUSE 2.0 cz.1](http://www.inzynierdomu.pl/projekt-greenhouse-2-0-cz-1/) PL<br>
 The development process is presented on live streams [Playlist - live](https://www.youtube.com/playlist?list=PLZ7-be74MkEyWofOm7bbRsfblTcDVo8DT)
+
+<div align="center">
+<h2>Support</h2>
+
+<p>If any of my projects have helped you in your work, studies, or simply made your day better, you can buy me a coffee. <a href="https://buycoffee.to/inzynier-domu" target="_blank"><img src="https://buycoffee.to/img/share-button-primary.png" style="width: 195px; height: 51px" alt="Postaw mi kawę na buycoffee.to"></a></p>
+</div>
 
 ## Scheme
 
